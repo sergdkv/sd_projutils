@@ -1,0 +1,9103 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+\noweboptions{longchunks,smallcode}
+\lstset { 
+basicstyle=\footnotesize,
+breaklines=true,
+breakatwhitespace=true,
+resetmargins=true,
+xleftmargin=3em
+}
+\end_preamble
+\use_default_options false
+\begin_modules
+noweb
+\end_modules
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format pdf
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language polish
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+binopProj
+\begin_inset Newline newline
+\end_inset
+
+Бинарные операции над новыми проекциями формата lab34 
+\end_layout
+
+\begin_layout Author
+Сергей Дьяков
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Введение
+\end_layout
+
+\begin_layout Standard
+Простая программа осуществляющая бинарные операции (сложение, вычитание,
+ умножение на число, деление на число и т.п.) над новыми проекцими формата
+ lab34.
+\end_layout
+
+\begin_layout Standard
+Программа должна быть написана на языке c++ с использованием библиотеки
+ lab34NProjLib
+\end_layout
+
+\begin_layout Section
+Формат вызова программы
+\end_layout
+
+\begin_layout Standard
+Арифметические операции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p_{1}-p_{2}\rightarrow p_{3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $p_{1}+p_{2}\rightarrow p_{3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Наложение маски
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Formula $\begin{cases}
+cloud(p_{2}), & cloud(p_{2})\\
+\overline{cloud(p_{2})}, & p_{1}
+\end{cases}\rightarrow p_{3}\equiv p_{1}filterby\,p_{2}\rightarrow p_{3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Фильтрация
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p_{1}filterby\,(p_{2}>limit)?-5$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "language=bash"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --diffp mt21344_ir2.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir12.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --sump mt21344_ir12.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir2_new.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --sum 10 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir1_p10_new.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro -maskfrom mt21344_vis_filtered.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir1_filtered.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --filterif mt21344_ir1.pro,less,2,mask7 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir1_filtered.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#binopProj mt21344_ir1.pro --diffp mt21344_ir2.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#     --ifnegative -5 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#     --ifpositivep mt21344_ir1.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#     -o mt21344_ir1_filtered.pro
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Cтруктура программы и разбор параметров
+\end_layout
+
+\begin_layout Standard
+Разбор опций программы производиться с помощью функции getopt
+\end_layout
+
+\begin_layout Standard
+(описание: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://habrahabr.ru/blogs/nix_coding/55665/
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Структура программы предполагает считывание исходного файла и последовательную
+ обработку данного файла различными опциями, при этом запись файла или коррекция
+ способа представления файла является всего лишь опциями обработки.
+ Если результат обработки не был сохранен в файл - будет выведено сообщение
+ о ошибке.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+binopProj.cpp
+\end_layout
+
+\end_inset
+
+#include <stdio.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <math.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <getopt.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+<<includes>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<глобальные переменные>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<функции>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main( int argc, char ** argv ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ( argc < 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        use_message();
+\end_layout
+
+\begin_layout Plain Layout
+
+        return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+    };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    char * input_file_name = argv[1];
+\end_layout
+
+\begin_layout Plain Layout
+
+    <<считывание исходного файла>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    const char *short_options = "" <<однобуквенные опции>>;
+\end_layout
+
+\begin_layout Plain Layout
+
+    static struct option long_options[] = {
+\end_layout
+
+\begin_layout Plain Layout
+
+        <<длинные опции>>
+\end_layout
+
+\begin_layout Plain Layout
+
+    };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    int optIdx;
+\end_layout
+
+\begin_layout Plain Layout
+
+    bool result_saved = false;
+\end_layout
+
+\begin_layout Plain Layout
+
+    while (1){
+\end_layout
+
+\begin_layout Plain Layout
+
+       int opt_char;
+\end_layout
+
+\begin_layout Plain Layout
+
+       opt_char = getopt_long( 
+\end_layout
+
+\begin_layout Plain Layout
+
+            argc-1, &(argv[1]),  // Мы пропустили имя исходного файла
+\end_layout
+
+\begin_layout Plain Layout
+
+            short_options, long_options, &optIdx);
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( opt_char == -1 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+           break;  
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       result_saved = false;
+\end_layout
+
+\begin_layout Plain Layout
+
+       switch( opt_char ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           <<обработка опций комадной строки>>
+\end_layout
+
+\begin_layout Plain Layout
+
+           default:
+\end_layout
+
+\begin_layout Plain Layout
+
+               use_message();
+\end_layout
+
+\begin_layout Plain Layout
+
+               return(-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( ! result_saved ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        puts( "Результат должен быть сохранен.
+ Используете опцию -o .
+\backslash
+n"  );
+\end_layout
+
+\begin_layout Plain Layout
+
+        use_message();
+\end_layout
+
+\begin_layout Plain Layout
+
+        return(-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Сборка программы
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+build-script
+\end_layout
+
+\end_inset
+
+#!/bin/sh
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Plain Layout
+
+A=binopProj
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P=`pwd`
+\end_layout
+
+\begin_layout Plain Layout
+
+SRC=$P/temp/src
+\end_layout
+
+\begin_layout Plain Layout
+
+BIN=$P/temp/bin
+\end_layout
+
+\begin_layout Plain Layout
+
+INCL=$P/temp/include
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+EXE=$BIN/${A}.exe
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+LNW_notangle.sh ${A}.cpp $SRC/
+\end_layout
+
+\begin_layout Plain Layout
+
+INCLUDES="-I $P/external/INCLUDE  -I $P/external/INCLUDE/C_LIB -I $INCL
+ "
+\end_layout
+
+\begin_layout Plain Layout
+
+#COPT="-D_GLIBCXX_DEBUG -Wall -ggdb -O0"
+\end_layout
+
+\begin_layout Plain Layout
+
+#COPT="-g -ggdb"
+\end_layout
+
+\begin_layout Plain Layout
+
+#COPT="-O3"
+\end_layout
+
+\begin_layout Plain Layout
+
+g++ -D_GLIBCXX_DEBUG -g -ggdb -O0 -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cp
+p $SRC/lab34NProjLib.cpp -o $EXE.debug.exe
+\end_layout
+
+\begin_layout Plain Layout
+
+g++ -O3 -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp
+ -o $EXE
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+EXE=$BIN/${A}_windows.exe
+\end_layout
+
+\begin_layout Plain Layout
+
+i686-w64-mingw32-c++ 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp
+ -o $EXE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Чтение исходных данных
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+считывание исходного файла
+\end_layout
+
+\end_inset
+
+TLab34NProj inp_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+TLab34NProj::read( input_file_name, inp_proj );
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+includes
+\end_layout
+
+\end_inset
+
+#include <lab34NProjLib.hpp>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Разбор опций программы
+\end_layout
+
+\begin_layout Subsection
+Вывод справки
+\end_layout
+
+\begin_layout Standard
+Справку можно вызвать запустив программу без опций или с короткой опцией
+ -h
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"h"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+или с длинной опцией –help (определяем структуру описания длинных опций
+ struct option)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"help",          0, 0, 'h' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+в любом случае будет вызвана функция use_message.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'h':
+\end_layout
+
+\begin_layout Plain Layout
+
+    use_message();
+\end_layout
+
+\begin_layout Plain Layout
+
+    return(0);
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+определить которую просто
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+функции
+\end_layout
+
+\end_inset
+
+void use_message(){
+\end_layout
+
+\begin_layout Plain Layout
+
+    puts( 
+\end_layout
+
+\begin_layout Plain Layout
+
+"binopProj
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"программа для выполнения бинарных операций над файлами-проекциями нового
+ формата lab34
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"Формат вызова:
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"   binopProj <имя исходного файла> [опции обработки] -o <имя конечного
+ файла>
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"Список опций:
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+<<Справка>> );
+\end_layout
+
+\begin_layout Plain Layout
+
+};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Запись проекции в файл
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"o:"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"save",          1, 0, 'o' },
+\end_layout
+
+\begin_layout Plain Layout
+
+{"output",        1, 0, 'o' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"-o       [имя файла]
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--output [имя файла]
+\backslash
+t--- запись результата в файл
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--save   [имя файла]
+\backslash
+t--- запись результата в файл
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'o':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+    result_saved = true;
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::string out_filename( optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+    inp_proj.write( out_filename );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Определить множитель представления чисел
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"set-ka",          1, 0, 301 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--set-ka [число]
+\backslash
+t--- определить новый множитель представления чисел
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 301:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       double M = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%lf", &M ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора числа %s (опция set_ka)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       inp_proj.blk0.ka = M;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Преобразование температуры в радиации
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"temp2rad",          1, 0, 190 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--temp2rad [длина волны]
+\backslash
+t--- преобразовать температуры в радиации
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 190:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       double M = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%lf", &M ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора числа %s (опция temp2rad)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double T = inp_proj.geo[i][j] + 273.14;
+\end_layout
+
+\begin_layout Plain Layout
+
+              const double c1=1.1910427e-5;
+\end_layout
+
+\begin_layout Plain Layout
+
+              const double c2=1.4387752;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double wavenumber = 10000./M;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double A1 = c1 * wavenumber*wavenumber*wavenumber;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double A2 = exp(c2*wavenumber/T) - 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] = A1/A2;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Преобразование радиаций в температуру
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"rad2temp",          1, 0, 191 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--rad2temp [длина волны]
+\backslash
+t--- преобразовать радиацию в температуру
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 191:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       double M = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%lf", &M ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора числа %s (опция rad2temp)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Radiance = inp_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+              const double c1=1.1910427e-5;
+\end_layout
+
+\begin_layout Plain Layout
+
+              const double c2=1.4387752;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double wavenumber = 10000./M;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double A1 = c2 * wavenumber;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double A2 = log(1 + c1*wavenumber*wavenumber*wavenumber/Radiance
+ ) ;
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] = A1/A2 - 273.14;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Умножение проекции на число
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"M:"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"mult",          1, 0, 'M' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"-M      <число>
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--mult [число]
+\backslash
+t--- умножить значения проекции на число
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'M':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       double M = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%lf", &M ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора числа %s (опция mult)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] *= M;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Деление проекции на число
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"R:"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"relation",          1, 0, 'R' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"-R      <число>
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--relation [число]
+\backslash
+t--- поделить значения проекции на число
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'R':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       double M = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%lf", &M ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора числа %s (опция relation)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] /= M;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Вычитание проекции из проекции
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"d:"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"diffp",          1, 0, 'd' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"-d       [имя файла]
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--diffp [имя файла]
+\backslash
+t--- вычесть значение проекции
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+Вычитая проекцию из проекции мы делаем следующее:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\,\text{\text{\text{(точка отфильтрована на исходном изображении)}}}\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}<0\,\text{(точка отфильтрована на конечном изображеии)}\\
+T^{inp}-T^{arg}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}\eqslantgtr0
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'd':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                 continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] -= inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Суммирование проекции и проекции
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"s:"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"sump",          1, 0, 's' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"-s       [имя файла]
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--sump [имя файла]
+\backslash
+t--- прибавить значения взяв их из проекции
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\,\text{\text{\text{(точка отфильтрована на исходном изображении)}}}\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}<0\,\text{(точка отфильтрована на конечном изображеии)}\\
+T^{inp}+T^{arg}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}\eqslantgtr0
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 's':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                 continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] += inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Наложение маски на проекцию, дополнение маски проекции
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"cutover",          1, 0, 101 },
+\end_layout
+
+\begin_layout Plain Layout
+
+{"cutunder",          1, 0, 101 },
+\end_layout
+
+\begin_layout Plain Layout
+
+{"maskover",          1, 0, 101 },
+\end_layout
+
+\begin_layout Plain Layout
+
+{"maskunder",         1, 0, 102 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--maskover  [имя файла]
+\backslash
+t--- наложить на проекцию новую маску облачности
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--maskunder [имя файла]
+\backslash
+t--- дополнить маску облачности значениями из проекции
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\,\text{\text{\text{(точка отфильтрована на исходном изображении)}}}\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}<0\,\text{(точка отфильтрована на конечном изображеии)}\\
+T^{inp}+T^{arg}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}\eqslantgtr0
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 101:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\begin_layout Plain Layout
+
+case 102:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.raw[i][j] < 0 && inp_proj.raw[i][j] >= 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Суммирование проекции и числа
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"S:"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"sum",          1, 0, 'S' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"-S       [число]
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--sum  [число]
+\backslash
+t--- прибавить значение
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'S':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       double S = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%lf", &S ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора числа %s (опция sum)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] += S;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Линейное преобразование значений проекции
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+однобуквенные опции
+\end_layout
+
+\end_inset
+
+"L:"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"linear-trans-value",          1, 0, 'L' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"-L     x1,x2,y1,y2
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--linear-trans-value x1,x2,y1,y2
+\backslash
+t--- линейное преобразование значений проекции
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'L':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       double x1 = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       double x2 = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       double y1 = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       double y2 = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%lf,%lf,%lf,%lf", &x1, &x2, &y1, &y2 ) != 4
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора чисел %s (опция linear-trans-value)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double x = inp_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+              double new_x = y1+(x-x1)*(y2-y1)/(x2-x1);
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[i][j] = new_x;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Минимальное значение из двух проекций
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"min",               1, 0, 112 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--min       [имя файла]
+\backslash
+t--- минимальное значение из двух проекций
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 112:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                 continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.geo[i][j] < inp_proj.geo[i][j] ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.geo[i][j] = inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Замещение и дополнение температур одной проекции, температурами другой
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"tempover",           1, 0, 121 },
+\end_layout
+
+\begin_layout Plain Layout
+
+{"tempunder",          1, 0, 122 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--tempover  [имя файла]
+\backslash
+t--- наложить на проекцию температуры из другой проекции
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--tempunder [имя файла]
+\backslash
+t--- дополнить отсутствующие температуры одной проекции температурами из
+ другой
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+tempover
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+tempunder
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{arg}<0\\
+T^{arg}\rightarrow T^{out}, & C^{arg}\eqslantgtr0
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\,\,\wedge\,\,C^{arg}<0\\
+T^{inp}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\\
+T^{arg}\rightarrow T^{out}, & C^{arg}\eqslantgtr0\,\,\wedge\,\,C^{inp}<0
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 121:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.raw[i][j] >= 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.geo[i][j] = inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\begin_layout Plain Layout
+
+case 122:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp2_proj.raw[i][j] >= 0 && inp_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.geo[i][j] = inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Фильтрация данных по условию
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"filtrif",          1, 0, 'F' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--filtrif  [опции фильтрации]
+\backslash
+t--- фильтрация проекции
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                             
+\backslash
+t    [опции фильтрации] = 
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                             
+\backslash
+t       [имя файла],
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                             
+\backslash
+t       [less|large|lessoreq|largeoreq|less_soft|
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                             
+\backslash
+t         large_soft|lessoreq_soft|largeoreq_soft], 
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                             
+\backslash
+t       [limit (float double)],[mask value (5)]
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                    (пример:          --filtrif n1235_ir14.pro,large,-2,mask5)
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Данная операция имеет на один на четыре аргумента: имя проекции, используемой
+ для фильтрации, имя операции сравнения, величину порога, при достижении
+ которой производится фильтрация и код, которым будет отмечаться данные
+ не прошедшие фильтрацию.
+ В случае если в проекции используемой для фильтрации отсутствуют данные
+ (например в случае сбоя приема или по другой причине) возможно два режима
+ работы: жесткий, при котором отсутствие данных приводит к фильтрации пикселя
+ и мягкий, при котором отсутствие данных игнорируется (режим 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt soft}
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+жесткий режим
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}<0\\
+mask\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}\eqslantgtr0\,\,\wedge\,\,\left(T^{arg}\text{op}\,L\right)\\
+T^{inp}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}\eqslantgtr0\,\,\wedge\,\,\neg\left(T^{arg}\text{op}\,L\right)
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+щадящий (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt soft}
+\end_layout
+
+\end_inset
+
+) режим работы
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\\
+T^{inp}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}<0\\
+mask\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}\eqslantgtr0\,\,\wedge\,\,\left(T^{arg}\text{op}\,L\right)\\
+T^{inp}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\,C^{arg}\eqslantgtr0\,\,\wedge\,\,\neg\left(T^{arg}\text{op}\,L\right)
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'F':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string s(optarg);
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string filename;
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string operation;
+\end_layout
+
+\begin_layout Plain Layout
+
+       double limit;
+\end_layout
+
+\begin_layout Plain Layout
+
+       long mask;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string filtrif_options[100];
+\end_layout
+
+\begin_layout Plain Layout
+
+       int filtrif_options_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( int k = 0; k < 100; k++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          filtrif_options[k] = get_strhead( s, "," );  
+\end_layout
+
+\begin_layout Plain Layout
+
+          filtrif_options_num = k + 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+          s = get_strtail( s, "," );
+\end_layout
+
+\begin_layout Plain Layout
+
+          if( s.size() == 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+             break;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       int filtr_nums = filtrif_options_num/3;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string mask_str  = filtrif_options[filtrif_options_num-1];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj inp_proj_filtr;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, inp_proj_filtr );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj_filtr.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj_filtr.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+             inp_proj_filtr.raw[i][j] = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( int k = 0; k < filtr_nums; k++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           std::string fname_str  = filtrif_options[k*3];
+\end_layout
+
+\begin_layout Plain Layout
+
+           std::string operand_str  = filtrif_options[k*3+1];
+\end_layout
+
+\begin_layout Plain Layout
+
+           std::string operand_limit  = filtrif_options[k*3+2];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           <<Разбор аргументов filtrif>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           //std::cout << "filename=<"   << filename  << "> " << 
+\end_layout
+
+\begin_layout Plain Layout
+
+           //      "operations=<" << operation << "> " <<
+\end_layout
+
+\begin_layout Plain Layout
+
+           //      "limit=<"      << limit     << "> " <<
+\end_layout
+
+\begin_layout Plain Layout
+
+           //      "mask=<"       << mask      << "> " << "
+\backslash
+n";
+\end_layout
+
+\begin_layout Plain Layout
+
+           int opt_code = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( operand_str.find( "less"     )  != std::string::npos ) opt_code
+ = 4;
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( operand_str.find( "lessoreq" )  != std::string::npos ) opt_code
+ = 8;
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( operand_str.find( "large"    )  != std::string::npos ) opt_code
+ = 12;
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( operand_str.find( "largeoreq" ) != std::string::npos ) opt_code
+ = 16;
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( operand_str.find( "soft"     )  != std::string::npos ) opt_code
+ += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+           if ( opt_code  < 4 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+               std::cout <<  "Операция " << operation << " в строке " <<
+ operand_str
+\end_layout
+
+\begin_layout Plain Layout
+
+                       << " указана неверно" << "
+\backslash
+n";
+\end_layout
+
+\begin_layout Plain Layout
+
+               return 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+           inp2_proj.read( filename, inp2_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+           for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 if( inp_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                     continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                 }
+\end_layout
+
+\begin_layout Plain Layout
+
+                 if( inp2_proj.raw[i][j] < 0 ) { 
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( (opt_code % 2) == 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                         inp_proj_filtr.raw[i][j] = -mask;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                 }
+\end_layout
+
+\begin_layout Plain Layout
+
+                 else {
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( inp_proj_filtr.raw[i][j] >= 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                        continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     double b = inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     switch( ( opt_code / 4 ) * 4 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                         case 4: if( b < limit  ) 
+\end_layout
+
+\begin_layout Plain Layout
+
+                                   inp_proj_filtr.raw[i][j] = -mask; 
+\end_layout
+
+\begin_layout Plain Layout
+
+                               else inp_proj_filtr.raw[i][j] = 0;  
+\end_layout
+
+\begin_layout Plain Layout
+
+                               break;; 
+\end_layout
+
+\begin_layout Plain Layout
+
+                         case 8: if( b <= limit )
+\end_layout
+
+\begin_layout Plain Layout
+
+                                  inp_proj_filtr.raw[i][j] = -mask;
+\end_layout
+
+\begin_layout Plain Layout
+
+                               else inp_proj_filtr.raw[i][j] = 0;  
+\end_layout
+
+\begin_layout Plain Layout
+
+                               break;; 
+\end_layout
+
+\begin_layout Plain Layout
+
+                         case 12: if( b > limit )  
+\end_layout
+
+\begin_layout Plain Layout
+
+                                   inp_proj_filtr.raw[i][j] = -mask; 
+\end_layout
+
+\begin_layout Plain Layout
+
+                                else inp_proj_filtr.raw[i][j] = 0;  
+\end_layout
+
+\begin_layout Plain Layout
+
+                                break;; 
+\end_layout
+
+\begin_layout Plain Layout
+
+                         case 16: if( b >= limit ) 
+\end_layout
+
+\begin_layout Plain Layout
+
+                                   inp_proj_filtr.raw[i][j] = -mask;
+\end_layout
+
+\begin_layout Plain Layout
+
+                                else inp_proj_filtr.raw[i][j] = 0;  
+\end_layout
+
+\begin_layout Plain Layout
+
+                                break;; 
+\end_layout
+
+\begin_layout Plain Layout
+
+                     } // case
+\end_layout
+
+\begin_layout Plain Layout
+
+                 }  // if
+\end_layout
+
+\begin_layout Plain Layout
+
+              } // j 
+\end_layout
+
+\begin_layout Plain Layout
+
+           } // i
+\end_layout
+
+\begin_layout Plain Layout
+
+       }// k
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj_filtr.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj_filtr.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+             if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+             inp_proj.raw[i][j] = inp_proj_filtr.raw[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Данная процедура требует разбора значений четырех операндов и проверки переданны
+х значений.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+includes
+\end_layout
+
+\end_inset
+
+#include <iostream>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Разбор аргументов filtrif
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Выделяем имя файла
+\end_layout
+
+\begin_layout Plain Layout
+
+filename  = fname_str;  
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Выделяем вид операции
+\end_layout
+
+\begin_layout Plain Layout
+
+operation = operand_str;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Выделяем величину порога фильтрации
+\end_layout
+
+\begin_layout Plain Layout
+
+std::string limit_str = operand_limit; 
+\end_layout
+
+\begin_layout Plain Layout
+
+if( parseDouble( limit_str.c_str(), &limit ) != 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::string s10 = 
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string("Ошибка преобразования величины предела ") + limit_str
+ + 
+\end_layout
+
+\begin_layout Plain Layout
+
+              " в число (в строке " + optarg + ")";
+\end_layout
+
+\begin_layout Plain Layout
+
+    puts( s10.c_str() );
+\end_layout
+
+\begin_layout Plain Layout
+
+    exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// Определяем значение, которым будет произовдится маскирование
+\end_layout
+
+\begin_layout Plain Layout
+
+std::string mask_str2 = mask_str;
+\end_layout
+
+\begin_layout Plain Layout
+
+if( mask_str2.substr( 0, 4 ) != "mask" ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::string s10 = 
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string("Ошибка формата маски") + mask_str2 + 
+\end_layout
+
+\begin_layout Plain Layout
+
+              " должен начитаться с mask (в строке " + optarg + ")";
+\end_layout
+
+\begin_layout Plain Layout
+
+    puts( s10.c_str() );
+\end_layout
+
+\begin_layout Plain Layout
+
+    exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+mask_str2 = mask_str2.substr(4, std::string::npos );
+\end_layout
+
+\begin_layout Plain Layout
+
+      
+\end_layout
+
+\begin_layout Plain Layout
+
+if( parseLong( mask_str2.c_str(), &mask ) != 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::string s10 = 
+\end_layout
+
+\begin_layout Plain Layout
+
+       std::string("Ошибка преобразования маски ") + mask_str2 + 
+\end_layout
+
+\begin_layout Plain Layout
+
+              " в число (в строке " + optarg + ")";
+\end_layout
+
+\begin_layout Plain Layout
+
+    puts( s10.c_str() );
+\end_layout
+
+\begin_layout Plain Layout
+
+    exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph*
+Функции работы со строками
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes pld
+\end_inset
+
+Голова
+\begin_inset Quotes prd
+\end_inset
+
+ и 
+\begin_inset Quotes pld
+\end_inset
+
+хвост
+\begin_inset Quotes prd
+\end_inset
+
+ строки 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tt s
+\end_layout
+
+\end_inset
+
+ относительно разделителя 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tt delim
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+функции
+\end_layout
+
+\end_inset
+
+std::string get_strhead( const std::string& s, const std::string& delim
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+       int i = s.find( delim );
+\end_layout
+
+\begin_layout Plain Layout
+
+       return s.substr( 0, i );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+std::string get_strtail( const std::string& s, const std::string& delim
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+       int i = s.find( delim );
+\end_layout
+
+\begin_layout Plain Layout
+
+       if ( i == std::string::npos ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           return std::string("");
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       return s.substr( i+1, std::string::npos );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Преобразование строки в 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tt double
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tt long
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Если преобразование удалось — возвращает ноль.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+функции
+\end_layout
+
+\end_inset
+
+int parseLongDouble( const char *buffer, double *ret_double, long*ret_long
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    const char *begin;
+\end_layout
+
+\begin_layout Plain Layout
+
+    char *end;
+\end_layout
+
+\begin_layout Plain Layout
+
+    double d;
+\end_layout
+
+\begin_layout Plain Layout
+
+    long l;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    begin = buffer;
+\end_layout
+
+\begin_layout Plain Layout
+
+    while( *begin && isspace(*begin) ) begin++;
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( ret_double ) 
+\end_layout
+
+\begin_layout Plain Layout
+
+       d = strtod( begin, &end );
+\end_layout
+
+\begin_layout Plain Layout
+
+    else 
+\end_layout
+
+\begin_layout Plain Layout
+
+       l = strtol( begin, &end, 10 );
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( begin == end ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        return 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    else {
+\end_layout
+
+\begin_layout Plain Layout
+
+        while( *end && isspace(*end) ) end++;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if( *end ) return 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( ret_double ) 
+\end_layout
+
+\begin_layout Plain Layout
+
+        *ret_double = d;
+\end_layout
+
+\begin_layout Plain Layout
+
+    else if ( ret_long ) 
+\end_layout
+
+\begin_layout Plain Layout
+
+        *ret_long = l;
+\end_layout
+
+\begin_layout Plain Layout
+
+    return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+int parseLong( const char *buffer, long *ret_long ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    return parseLongDouble( buffer, NULL, ret_long );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+int parseDouble( const char *buffer, double *ret_double ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    return parseLongDouble( buffer, ret_double, NULL );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+includes
+\end_layout
+
+\end_inset
+
+#include <stdlib.h>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Замена значений масок
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"changemask",          1, 0, 'C' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--changemask  <from>,<to>
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"     (пример:          ----changemask -2,-16 
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'C':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       int mask1 = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int mask2 = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%d,%d", &mask1, &mask2 ) != 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора ЧИСЛОxЧИСЛО %s (опция changemask)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] == mask1 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                 inp_proj.raw[i][j] = mask2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Абсолютная величина
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"abs",          0, 0, 'A' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--abs  
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"     (пример:          --abs 
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'A':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.geo[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                inp_proj.geo[i][j] = -1*inp_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Подсчет процента незамаскированных значений в бегущем окне
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"freepersent",          1, 0, 'P' },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--freepersent  sizeX,sizeY[,step]
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"     (пример:          ----freepersent 5,5 
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 'P':
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       int sizeX = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int sizeY = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int step = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%d,%d,%d", &sizeX, &sizeY, &step ) < 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора ЧИСЛОxЧИСЛО %s (опция freepersent)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i1 = i  - sizeY/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i2 = i1 + sizeY;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j1 = j  - sizeX/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j2 = j1 + sizeX;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int n_free = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int n = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              for(    int i3 = i1; i3 < i2; i3 += step ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 for( int j3 = j1; j3 < j2; j3 += step    ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                     //printf( "i=%d j=%d %d %d n_free=%d
+\backslash
+n", i, j, i3, j3, n_free );
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if ( i3 < 0 || i3 >= inp_proj.lines() ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if ( j3 < 0 || j3 >= inp_proj.cols() ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     n += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( inp_proj.raw[i3][j3] >= 0 ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+                        n_free += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                 }
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              //printf( "i=%d j=%d %d %d n_free=%d
+\backslash
+n", i, j, 0, 0, n_free );
+\end_layout
+
+\begin_layout Plain Layout
+
+              out_proj.raw[i][j] = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              out_proj.geo[i][j] = (100.*n_free)/n;
+\end_layout
+
+\begin_layout Plain Layout
+
+              //inp_proj.geo[i][j] = n_free;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( out_proj, inp_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Медианное осреднение с использованием прямоугольника
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"median-rect",          1, 0, 201 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--median-rect [число]x[число][,шаг]
+\backslash
+t--- медианное осреднение
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 201:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_x = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_y = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int step = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rc = sscanf( optarg, "%dx%d,%d", &rect_x, &rect_y, &step );
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( rc == 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              step = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       else if ( rc == 3 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              // step = step
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       else {
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора ЧИСЛОxЧИСЛО %s (опция median-rect)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       
+\end_layout
+
+\begin_layout Plain Layout
+
+       //printf( "median rect_x=%d rect_y=%d
+\backslash
+n", rect_x, rect_y );
+\end_layout
+
+\begin_layout Plain Layout
+
+       static double med_buf[5000*5000];
+\end_layout
+
+\begin_layout Plain Layout
+
+       static double med_buf2[5000*5000];
+\end_layout
+
+\begin_layout Plain Layout
+
+       int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( rect_x != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+             for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <<стандартное создание отсортированного массива>>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <<получение медианы и сохранение результата>>
+\end_layout
+
+\begin_layout Plain Layout
+
+             }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       else { //rect_x == 1
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j += step ){
+\end_layout
+
+\begin_layout Plain Layout
+
+             for( unsigned int i = 0; i < inp_proj.lines(); i += step ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 if( i == 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                     <<стандартное создание отсортированного массива>>
+\end_layout
+
+\begin_layout Plain Layout
+
+                 }
+\end_layout
+
+\begin_layout Plain Layout
+
+                 else {
+\end_layout
+
+\begin_layout Plain Layout
+
+                     int i1 = i - rect_y/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     int i2 = i1 + rect_y;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     double value_to_delete = -99999.;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     double value_to_add = -99999.;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( i1 - 1 >= 0 && i1 - 1 < inp_proj.lines() 
+\end_layout
+
+\begin_layout Plain Layout
+
+                         && inp_proj.raw[i1-1][j] >= 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                        value_to_delete = inp_proj.geo[i1-1][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( i2 - 1 >= 0 && i2 - 1 < inp_proj.lines() 
+\end_layout
+
+\begin_layout Plain Layout
+
+                         && inp_proj.raw[i2-1][j] >= 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                        value_to_add = inp_proj.geo[i2-1][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     int k2 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     for( int k = 0; k < med_num; k++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                        if( value_to_delete != -99999.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+                            && med_buf[k] == value_to_delete ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                            value_to_delete = -99999.;
+\end_layout
+
+\begin_layout Plain Layout
+
+                            continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                        }
+\end_layout
+
+\begin_layout Plain Layout
+
+                        if( value_to_add != -99999.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+                            && med_buf[k] > value_to_add ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                            med_buf2[k2] = value_to_add;
+\end_layout
+
+\begin_layout Plain Layout
+
+                            k2++;
+\end_layout
+
+\begin_layout Plain Layout
+
+                            value_to_add = -99999.;
+\end_layout
+
+\begin_layout Plain Layout
+
+                        }
+\end_layout
+
+\begin_layout Plain Layout
+
+                        med_buf2[k2] = med_buf[k];
+\end_layout
+
+\begin_layout Plain Layout
+
+                        k2++;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( value_to_add != -99999.
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                        med_buf2[k2] = value_to_add;
+\end_layout
+
+\begin_layout Plain Layout
+
+                        k2++;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if(0){ // проверка
+\end_layout
+
+\begin_layout Plain Layout
+
+                        <<стандартное создание отсортированного массива>>
+\end_layout
+
+\begin_layout Plain Layout
+
+                        if( k2 != med_num ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                           printf( "Error, %d %d ", i, j );
+\end_layout
+
+\begin_layout Plain Layout
+
+                           exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+                        }
+\end_layout
+
+\begin_layout Plain Layout
+
+                        for( int k = 0; k < med_num; k++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                           if( med_buf[k] != med_buf2[k] ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                              printf( "Error, %d %d ", i, j );
+\end_layout
+
+\begin_layout Plain Layout
+
+                              exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+                           }
+\end_layout
+
+\begin_layout Plain Layout
+
+                        }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                 }
+\end_layout
+
+\begin_layout Plain Layout
+
+                 <<получение медианы и сохранение результата>>
+\end_layout
+
+\begin_layout Plain Layout
+
+             }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( out_proj, inp_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+стандартное создание отсортированного массива
+\end_layout
+
+\end_inset
+
+med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+int i1 = i - rect_y/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+int i2 = i1 + rect_y;
+\end_layout
+
+\begin_layout Plain Layout
+
+int j1 = j  - rect_x/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+int j2 = j1 + rect_x;
+\end_layout
+
+\begin_layout Plain Layout
+
+if( i1 < 0 ) i1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+if( i2 > inp_proj.lines() ) i2 = inp_proj.lines();
+\end_layout
+
+\begin_layout Plain Layout
+
+if( j1 < 0 ) j1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+if( j2 > inp_proj.cols() )  j2 = inp_proj.cols();
+\end_layout
+
+\begin_layout Plain Layout
+
+for( unsigned int i3 = i1; i3 < i2; i3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    for( unsigned int j3 = j1; j3 < j2; j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        if( inp_proj.raw[i3][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+        med_buf[med_num] = inp_proj.geo[i3][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+        med_num += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+qsort( med_buf, med_num, sizeof(med_buf[0]), double_compare );
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+получение медианы и сохранение результата
+\end_layout
+
+\end_inset
+
+if( med_num > 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( med_num % 2 == 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        out_proj.geo[i][j] = (med_buf[med_num/2] + med_buf[med_num/2-1])/2.;
+\end_layout
+
+\begin_layout Plain Layout
+
+        out_proj.raw[i][j] = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( med_num % 2 == 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        out_proj.geo[i][j] = med_buf[med_num/2];
+\end_layout
+
+\begin_layout Plain Layout
+
+        out_proj.raw[i][j] = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+функции
+\end_layout
+
+\end_inset
+
+int double_compare( const void *p_a, const void *p_b ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    double a = *(const double*)p_a;
+\end_layout
+
+\begin_layout Plain Layout
+
+    double b = *(const double*)p_b;
+\end_layout
+
+\begin_layout Plain Layout
+
+    if(a < b) return -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    if(a > b) return 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+    return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Расчет разброса по прямоугольнику
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"razbros-rect",          1, 0, 209 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--razbros-rect [число]x[число]
+\backslash
+t--- разброс
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 209:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_x = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_y = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%dx%d", &rect_x, &rect_y ) != 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора ЧИСЛОxЧИСЛО %s (опция razbros-rect)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       printf( "razbros rect_x=%d rect_y=%d
+\backslash
+n", rect_x, rect_y );
+\end_layout
+
+\begin_layout Plain Layout
+
+       static double med_buf[5000*5000];
+\end_layout
+
+\begin_layout Plain Layout
+
+       int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i1 = i - rect_y/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i2 = i1 + rect_y;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j1 = j  - rect_x/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j2 = j1 + rect_x;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i1 < 0 ) i1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i2 > inp_proj.lines() ) i2 = inp_proj.lines();
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j1 < 0 ) j1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j2 > inp_proj.cols() )  j2 = inp_proj.cols();
+\end_layout
+
+\begin_layout Plain Layout
+
+              double min_f = 999999;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double max_f = 999999;
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( unsigned int i3 = i1; i3 < i2; i3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                  for( unsigned int j3 = j1; j3 < j2; j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( inp_proj.raw[i3][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if ( min_f == 999999  || inp_proj.geo[i3][j3] < min_f
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                         min_f = inp_proj.geo[i3][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if ( max_f == 999999  || inp_proj.geo[i3][j3] > max_f
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                         max_f = inp_proj.geo[i3][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     }
+\end_layout
+
+\begin_layout Plain Layout
+
+                  }
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( max_f != 999999 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 out_proj.geo[i][j] = max_f - min_f;
+\end_layout
+
+\begin_layout Plain Layout
+
+                 out_proj.raw[i][j] = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( out_proj, inp_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Расчет разброса по прямоугольнику (сигма)
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"sigma-rect",          1, 0, 215 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--sigma-rect [число]x[число]
+\backslash
+t--- разброс
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 215:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_x = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_y = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%dx%d", &rect_x, &rect_y ) != 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора ЧИСЛОxЧИСЛО %s (опция sigma-rect)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       printf( "sigma rect_x=%d rect_y=%d
+\backslash
+n", rect_x, rect_y );
+\end_layout
+
+\begin_layout Plain Layout
+
+       // static double med_buf[5000*5000];
+\end_layout
+
+\begin_layout Plain Layout
+
+       // int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i1 = i - rect_y/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i2 = i1 + rect_y;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j1 = j  - rect_x/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j2 = j1 + rect_x;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i1 < 0 ) i1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i2 > inp_proj.lines() ) i2 = inp_proj.lines();
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j1 < 0 ) j1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j2 > inp_proj.cols() )  j2 = inp_proj.cols();
+\end_layout
+
+\begin_layout Plain Layout
+
+              double sum_f = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double num_f = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double sum2_f = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( unsigned int i3 = i1; i3 < i2; i3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                  for( unsigned int j3 = j1; j3 < j2; j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( inp_proj.raw[i3][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     sum_f += inp_proj.geo[i3][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     num_f += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  }
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( unsigned int i3 = i1; i3 < i2; i3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                  for( unsigned int j3 = j1; j3 < j2; j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( inp_proj.raw[i3][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     sum2_f += (inp_proj.geo[i3][j3] - sum_f/num_f)*
+\end_layout
+
+\begin_layout Plain Layout
+
+                               (inp_proj.geo[i3][j3] - sum_f/num_f);
+\end_layout
+
+\begin_layout Plain Layout
+
+                     //num_f += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  }
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( num_f > 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                  out_proj.geo[i][j] = sqrt(sum2_f / num_f);
+\end_layout
+
+\begin_layout Plain Layout
+
+                  out_proj.raw[i][j] = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( out_proj, inp_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Осреднение с использованием прямоугольника в качестве бегущего окна
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"average-rect",          1, 0, 202 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--average-rect [число]x[число]
+\backslash
+t--- осреднение
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 202:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_x = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_y = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%dx%d", &rect_x, &rect_y ) != 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора ЧИСЛОxЧИСЛО %s (опция median-rect)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       //printf( "median rect_x=%d rect_y=%d
+\backslash
+n", rect_x, rect_y );
+\end_layout
+
+\begin_layout Plain Layout
+
+       static double med_buf[5000*5000];
+\end_layout
+
+\begin_layout Plain Layout
+
+       int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( unsigned int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i1 = i - rect_y/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i2 = i1 + rect_y;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j1 = j  - rect_x/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j2 = j1 + rect_x;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i1 < 0 ) i1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i2 > inp_proj.lines() ) i2 = inp_proj.lines();
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j1 < 0 ) j1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j2 > inp_proj.cols() )  j2 = inp_proj.cols();
+\end_layout
+
+\begin_layout Plain Layout
+
+              double s = 0.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int n = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( unsigned int i3 = i1; i3 < i2; i3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                  for( unsigned int j3 = j1; j3 < j2; j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( inp_proj.raw[i3][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     s += inp_proj.geo[i3][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     n += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  }
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( n > 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                  out_proj.geo[i][j] = s/n;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  out_proj.raw[i][j] = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( out_proj, inp_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Осреднение по строке
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"print-median-row",          0, 0, 203 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--print-median-row 
+\backslash
+t--- осреднение по строке
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 203:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        static double med_buf[5000*5000];
+\end_layout
+
+\begin_layout Plain Layout
+
+        int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+        TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+        for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+           for( unsigned int j3 = 0; j3 < inp_proj.cols(); j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              med_buf[med_num] = inp_proj.geo[i][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+              med_num += 1;                     
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           qsort( med_buf, med_num, sizeof(med_buf[0]), double_compare );
+\end_layout
+
+\begin_layout Plain Layout
+
+           //printf( "%d %d
+\backslash
+n", i, med_num );
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( med_num > 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( med_num % 2 == 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 a=(med_buf[med_num/2] + med_buf[med_num/2-1])/2.;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( med_num % 2 == 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 a=med_buf[med_num/2];
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q25= med_buf[med_num/4];
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q75= med_buf[3*med_num/4];
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q40= med_buf[med_num*4/10];
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q60= med_buf[med_num*6/10];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+              printf( "line= % 5d Q25= %lf Q40= %lf MED= %lf Q60= %lf Q75=
+ %lf N=%d
+\backslash
+n", 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+                                i,     Q25,     Q40,     a,       Q60, 
+    Q75, med_num );
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( unsigned int j3 = 0; j3 < inp_proj.cols(); j3++ ){   
+                                                         out_proj.geo[i][j3]
+ = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+                 out_proj.raw[i][j3] = 1;                              
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+        TLab34NProj::copyFromTo( out_proj, inp_proj ); 
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Осреднение по столбцу
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"print-median-column",          0, 0, 204 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--print-median-column 
+\backslash
+t--- осреднение по столбцу
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 204:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        static double med_buf[5000*5000];
+\end_layout
+
+\begin_layout Plain Layout
+
+        int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+        TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+        for( unsigned int j3 = 0; j3 < inp_proj.cols(); j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+           for( unsigned int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( inp_proj.raw[i][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              med_buf[med_num] = inp_proj.geo[i][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+              med_num += 1;                     
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           qsort( med_buf, med_num, sizeof(med_buf[0]), double_compare );
+\end_layout
+
+\begin_layout Plain Layout
+
+           //printf( "%d %d
+\backslash
+n", i, med_num );
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( med_num > 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( med_num % 2 == 0 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 a=(med_buf[med_num/2] + med_buf[med_num/2-1])/2.;
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( med_num % 2 == 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                 a=med_buf[med_num/2];
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q25= med_buf[med_num/4];
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q75= med_buf[3*med_num/4];
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q40= med_buf[med_num*4/10];
+\end_layout
+
+\begin_layout Plain Layout
+
+              double Q60= med_buf[med_num*6/10];
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+              printf( "col= % 5d Q25= %lf Q40= %lf MED= %lf Q60= %lf Q75=
+ %lf N=%d
+\backslash
+n", 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+                              j3,     Q25,     Q40,     a,       Q60,  
+   Q75, med_num );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( unsigned int i = 0; i < inp_proj.lines(); i++ ){     
+                                                         out_proj.geo[i][j3]
+ = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+                 out_proj.raw[i][j3] = 1;                              
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+        TLab34NProj::copyFromTo( out_proj, inp_proj ); 
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Сдвиг проекции
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"shift",          1, 0, 205 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--shift [число X],[число Y] 
+\backslash
+t--- сдвигуть проекцию вправо на X и вверх на Y
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 205:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              out_proj.raw[i][j] = -1;
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       int X = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       int Y = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%d,%d", &X, &Y ) != 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора числа %s (опция shift 10,5)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i1 = i + Y;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j1 = j + X;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i1 < 0 || i1 >= inp_proj.lines() ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j1 < 0 || j1 >= inp_proj.cols() ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+              out_proj.geo[i1][j1] = inp_proj.geo[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+              out_proj.raw[i1][j1] = inp_proj.raw[i][j];
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( out_proj, inp_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Квадратичное осреднение с использованием горизонтального (вертикального)
+ отрезка
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"MNK-h",          1, 0, 206 },
+\end_layout
+
+\begin_layout Plain Layout
+
+{"MNK-v",          1, 0, 207 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--MNK-h [число]
+\backslash
+t--- квадратиное (МНК) осреднение по горизонтальному отрезку 
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"--MNK-v [число]
+\backslash
+t--- квадратиное (МНК) осреднение по горизонтальному отрезку 
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 206:
+\end_layout
+
+\begin_layout Plain Layout
+
+case 207:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj out_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( inp_proj, out_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+       int rect_size = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( sscanf( optarg, "%d", &rect_size ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          fprintf( stderr, "Ошибка разбора ЧИСЛО %s (опция --MNK-v, --MNK-h)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+       };
+\end_layout
+
+\begin_layout Plain Layout
+
+       //printf( " %s rect_size=%d
+\backslash
+n", (opt_char == 206 ? "MNK-h" : "MNK-v" ), rect_size );
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       for( int i = 0; i < inp_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+          for( int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              int med_num = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int rect_x = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int rect_y = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( opt_char == 206 ) rect_x = rect_size;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( opt_char == 207 ) rect_y = rect_size;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i1 = i - rect_y/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int i2 = i1 + rect_y;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j1 = j  - rect_x/2;
+\end_layout
+
+\begin_layout Plain Layout
+
+              int j2 = j1 + rect_x;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i1 < 0 ) i1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( i2 > inp_proj.lines() ) i2 = inp_proj.lines();
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j1 < 0 ) j1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              if( j2 > inp_proj.cols() )  j2 = inp_proj.cols();
+\end_layout
+
+\begin_layout Plain Layout
+
+              double b1 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double b2 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double b3 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a11 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a12 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a13 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a21 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a22 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a23 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a31 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a32 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a33 = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+              for( int i3 = i1; i3 < i2; i3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                  for( int j3 = j1; j3 < j2; j3++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( inp_proj.raw[i3][j3] < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     int x = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     double y = inp_proj.geo[i3][j3];
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( opt_char == 206 ) x = j3-j;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if( opt_char == 207 ) x = i3-i;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     b1 += y;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     b2 += y*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     b3 += y*x*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a11 += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a12 += x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a13 += x*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a21 += x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a22 += x*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a23 += x*x*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a31 += x*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a32 += x*x*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                     a33 += x*x*x*x;
+\end_layout
+
+\begin_layout Plain Layout
+
+                  }
+\end_layout
+
+\begin_layout Plain Layout
+
+              }
+\end_layout
+
+\begin_layout Plain Layout
+
+              double D  = a11*(a23*a32-a22*a33)+a12*(a21*a33-a23*a31)+a13*(a22*a
+31-a21*a32);
+\end_layout
+
+\begin_layout Plain Layout
+
+              double D1 = a12*(a33*b2-a23*b3)+a13*(a22*b3-a32*b2)+(a23*a32-a22*a
+33)*b1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double D2 = -1*(a11*(a33*b2-a23*b3)+a13*(a21*b3-a31*b2)+(a23*a31-a
+21*a33)*b1);
+\end_layout
+
+\begin_layout Plain Layout
+
+              double D3 = a11*(a32*b2-a22*b3)+a12*(a21*b3-a31*b2)+(a22*a31-a21*a
+32)*b1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              double a = D1/D;
+\end_layout
+
+\begin_layout Plain Layout
+
+              out_proj.geo[i][j] = a;
+\end_layout
+
+\begin_layout Plain Layout
+
+              // printf( "%d %d %lf
+\backslash
+n", i, j, a );
+\end_layout
+
+\begin_layout Plain Layout
+
+          }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       TLab34NProj::copyFromTo( out_proj, inp_proj );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Subsection
+Инициализация значений строк из текстового файла 
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"row-from-file",          1, 0, 208 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--row-from-file [имя файла]
+\backslash
+t--- инициализация значений в строках из 
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                           
+\backslash
+tтекстового файла формата <номер строки> <значение>
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 208:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       char *txt_file_name = optarg;
+\end_layout
+
+\begin_layout Plain Layout
+
+       FILE *txt_file = fopen( txt_file_name, "r" );
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( txt_file == NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           perror( txt_file_name );
+\end_layout
+
+\begin_layout Plain Layout
+
+           exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       static char buf[2000];
+\end_layout
+
+\begin_layout Plain Layout
+
+       while( fgets( buf, 1998, txt_file ) != NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           int row = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+           double value = 0.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+           char *p = buf;
+\end_layout
+
+\begin_layout Plain Layout
+
+           while( *p != '
+\backslash
+000' && isspace(*p) ){
+\end_layout
+
+\begin_layout Plain Layout
+
+               p++;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( *p == '
+\backslash
+000' ){
+\end_layout
+
+\begin_layout Plain Layout
+
+               continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( sscanf( p, "%d %lf", &row, &value ) != 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              fprintf( stderr, "Ошибка строки <%s> файла <%s> (ожидается
+ 3 201.1 )
+\backslash
+n", buf, txt_file_name );
+\end_layout
+
+\begin_layout Plain Layout
+
+              exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( row < 0 || row >= inp_proj.lines() ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              fprintf( stderr, 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+                  "Неверное значение номера строки в файле файла <%s> (указано
+ %d)
+\backslash
+n", txt_file_name, row );
+\end_layout
+
+\begin_layout Plain Layout
+
+              continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           for( int j = 0; j < inp_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.raw[row][j] = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[row][j] = value;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"col-from-file",          1, 0, 210 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+"--col-from-file [имя файла]
+\backslash
+t--- инициализация значений в колонках из 
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+"                           
+\backslash
+tтекстового файла формата <номер колонки> <значение>
+\backslash
+n"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 210:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+       char *txt_file_name = optarg;
+\end_layout
+
+\begin_layout Plain Layout
+
+       FILE *txt_file = fopen( txt_file_name, "r" );
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( txt_file == NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           perror( txt_file_name );
+\end_layout
+
+\begin_layout Plain Layout
+
+           exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+       static char buf[2000];
+\end_layout
+
+\begin_layout Plain Layout
+
+       while( fgets( buf, 1998, txt_file ) != NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+           int col = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+           double value = 0.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+           char *p = buf;
+\end_layout
+
+\begin_layout Plain Layout
+
+           while( *p != '
+\backslash
+000' && isspace(*p) ){
+\end_layout
+
+\begin_layout Plain Layout
+
+               p++;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( *p == '
+\backslash
+000' ){
+\end_layout
+
+\begin_layout Plain Layout
+
+               continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( sscanf( p, "%d %lf", &col, &value ) != 2 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              fprintf( stderr, "Ошибка строки <%s> файла <%s> (ожидается
+ 3 201.1 )
+\backslash
+n", buf, txt_file_name );
+\end_layout
+
+\begin_layout Plain Layout
+
+              exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           if( col < 0 || col >= inp_proj.cols() ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              fprintf( stderr, 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+                  "Неверное значение номера строки в файле файла <%s> (указано
+ %d)
+\backslash
+n", txt_file_name, col );
+\end_layout
+
+\begin_layout Plain Layout
+
+              continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+           for( int j = 0; j < inp_proj.lines(); j++ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.raw[j][col] = 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+              inp_proj.geo[j][col] = value;
+\end_layout
+
+\begin_layout Plain Layout
+
+           }
+\end_layout
+
+\begin_layout Plain Layout
+
+       }
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

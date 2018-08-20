@@ -1,0 +1,2327 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+\noweboptions{longchunks,smallcode}
+\lstset { 
+basicstyle=\footnotesize,
+breaklines=true,
+breakatwhitespace=true,
+resetmargins=true,
+xleftmargin=3em
+}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format pdf
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+binopProj
+\begin_inset Newline newline
+\end_inset
+
+Бинарные операции над новыми проекциями формата lab34 
+\end_layout
+
+\begin_layout Author
+Сергей Дьяков
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Введение
+\end_layout
+
+\begin_layout Standard
+Простая программа осуществляющая бинарные операции (сложение, вычитание,
+ умножение на число, деление на число и т.п.) над новыми проекцими формата
+ lab34.
+\end_layout
+
+\begin_layout Standard
+Программа должна быть написана на языке c++ с использованием библиотеки
+ lab34NProjLib
+\end_layout
+
+\begin_layout Section
+Формат вызова программы
+\end_layout
+
+\begin_layout Standard
+Арифметические операции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p_{1}-p_{2}\rightarrow p_{3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $p_{1}+p_{2}\rightarrow p_{3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Наложение маски
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset Formula $\begin{cases}
+cloud(p_{2}), & cloud(p_{2})\\
+\overline{cloud(p_{2})}, & p_{1}
+\end{cases}\rightarrow p_{3}\equiv p_{1}filterby\, p_{2}\rightarrow p_{3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Фильтрация
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p_{1}filterby\,(p_{2}>limit)?-5$
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "language=bash"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --diffp mt21344_ir2.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir12.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --sump mt21344_ir12.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir2_new.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --sum 10 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir1_p10_new.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro -maskfrom mt21344_vis_filtered.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir1_filtered.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+binopProj mt21344_ir1.pro --filterif mt21344_ir1.pro,less,2,mask7 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+    -o mt21344_ir1_filtered.pro
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#binopProj mt21344_ir1.pro --diffp mt21344_ir2.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#     --ifnegative -5 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#     --ifpositivep mt21344_ir1.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+#     -o mt21344_ir1_filtered.pro
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Cтруктура программы и разбор параметров
+\end_layout
+
+\begin_layout Standard
+Разбор опций программы производиться с помощью функции getopt
+\end_layout
+
+\begin_layout Standard
+(описание: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://habrahabr.ru/blogs/nix_coding/55665/
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Структура программы предполагает считывание исходного файла и последовательную
+ обработку данного файла различными опциями, при этом запись файла или коррекция
+ способа представления файла является всего лишь опциями обработки.
+ Если результат обработки не был сохранен в файл - будет выведено сообщение
+ о ошибке.
+\end_layout
+
+\begin_layout Scrap
+
+<<binopProj.cpp>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdio.h>
+\end_layout
+
+\begin_layout Scrap
+
+#include <getopt.h>
+\end_layout
+
+\begin_layout Scrap
+
+<<includes>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<глобальные переменные>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<функции>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+int main( int argc, char ** argv ){
+\end_layout
+
+\begin_layout Scrap
+
+    if ( argc < 2 ){
+\end_layout
+
+\begin_layout Scrap
+
+        use_message();
+\end_layout
+
+\begin_layout Scrap
+
+        return 0;
+\end_layout
+
+\begin_layout Scrap
+
+    };
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    char * input_file_name = argv[1];
+\end_layout
+
+\begin_layout Scrap
+
+    <<считывание исходного файла>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    const char *short_options = "" <<однобуквенные опции>>;
+\end_layout
+
+\begin_layout Scrap
+
+    static struct option long_options[] = {
+\end_layout
+
+\begin_layout Scrap
+
+        <<длинные опции>>
+\end_layout
+
+\begin_layout Scrap
+
+    };
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    int optIdx;
+\end_layout
+
+\begin_layout Scrap
+
+    bool result_saved = false;
+\end_layout
+
+\begin_layout Scrap
+
+    while (1){
+\end_layout
+
+\begin_layout Scrap
+
+       int opt_char;
+\end_layout
+
+\begin_layout Scrap
+
+       opt_char = getopt_long( 
+\end_layout
+
+\begin_layout Scrap
+
+            argc-1, &(argv[1]),  // Мы пропустили имя исходного файла
+\end_layout
+
+\begin_layout Scrap
+
+            short_options, long_options, &optIdx);
+\end_layout
+
+\begin_layout Scrap
+
+       if( opt_char == -1 ) {
+\end_layout
+
+\begin_layout Scrap
+
+           break;  
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+       result_saved = false;
+\end_layout
+
+\begin_layout Scrap
+
+       switch( opt_char ){
+\end_layout
+
+\begin_layout Scrap
+
+           <<обработка опций комадной строки>>
+\end_layout
+
+\begin_layout Scrap
+
+           default:
+\end_layout
+
+\begin_layout Scrap
+
+               use_message();
+\end_layout
+
+\begin_layout Scrap
+
+               return(-1);
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    if( ! result_saved ){
+\end_layout
+
+\begin_layout Scrap
+
+        puts( "Результат должен быть сохранен.
+ Используете опцию -o .
+\backslash
+n"  );
+\end_layout
+
+\begin_layout Scrap
+
+        use_message();
+\end_layout
+
+\begin_layout Scrap
+
+        return(-1);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    return 0;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsubsection*
+Сборка программы
+\end_layout
+
+\begin_layout Scrap
+
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+
+#!/bin/sh
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Scrap
+
+A=binopProj
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+P=`pwd`
+\end_layout
+
+\begin_layout Scrap
+
+SRC=$P/temp/src
+\end_layout
+
+\begin_layout Scrap
+
+BIN=$P/temp/bin
+\end_layout
+
+\begin_layout Scrap
+
+INCL=$P/temp/include
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+EXE=$BIN/${A}.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+LNW_notangle.sh ${A}.cpp $SRC/${A}.cpp
+\end_layout
+
+\begin_layout Scrap
+
+INCLUDES="-I $P/external/INCLUDE  -I $P/external/INCLUDE/C_LIB -I $INCL
+ "
+\end_layout
+
+\begin_layout Scrap
+
+#COPT="-D_GLIBCXX_DEBUG -Wall -ggdb -O0"
+\end_layout
+
+\begin_layout Scrap
+
+COPT="-O3"
+\end_layout
+
+\begin_layout Scrap
+
+g++ -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp -o $EXE
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Чтение исходных данных
+\end_layout
+
+\begin_layout Scrap
+
+<<считывание исходного файла>>=
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj inp_proj;
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj::read( input_file_name, inp_proj );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<includes>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <lab34NProjLib.hpp>
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Разбор опций программы
+\end_layout
+
+\begin_layout Subsection
+Вывод справки
+\end_layout
+
+\begin_layout Standard
+Справку можно вызвать запустив программу без опций или с короткой опцией
+ -h
+\end_layout
+
+\begin_layout Scrap
+
+<<однобуквенные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+"h"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+или с длинной опцией --help (определяем структуру описания длинных опций
+ struct option)
+\end_layout
+
+\begin_layout Scrap
+
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+{"help",          0, 0, 'h' },
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+в любом случае будет вызвана функция use_message.
+\end_layout
+
+\begin_layout Scrap
+
+<<обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+
+case 'h':
+\end_layout
+
+\begin_layout Scrap
+
+    use_message();
+\end_layout
+
+\begin_layout Scrap
+
+    return(0);
+\end_layout
+
+\begin_layout Scrap
+
+    break;;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+определить которую просто
+\end_layout
+
+\begin_layout Scrap
+
+<<функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+void use_message(){
+\end_layout
+
+\begin_layout Scrap
+
+    puts( 
+\end_layout
+
+\begin_layout Scrap
+
+"binopProj
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"программа для выполнения бинарных операций над файлами-проекциями нового
+ формата lab34
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"Формат вызова:
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"   binopProj <имя исходного файла> [опции обработки] -o <имя конечного
+ файла>
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"Список опций:
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+<<Справка>> );
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Запись проекции в файл
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Scrap
+
+<<однобуквенные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+"o:"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+{"save",          1, 0, 'o' },
+\end_layout
+
+\begin_layout Scrap
+
+{"output",        1, 0, 'o' },
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Scrap
+
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+
+"-o       [имя файла]
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"--output [имя файла]
+\backslash
+t--- запись результата в файл
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"--save   [имя файла]
+\backslash
+t--- запись результата в файл
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+
+<<обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+
+case 'o':
+\end_layout
+
+\begin_layout Scrap
+
+    {
+\end_layout
+
+\begin_layout Scrap
+
+    result_saved = true;
+\end_layout
+
+\begin_layout Scrap
+
+    std::string out_filename( optarg );
+\end_layout
+
+\begin_layout Scrap
+
+    inp_proj.write( out_filename );
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    break;;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Вычитание проекции из проекции
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Scrap
+
+<<однобуквенные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+"d:"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+{"diffp",          1, 0, 'd' },
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Scrap
+
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+
+"-d       [имя файла]
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"--diffp [имя файла]
+\backslash
+t--- вычесть значение проекции
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+Вычитая проекию из проекции мы делаем следующее:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\,\text{\text{\text{(точка отфильтрована на исходном изображении)}}}\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}<0\,\text{(точка отфильтрована на конечном изображеии)}\\
+T^{inp}-T^{arg}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}\eqslantgtr0
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+
+<<обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+
+case 'd':
+\end_layout
+
+\begin_layout Scrap
+
+    {
+\end_layout
+
+\begin_layout Scrap
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Scrap
+
+       TLab34NProj::read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Scrap
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Scrap
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp2_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Scrap
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+                 continue;
+\end_layout
+
+\begin_layout Scrap
+
+              }
+\end_layout
+
+\begin_layout Scrap
+
+              inp_proj.geo[i][j] -= inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    break;;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Суммирование проекции и проекции
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Scrap
+
+<<однобуквенные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+"s:"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+{"sump",          1, 0, 's' },
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Scrap
+
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+
+"-s       [имя файла]
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"--sump [имя файла]
+\backslash
+t--- прибавить значения взяв их из проекции
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\,\text{\text{\text{(точка отфильтрована на исходном изображении)}}}\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}<0\,\text{(точка отфильтрована на конечном изображеии)}\\
+T^{inp}+T^{arg}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}\eqslantgtr0
+\end{cases}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+
+<<обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+
+case 's':
+\end_layout
+
+\begin_layout Scrap
+
+    {
+\end_layout
+
+\begin_layout Scrap
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Scrap
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Scrap
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Scrap
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp2_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Scrap
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+                 continue;
+\end_layout
+
+\begin_layout Scrap
+
+              }
+\end_layout
+
+\begin_layout Scrap
+
+              inp_proj.geo[i][j] += inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    break;;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Замещение и дополнение кодов маскирования одной проекции, кодами другой
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Scrap
+
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+{"cutover",          1, 0, 101 },
+\end_layout
+
+\begin_layout Scrap
+
+{"cutunder",         1, 0, 102 },
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Scrap
+
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+
+"--cutover  [имя файла]
+\backslash
+t--- наложить на проекцию новую маску облачности
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"--cutunder [имя файла]
+\backslash
+t--- дополнить маску облачности значениями из прокции
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+cutover
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+cutunder
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{arg}\rightarrow C^{out}, & C^{arg}<0\\
+C^{inp}\rightarrow C^{out}, & C^{arg}\eqslantgtr0\,\,\wedge\,\, C^{int}<0\\
+T^{inp}\rightarrow T^{out}, & C^{arg}\eqslantgtr0\,\,\wedge\,\, C^{inp}\eqslantgtr0
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}<0\\
+T^{inp}\rightarrow T^{out}, & C^{arg}\eqslantgtr0\,\,\wedge\,\, C^{inp}\eqslantgtr0
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+
+<<обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+
+case 101:
+\end_layout
+
+\begin_layout Scrap
+
+case 102:
+\end_layout
+
+\begin_layout Scrap
+
+    {
+\end_layout
+
+\begin_layout Scrap
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Scrap
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Scrap
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Scrap
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp2_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Scrap
+
+                 if ( opt_char == 102 && inp_proj.raw[i][j] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+                 inp_proj.raw[i][j] = inp2_proj.raw[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+                 continue;
+\end_layout
+
+\begin_layout Scrap
+
+              }
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    break;;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Фильтрация данных по условию
+\end_layout
+
+\begin_layout Subsubsection
+опции
+\end_layout
+
+\begin_layout Scrap
+
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+
+{"filtrif",          1, 0, 'F' },
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsubsection
+справка
+\end_layout
+
+\begin_layout Scrap
+
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+
+"--filtrif  [опции фильтрации]
+\backslash
+t--- фильтрация проекции
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"                             
+\backslash
+t    [опции фильтрации] = 
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"                             
+\backslash
+t       [имя файла],
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"                             
+\backslash
+t       [less|large|lessoreq|largeoreq|less_soft|
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"                             
+\backslash
+t         large_soft|lessoreq_soft|largeoreq_soft], 
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+"                             
+\backslash
+t       [limit (float double)],[mask value (5)]
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Дання операция имеет на один на четыре аргумента: имя проекции, используемой
+ для фильтрации, имя операции сравнения, величину порога, при достижении
+ которой произовдится фильтрация и код, которым будет отмечаться данные
+ не прошедшие фильтрацию.
+ В случае если в проекции используемой для фильтрации отсутствут данные
+ (например в случае сбоя приема или по другой причине) возможно два режима
+ работы: жесткий, при котором отсутствие данных приводит к фильтрации пикселя
+ и мягкий, при котором отсутствие данных игнорируется (режим 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt soft}
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+жесткий режим
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\\
+C^{arg}\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}<0\\
+mask\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}\eqslantgtr0\,\,\wedge\,\,\left(T^{arg}\text{op}\, L\right)\\
+T^{inp}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}\eqslantgtr0\,\,\wedge\,\,\neg\left(T^{arg}\text{op}\, L\right)
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+щадящий (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt soft}
+\end_layout
+
+\end_inset
+
+) режим работы
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{cases}
+C^{inp}\rightarrow C^{out}, & C^{inp}<0\\
+T^{inp}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}<0\\
+mask\rightarrow C^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}\eqslantgtr0\,\,\wedge\,\,\left(T^{arg}\text{op}\, L\right)\\
+T^{inp}\rightarrow T^{out}, & C^{inp}\eqslantgtr0\,\,\wedge\,\, C^{arg}\eqslantgtr0\,\,\wedge\,\,\neg\left(T^{arg}\text{op}\, L\right)
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+
+<<обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+
+case 'F':
+\end_layout
+
+\begin_layout Scrap
+
+    {
+\end_layout
+
+\begin_layout Scrap
+
+       std::string s(optarg);
+\end_layout
+
+\begin_layout Scrap
+
+       std::string filename;
+\end_layout
+
+\begin_layout Scrap
+
+       std::string operation;
+\end_layout
+
+\begin_layout Scrap
+
+       double limit;
+\end_layout
+
+\begin_layout Scrap
+
+       long mask;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+       <<Разбор аргументов filtrif>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+       //std::cout << "filename=<"   << filename  << "> " << 
+\end_layout
+
+\begin_layout Scrap
+
+       //      "operations=<" << operation << "> " <<
+\end_layout
+
+\begin_layout Scrap
+
+       //      "limit=<"      << limit     << "> " <<
+\end_layout
+
+\begin_layout Scrap
+
+       //      "mask=<"       << mask      << "> " << "
+\backslash
+n";
+\end_layout
+
+\begin_layout Scrap
+
+       int opt_code = 0;
+\end_layout
+
+\begin_layout Scrap
+
+       if( operation.find( "less"     )  != std::string::npos ) opt_code
+ = 4;
+\end_layout
+
+\begin_layout Scrap
+
+       if( operation.find( "lessoreq" )  != std::string::npos ) opt_code
+ = 8;
+\end_layout
+
+\begin_layout Scrap
+
+       if( operation.find( "large"    )  != std::string::npos ) opt_code
+ = 12;
+\end_layout
+
+\begin_layout Scrap
+
+       if( operation.find( "largeoreq" ) != std::string::npos ) opt_code
+ = 16;
+\end_layout
+
+\begin_layout Scrap
+
+       if( operation.find( "soft"     )  != std::string::npos ) opt_code
+ += 1;
+\end_layout
+
+\begin_layout Scrap
+
+       if ( opt_code  < 4 ){
+\end_layout
+
+\begin_layout Scrap
+
+            std::cout <<  "Операция " << operation << " в строке " << optarg
+\end_layout
+
+\begin_layout Scrap
+
+                      << " указана неверно" << "
+\backslash
+n";
+\end_layout
+
+\begin_layout Scrap
+
+            return 1;
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+       TLab34NProj inp2_proj;
+\end_layout
+
+\begin_layout Scrap
+
+       inp2_proj.read( optarg, inp2_proj );
+\end_layout
+
+\begin_layout Scrap
+
+       for( unsigned int i = 0; i < inp2_proj.lines(); i++ ){
+\end_layout
+
+\begin_layout Scrap
+
+          for( unsigned int j = 0; j < inp2_proj.cols(); j++ ){
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp_proj.raw[i][j] < 0 ) {
+\end_layout
+
+\begin_layout Scrap
+
+                 continue;
+\end_layout
+
+\begin_layout Scrap
+
+              }
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp2_proj.raw[i][j] < 0 ) { 
+\end_layout
+
+\begin_layout Scrap
+
+                 if( (opt_code % 2) == 0 ) inp_proj.raw[i][j] = -mask;
+\end_layout
+
+\begin_layout Scrap
+
+                 continue;
+\end_layout
+
+\begin_layout Scrap
+
+              }
+\end_layout
+
+\begin_layout Scrap
+
+              else {
+\end_layout
+
+\begin_layout Scrap
+
+                  double b = inp2_proj.geo[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+                  switch( ( opt_code / 4 ) * 4 ){
+\end_layout
+
+\begin_layout Scrap
+
+                      case 4: if( b < limit  )  inp_proj.raw[i][j] = -mask;
+ break;; 
+\end_layout
+
+\begin_layout Scrap
+
+                      case 8: if( b <= limit )  inp_proj.raw[i][j] = -mask;
+ break;; 
+\end_layout
+
+\begin_layout Scrap
+
+                      case 12: if( b > limit )  inp_proj.raw[i][j] = -mask;
+ break;; 
+\end_layout
+
+\begin_layout Scrap
+
+                      case 16: if( b >= limit ) inp_proj.raw[i][j] = -mask;
+ break;; 
+\end_layout
+
+\begin_layout Scrap
+
+                  }
+\end_layout
+
+\begin_layout Scrap
+
+              }
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    break;;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Данная процудура требует разбора значений четырех аперандов и проверки переданны
+х значений.
+ 
+\end_layout
+
+\begin_layout Scrap
+
+<<includes>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <iostream>
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Разбор аргументов filtrif>>=
+\end_layout
+
+\begin_layout Scrap
+
+// Выделяем имя файла
+\end_layout
+
+\begin_layout Scrap
+
+filename  = get_strhead( s, "," );  
+\end_layout
+
+\begin_layout Scrap
+
+s = get_strtail( s, "," );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+// Выделяем вид операции
+\end_layout
+
+\begin_layout Scrap
+
+operation = get_strhead( s, "," );
+\end_layout
+
+\begin_layout Scrap
+
+s = get_strtail( s, "," );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+// Выделяем величину порога фильтрации
+\end_layout
+
+\begin_layout Scrap
+
+std::string limit_str = get_strhead( s, "," ); 
+\end_layout
+
+\begin_layout Scrap
+
+s = get_strtail( s, "," );
+\end_layout
+
+\begin_layout Scrap
+
+if( parseDouble( limit_str.c_str(), &limit ) != 0 ){
+\end_layout
+
+\begin_layout Scrap
+
+    std::string s10 = 
+\end_layout
+
+\begin_layout Scrap
+
+       std::string("Ошибка преобразования величины предела ") + limit_str
+ + 
+\end_layout
+
+\begin_layout Scrap
+
+              " в число (в строке " + optarg + ")";
+\end_layout
+
+\begin_layout Scrap
+
+    puts( s10.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+    exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+// Определяем значение, которым будет произовдится маскирование
+\end_layout
+
+\begin_layout Scrap
+
+std::string mask_str  = get_strhead( s, "," );
+\end_layout
+
+\begin_layout Scrap
+
+s = get_strtail( s, "," );
+\end_layout
+
+\begin_layout Scrap
+
+if( mask_str.substr( 0, 4 ) != "mask" ){
+\end_layout
+
+\begin_layout Scrap
+
+    std::string s10 = 
+\end_layout
+
+\begin_layout Scrap
+
+       std::string("Ошибка формата маски") + mask_str + 
+\end_layout
+
+\begin_layout Scrap
+
+              " должен начитаться с mask (в строке " + optarg + ")";
+\end_layout
+
+\begin_layout Scrap
+
+    puts( s10.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+    exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+mask_str = mask_str.substr(4, std::string::npos );
+\end_layout
+
+\begin_layout Scrap
+
+      
+\end_layout
+
+\begin_layout Scrap
+
+if( parseLong( mask_str.c_str(), &mask ) != 0 ){
+\end_layout
+
+\begin_layout Scrap
+
+    std::string s10 = 
+\end_layout
+
+\begin_layout Scrap
+
+       std::string("Ошибка преобразования маски ") + mask_str + 
+\end_layout
+
+\begin_layout Scrap
+
+              " в число (в строке " + optarg + ")";
+\end_layout
+
+\begin_layout Scrap
+
+    puts( s10.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+    exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+\end_layout
+
+
+
+\end_body
+\end_document

@@ -1,0 +1,1811 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language russian
+\language_package babel
+\inputencoding utf8
+\fontencoding T2A
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry false
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+GlanceW
+\end_layout
+
+\begin_layout Standard
+Программа для автоматического запуска одного или нескольких экземпляров
+ программы Жени Фомина 
+\begin_inset CommandInset href
+LatexCommand href
+name "Glance"
+target "http://www.satellite.dvo.ru/contentid-18.html"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Формат вызова (показать несколько файлов одновременно):
+\end_layout
+
+\begin_layout Scrap
+<<Пример использования>>=
+\end_layout
+
+\begin_layout Scrap
+glancew.py --delay 10 --center 124,30 -Z 100 --base "mt201110082201"
+\end_layout
+
+\begin_layout Scrap
+     -P RAINBOW,-5,25       --open "_ir1.pro,_ir2.pro,_sst_filtered.pro"
+\end_layout
+
+\begin_layout Scrap
+     -P "W-B LINEAR,0,15"  --open "_vis.pro"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Рыба для программы
+\end_layout
+
+\begin_layout Scrap
+<<glancew.py>>=
+\end_layout
+
+\begin_layout Scrap
+#!/usr/bin/env python
+\end_layout
+
+\begin_layout Scrap
+# -*- coding: utf8 -*-
+\end_layout
+
+\begin_layout Scrap
+"""<<Текст справки>>
+\end_layout
+
+\begin_layout Scrap
+"""
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Константы>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Модули>>
+\end_layout
+
+\begin_layout Scrap
+import sys
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+def main(argv):
+\end_layout
+
+\begin_layout Scrap
+    <<main>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+if __name__ == "__main__":
+\end_layout
+
+\begin_layout Scrap
+    sys.exit( main(sys.argv[1:]) )
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Тело программы
+\end_layout
+
+\begin_layout Standard
+Программа организована вокруг последовательного разбора и выполнения опций.
+ Разбор опций производится модулем getopt.
+\end_layout
+
+\begin_layout Scrap
+<<Модули>>=
+\end_layout
+
+\begin_layout Scrap
+import getopt
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<main>>=
+\end_layout
+
+\begin_layout Scrap
+options_list = {
+\end_layout
+
+\begin_layout Scrap
+ 'H' : ("h", "help", ),
+\end_layout
+
+\begin_layout Scrap
+ 'V' : ("V:", "verbose", ),
+\end_layout
+
+\begin_layout Scrap
+ 'D' : ("D:", "delay=", ),
+\end_layout
+
+\begin_layout Scrap
+ 'C' : ("C:", "center=", ),
+\end_layout
+
+\begin_layout Scrap
+ 'Z' : ("Z:", "zoom=", ),
+\end_layout
+
+\begin_layout Scrap
+ 'B' : ("B:", "base=", ),
+\end_layout
+
+\begin_layout Scrap
+ 'P' : ("P:", "pallete=", ),
+\end_layout
+
+\begin_layout Scrap
+ 'O' : ("O:", "open=", ),
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+short_opts = "".join( [options_list[k][0] for k in options_list] )
+\end_layout
+
+\begin_layout Scrap
+long_opts  =          [options_list[k][1] for k in options_list]
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+try:
+\end_layout
+
+\begin_layout Scrap
+    opts, args = getopt.getopt( argv, short_opts , long_opts )
+\end_layout
+
+\begin_layout Scrap
+except getopt.GetoptError, err: 
+\end_layout
+
+\begin_layout Scrap
+    print str(err)
+\end_layout
+
+\begin_layout Scrap
+    <<Вывести справку>>
+\end_layout
+
+\begin_layout Scrap
+    sys.exit(2)
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+if len(argv) == 0:
+\end_layout
+
+\begin_layout Scrap
+    <<Вывести справку>>
+\end_layout
+
+\begin_layout Scrap
+    sys.exit() 
+\end_layout
+
+\begin_layout Scrap
+S = lambda a: [ x.rstrip( "=:" ) for x in a ]
+\end_layout
+
+\begin_layout Scrap
+for o, opt_argument in opts: 
+\end_layout
+
+\begin_layout Scrap
+    opt_name = o.lstrip('-')
+\end_layout
+
+\begin_layout Scrap
+    if opt_name in S(options_list['H']):
+\end_layout
+
+\begin_layout Scrap
+        <<Вывести справку>>
+\end_layout
+
+\begin_layout Scrap
+        sys.exit() 
+\end_layout
+
+\begin_layout Scrap
+    elif opt_name in S(options_list['V']) :
+\end_layout
+
+\begin_layout Scrap
+        <<Включить отладочный вывод>>
+\end_layout
+
+\begin_layout Scrap
+    elif opt_name in S(options_list['D']) :
+\end_layout
+
+\begin_layout Scrap
+        <<Установить величину задержки>>
+\end_layout
+
+\begin_layout Scrap
+    elif opt_name in S(options_list['C']) :
+\end_layout
+
+\begin_layout Scrap
+        <<Центрировать окно Glance в точку>>
+\end_layout
+
+\begin_layout Scrap
+    elif opt_name in S(options_list['Z']) :
+\end_layout
+
+\begin_layout Scrap
+        <<Масштабировать окно Glance>>
+\end_layout
+
+\begin_layout Scrap
+    elif opt_name in S(options_list['B']) :
+\end_layout
+
+\begin_layout Scrap
+        <<Установить общюю часть имен файлов>>
+\end_layout
+
+\begin_layout Scrap
+    elif opt_name in S(options_list['P']) :
+\end_layout
+
+\begin_layout Scrap
+        if opt_argument == 'list':
+\end_layout
+
+\begin_layout Scrap
+            <<Вывести список возможных палитр>>
+\end_layout
+
+\begin_layout Scrap
+            sys.exit(0) 
+\end_layout
+
+\begin_layout Scrap
+        else :
+\end_layout
+
+\begin_layout Scrap
+            <<Определить палитру>>
+\end_layout
+
+\begin_layout Scrap
+    elif opt_name in S(options_list['O']) :
+\end_layout
+
+\begin_layout Scrap
+        <<Открыть файл в Glance>>
+\end_layout
+
+\begin_layout Scrap
+    else :
+\end_layout
+
+\begin_layout Scrap
+        assert False, "unhandled option " + o
+\end_layout
+
+\begin_layout Scrap
+for opt_argument in args :
+\end_layout
+
+\begin_layout Scrap
+    if opt_argument[0] == '-' :
+\end_layout
+
+\begin_layout Scrap
+        print "Опция командной строки %s внутри списка файлов!" % opt_argument
+\end_layout
+
+\begin_layout Scrap
+        sys.exit(1)
+\end_layout
+
+\begin_layout Scrap
+    <<Открыть файл в Glance>>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Последовательно определим части программы.
+\end_layout
+
+\begin_layout Subsection
+Вывод справки
+\end_layout
+
+\begin_layout Scrap
+<<Вывести справку>>=
+\end_layout
+
+\begin_layout Scrap
+usage()
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+def usage():
+\end_layout
+
+\begin_layout Scrap
+    print __doc__
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+Текст справки
+\end_layout
+
+\begin_layout Scrap
+<<Текст справки>>=
+\end_layout
+
+\begin_layout Scrap
+Программа для автоматического запуска одного или нескольких экземпляров
+ 
+\end_layout
+
+\begin_layout Scrap
+программы Жени Фомина Glance.
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+Формат вызова:
+\end_layout
+
+\begin_layout Scrap
+ glancew.py [Опции] <имена файлов...>
+\end_layout
+
+\begin_layout Scrap
+Возможные опции:
+\end_layout
+
+\begin_layout Scrap
+-h
+\end_layout
+
+\begin_layout Scrap
+--help эта справка
+\end_layout
+
+\begin_layout Scrap
+-V
+\end_layout
+
+\begin_layout Scrap
+--verbose  включить отладочный вывод
+\end_layout
+
+\begin_layout Scrap
+-D
+\end_layout
+
+\begin_layout Scrap
+--delay <seconds>  изменить величину задержки между запусками программы
+ 
+\end_layout
+
+\begin_layout Scrap
+                   Glance
+\end_layout
+
+\begin_layout Scrap
+-C
+\end_layout
+
+\begin_layout Scrap
+--center <широта, долгота> 
+\end_layout
+
+\begin_layout Scrap
+                   определить координаты точки проеции которая будет в 
+\end_layout
+
+\begin_layout Scrap
+                   центре окна программы Glance
+\end_layout
+
+\begin_layout Scrap
+-Z 
+\end_layout
+
+\begin_layout Scrap
+--zoom <zoom>      запускать Glance c указанным масштабом 
+\end_layout
+
+\begin_layout Scrap
+                   (<<список возможных масштабов>>)
+\end_layout
+
+\begin_layout Scrap
+-B
+\end_layout
+
+\begin_layout Scrap
+--base <base>      установить начальную часть имен файлов 
+\end_layout
+
+\begin_layout Scrap
+                   (C:
+\backslash
+
+\backslash
+Data
+\backslash
+
+\backslash
+mt20113234)
+\end_layout
+
+\begin_layout Scrap
+-P
+\end_layout
+
+\begin_layout Scrap
+--pallete <pal,min_l,max_l> 
+\end_layout
+
+\begin_layout Scrap
+                   установить палитру и пороги палитры (RAINBOW,0,10)
+\end_layout
+
+\begin_layout Scrap
+                   (список палитр --pallete list)
+\end_layout
+
+\begin_layout Scrap
+-O <name>
+\end_layout
+
+\begin_layout Scrap
+--open <name>      открыть файл с именем <name>
+\end_layout
+
+\begin_layout Scrap
+                   или, если указан параметр base --- <base>+<name>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+Пример использования:
+\end_layout
+
+\begin_layout Scrap
+<<Пример использования>>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+Вывод списка палитр
+\end_layout
+
+\begin_layout Scrap
+<<Константы>>=
+\end_layout
+
+\begin_layout Scrap
+PAL_LIST = (
+\end_layout
+
+\begin_layout Scrap
+   'B-W LINEAR', 'W-B LINEAR', 'BLUE/WHITE', 'GRN-RED-BLU-WHT', 'RED TEMPERATURE
+',
+\end_layout
+
+\begin_layout Scrap
+  'BLUE/GREEN/RED/YELLOW', 'STD GAMMA-II', 'PRISM', 'RED-PURPLE',
+\end_layout
+
+\begin_layout Scrap
+  'GREEN/WHITE LINEAR', 'GRN/WHT EXPONENTIAL', 'GREEN-PINK', 'BLUE-RED',
+\end_layout
+
+\begin_layout Scrap
+  '16 LEVEL', 'RAINBOW', 'STEPS', 'STERN SPECIAL', 'Haze', 'Blue - Pastel
+ - Red',
+\end_layout
+
+\begin_layout Scrap
+  'Pastels', 'Hue Sat Lightness 1', 'Hue Sat Lightness 2', 'Hue Sat Value
+ 1',
+\end_layout
+
+\begin_layout Scrap
+  'Hue Sat Value 2', 'Purple-Red + Stripes', 'Beach', 'Mac Style', 'Eos
+ A',
+\end_layout
+
+\begin_layout Scrap
+  'Eos B', 'Hardcandy', 'Nature', 'Ocean', 'Peppermint', 'Plasma', 'Blue-Red',
+\end_layout
+
+\begin_layout Scrap
+  'Rainbow', 'Blue Waves', 'Volcano', 'Waves', 'Rainbow18', 'Rainbow + white',
+\end_layout
+
+\begin_layout Scrap
+  'Rainbow + black', )
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+def print_palletes_list():
+\end_layout
+
+\begin_layout Scrap
+    i = 1
+\end_layout
+
+\begin_layout Scrap
+    print "Список палитр:"
+\end_layout
+
+\begin_layout Scrap
+    for pal in PAL_LIST:
+\end_layout
+
+\begin_layout Scrap
+        print "%20s "% pal,
+\end_layout
+
+\begin_layout Scrap
+        if i % 4 == 0 : 
+\end_layout
+
+\begin_layout Scrap
+            print
+\end_layout
+
+\begin_layout Scrap
+        i += 1
+\end_layout
+
+\begin_layout Scrap
+    print
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Вывести список возможных палитр>>=
+\end_layout
+
+\begin_layout Scrap
+print_palletes_list()
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+Список масштабов
+\end_layout
+
+\begin_layout Standard
+Программа Glance, при запуске из ком.
+ строки, допускает некоторый набор коэффициентов увеличения, при этом величина
+ масштабирования задается целым числом (см.
+ интерактивную справку).
+\end_layout
+
+\begin_layout Scrap
+<<Константы>>=
+\end_layout
+
+\begin_layout Scrap
+ZOOM_LIST = {
+\end_layout
+
+\begin_layout Scrap
+  '100' : 2, 
+\end_layout
+
+\begin_layout Scrap
+  '200' : 3,
+\end_layout
+
+\begin_layout Scrap
+  '300' : 4,
+\end_layout
+
+\begin_layout Scrap
+  '400' : 5, 
+\end_layout
+
+\begin_layout Scrap
+  '50': 1, 
+\end_layout
+
+\begin_layout Scrap
+  '25':0
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<список возможных масштабов>>=
+\end_layout
+
+\begin_layout Scrap
+100, 200, 300, 400, 500, 50, 24
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+Определение простых опций командной строки
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+VERBOSE = False
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<Включить отладочный вывод>>=
+\end_layout
+
+\begin_layout Scrap
+global VERBOSE
+\end_layout
+
+\begin_layout Scrap
+VERBOSE = True
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+DELAY = 5.0
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<Установить величину задержки>>=
+\end_layout
+
+\begin_layout Scrap
+global DELAY
+\end_layout
+
+\begin_layout Scrap
+DELAY = float(opt_argument)
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+LAT_CENTER = False
+\end_layout
+
+\begin_layout Scrap
+LON_CENTER = False
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<Центрировать окно Glance в точку>>=
+\end_layout
+
+\begin_layout Scrap
+global LAT_CENTER, LON_CENTER
+\end_layout
+
+\begin_layout Scrap
+LAT_CENTER, LON_CENTER = [ float(x) for x in opt_argument.split(',') ]
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+ZOOM = 100
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<Масштабировать окно Glance>>= 
+\end_layout
+
+\begin_layout Scrap
+global ZOOM
+\end_layout
+
+\begin_layout Scrap
+if opt_argument not in ZOOM_LIST :
+\end_layout
+
+\begin_layout Scrap
+    print "Неправильно указан масштаб"
+\end_layout
+
+\begin_layout Scrap
+    <<Вывести справку>>    
+\end_layout
+
+\begin_layout Scrap
+    sys.exit(1)
+\end_layout
+
+\begin_layout Scrap
+ZOOM = opt_argument
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+BASE_FNAME = ""
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Установить общюю часть имен файлов>>=
+\end_layout
+
+\begin_layout Scrap
+global BASE_FNAME
+\end_layout
+
+\begin_layout Scrap
+BASE_FNAME = opt_argument
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+PALLETE_NAME = "B-W LINEAR"
+\end_layout
+
+\begin_layout Scrap
+BLACK_VALUE = 0
+\end_layout
+
+\begin_layout Scrap
+WHITE_VALUE = 30
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Определить палитру>>=
+\end_layout
+
+\begin_layout Scrap
+global PALLETE_NAME, BLACK_VALUE, WHITE_VALUE
+\end_layout
+
+\begin_layout Scrap
+p = opt_argument.split(',')
+\end_layout
+
+\begin_layout Scrap
+if len(p[0].strip()) != 0 and p[0] not in PAL_LIST:
+\end_layout
+
+\begin_layout Scrap
+    print "Указанная палитра недоступна"
+\end_layout
+
+\begin_layout Scrap
+    <<Вывести список возможных палитр>>
+\end_layout
+
+\begin_layout Scrap
+    sys.exit(1)
+\end_layout
+
+\begin_layout Scrap
+if len(p[0].strip()) != 0 :
+\end_layout
+
+\begin_layout Scrap
+    PALLETE_NAME = p[0]
+\end_layout
+
+\begin_layout Scrap
+if len(p) == 1:
+\end_layout
+
+\begin_layout Scrap
+    pass
+\end_layout
+
+\begin_layout Scrap
+elif len(p) == 3:
+\end_layout
+
+\begin_layout Scrap
+    BLACK_VALUE = float(p[1])
+\end_layout
+
+\begin_layout Scrap
+    WHITE_VALUE = float(p[2])
+\end_layout
+
+\begin_layout Scrap
+else :
+\end_layout
+
+\begin_layout Scrap
+    print "Палитра указана неправильно."
+\end_layout
+
+\begin_layout Scrap
+    <<Вывести справку>>
+\end_layout
+
+\begin_layout Scrap
+    sys.exit(1)
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Запускаем Glance
+\end_layout
+
+\begin_layout Standard
+При запуске Glance с указанным файлом необходимо создать конфигурационный
+ файл, в соответствии с указанными опциями, и учесть то, что Glance может
+ запускаться как в Windows так и в Linux (с использованием оболочки wine).
+ После запуска файла необходимо подождать окончания загрузки файла.
+\end_layout
+
+\begin_layout Scrap
+<<Модули>>=
+\end_layout
+
+\begin_layout Scrap
+import time 
+\end_layout
+
+\begin_layout Scrap
+import os
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Открыть файл в Glance>>=
+\end_layout
+
+\begin_layout Scrap
+for fext in opt_argument.split(','):
+\end_layout
+
+\begin_layout Scrap
+    fname = BASE_FNAME + fext
+\end_layout
+
+\begin_layout Scrap
+    if os.path.exists(fname) :
+\end_layout
+
+\begin_layout Scrap
+        open_by_glance(fname)
+\end_layout
+
+\begin_layout Scrap
+        time.sleep( DELAY )
+\end_layout
+
+\begin_layout Scrap
+    else :
+\end_layout
+
+\begin_layout Scrap
+        print "Файл " + fname + " отсутствует.
+ Пропускаем."
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Определим функцию открытия файла в Glance.
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+def open_by_glance(file_name):
+\end_layout
+
+\begin_layout Scrap
+    import os
+\end_layout
+
+\begin_layout Scrap
+    title = os.path.basename(file_name)
+\end_layout
+
+\begin_layout Scrap
+    file_name = os.path.abspath(file_name)
+\end_layout
+
+\begin_layout Scrap
+    <<Подготовка конфигурационного файла>>
+\end_layout
+
+\begin_layout Scrap
+    if os.name == 'posix':
+\end_layout
+
+\begin_layout Scrap
+        config_fname = get_wine_path( config_fname )
+\end_layout
+
+\begin_layout Scrap
+        file_name = get_wine_path( file_name )
+\end_layout
+
+\begin_layout Scrap
+        cmd = 'nohup wine start /MAX "%s" "%s" "%s" -o &' %  
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+                     ( GLANCE_PATH, config_fname, file_name )
+\end_layout
+
+\begin_layout Scrap
+    else :
+\end_layout
+
+\begin_layout Scrap
+        cmd = 'start "%s" /MAX "%s" "%s" "%s" -o' % 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+                     ( title, GLANCE_PATH, config_fname, file_name )
+\end_layout
+
+\begin_layout Scrap
+    print "glance run command=", cmd
+\end_layout
+
+\begin_layout Scrap
+    os.system( cmd )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+def get_wine_path( unix_path ):
+\end_layout
+
+\begin_layout Scrap
+    import subprocess
+\end_layout
+
+\begin_layout Scrap
+    cmd = [ 'winepath', '-w',  unix_path ]
+\end_layout
+
+\begin_layout Scrap
+    return subprocess.check_output( cmd ).strip()
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+GLANCE_PATH = 'C:
+\backslash
+Program Files
+\backslash
+Glance 1.82
+\backslash
+Glance.exe'
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Standard
+Подготовка конфигурационного файла будет проводится с помощью модуля ConfigParse
+r 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://docs.python.org/library/configparser.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Модули>>=
+\end_layout
+
+\begin_layout Scrap
+import ConfigParser
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Настройки>>=
+\end_layout
+
+\begin_layout Scrap
+GLANCE_INI_PATH = 'C:
+\backslash
+Program Files
+\backslash
+Glance 1.82
+\backslash
+Samples
+\backslash
+Glance_open.ini'
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Подготовка конфигурационного файла>>=
+\end_layout
+
+\begin_layout Scrap
+config_fname = create_new_glance_ini()
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+def create_new_glance_ini():
+\end_layout
+
+\begin_layout Scrap
+    import tempfile
+\end_layout
+
+\begin_layout Scrap
+    import os
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    config_file, config_fname = tempfile.mkstemp()
+\end_layout
+
+\begin_layout Scrap
+    config_file = os.fdopen(config_file, 'w' )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    config = ConfigParser.RawConfigParser()
+\end_layout
+
+\begin_layout Scrap
+    config.read(GLANCE_INI_PATH)
+\end_layout
+
+\begin_layout Scrap
+    for c in [ 'Palette', 'ConvertOptions', 'OpenOptions'] :
+\end_layout
+
+\begin_layout Scrap
+        if not config.has_section(c):
+\end_layout
+
+\begin_layout Scrap
+            config.add_section( c )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    config.set('Palette', 'palettename', PALLETE_NAME )
+\end_layout
+
+\begin_layout Scrap
+    config.set('Palette', 'PaletteIsIDL', 1 )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    config.set('OpenOptions', 'OpenLevelUnits', str(0) )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    config.set('OpenOptions', 'OpenLowLevelValue', str(BLACK_VALUE)  )
+\end_layout
+
+\begin_layout Scrap
+    config.set('OpenOptions', 'OpenHighLevelValue', str(WHITE_VALUE)  )
+\end_layout
+
+\begin_layout Scrap
+    config.set('OpenOptions', 'OpenLevelUnits', str(0) )
+\end_layout
+
+\begin_layout Scrap
+    config.set('OpenOptions', 'PaletteIsIDL', 1 )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    config.set('ConvertOptions', 'palettename', PALLETE_NAME )
+\end_layout
+
+\begin_layout Scrap
+    config.set('ConvertOptions', 'ConvertIDLPalName', PALLETE_NAME )
+\end_layout
+
+\begin_layout Scrap
+    config.set('ConvertOptions', 'ConvertLevelUnits', 0 )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    if LAT_CENTER != False:
+\end_layout
+
+\begin_layout Scrap
+        config.set('OpenOptions', 'OpenIsApplyScaleLonLat', str(1) )
+\end_layout
+
+\begin_layout Scrap
+        config.set('OpenOptions', 'OpenLon', str(LON_CENTER) )
+\end_layout
+
+\begin_layout Scrap
+        config.set('OpenOptions', 'OpenLat', str(LAT_CENTER) )
+\end_layout
+
+\begin_layout Scrap
+        config.set('OpenOptions', 'OpenScale', str(float(ZOOM)/100.) )
+\end_layout
+
+\begin_layout Scrap
+    config.write(config_file)
+\end_layout
+
+\begin_layout Scrap
+    config_file.close()
+\end_layout
+
+\begin_layout Scrap
+    return config_fname
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Создание скриншотов Glance
+\end_layout
+
+\begin_layout Standard
+Часто необходимо сделать скриншоты окна программы Glance со спуниковым изображен
+ием, удалив изображения кнопок и элементов интерфейса.
+\end_layout
+
+\begin_layout Standard
+Напишем скрипт для этого.
+\end_layout
+
+\begin_layout Standard
+Скрипт, должен делать скриншаты всех окон Glance, сохранять изображения
+ в рабочую директорию и обрезать их.
+\end_layout
+
+\begin_layout Standard
+Для этого необходимо
+\end_layout
+
+\begin_layout Scrap
+<<glance_shutter.sh>>=
+\end_layout
+
+\begin_layout Scrap
+#!/bin/bash
+\end_layout
+
+\begin_layout Scrap
+<<Получить список окон программы Glance>>
+\end_layout
+
+\begin_layout Scrap
+<<Сделать снимок каждого окна>>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы получить список окон воспользуемся программой wmctrl
+\end_layout
+
+\begin_layout Scrap
+<<Получить список окон программы Glance>>=
+\end_layout
+
+\begin_layout Scrap
+wmctrl -l | grep 'Glance -' >/tmp/glance_win_list.txt
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<Сделать снимок каждого окна>>=
+\end_layout
+
+\begin_layout Scrap
+cat /tmp/glance_win_list.txt | tr '
+\backslash
+
+\backslash
+' '%' | while read A ; do
+\end_layout
+
+\begin_layout Scrap
+    WINID=`echo $A | awk '{print $1}'`
+\end_layout
+
+\begin_layout Scrap
+    PROJ_NAME=`echo $A | sed 's/.*%//'`
+\end_layout
+
+\begin_layout Scrap
+    <<Сделать снимок окна WINID>>
+\end_layout
+
+\begin_layout Scrap
+done;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Сделать снимок окна WINID>>=
+\end_layout
+
+\begin_layout Scrap
+import -window ${WINID} "${PROJ_NAME}.png"
+\end_layout
+
+\begin_layout Scrap
+<<Обрезать изображение>>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы обрезать изображение воспользуемся идеей из 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.rootninja.com/remove-borders-from-images-using-imagemagick-convert/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+<<Обрезать изображение>>=
+\end_layout
+
+\begin_layout Scrap
+LEFT=3
+\end_layout
+
+\begin_layout Scrap
+TOP=60
+\end_layout
+
+\begin_layout Scrap
+RIGHT=20
+\end_layout
+
+\begin_layout Scrap
+BOTTOM=40
+\end_layout
+
+\begin_layout Scrap
+convert -chop ${LEFT}x${TOP} -rotate 180 -chop ${RIGHT}x${BOTTOM} -rotate
+ 180 "${PROJ_NAME}.png" "${PROJ_NAME}.png"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Section*
+Сборка программы
+\end_layout
+
+\begin_layout Scrap
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+#!/bin/bash -x
+\end_layout
+
+\begin_layout Scrap
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+SRC=temp/src
+\end_layout
+
+\begin_layout Scrap
+BIN=temp/src
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Scrap
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+cp "${LYX_TMP}/${NOWEB_SOURCE}" "$SRC/"
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+notangle -Rglancew.py "$NW" >$SRC/glancew.py
+\end_layout
+
+\begin_layout Scrap
+chmod +x $SRC/glancew.py
+\end_layout
+
+\begin_layout Scrap
+notangle -Rglance_shutter.sh "$NW" >$BIN/glance_shutter.sh
+\end_layout
+
+\begin_layout Scrap
+chmod +x $BIN/glance_shutter.sh
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\end_body
+\end_document

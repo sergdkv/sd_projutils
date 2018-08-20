@@ -1,0 +1,2884 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding T2A
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 10
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+lab34NProjLib
+\end_layout
+
+\begin_layout Abstract
+Набор функций для чтения данных из новых файл-проекций формата lab34.
+\end_layout
+
+\begin_layout Abstract
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Типы данных
+\end_layout
+
+\begin_layout Standard
+Предлагается хранить проекции в памяти компьютера в виде двух массивов --
+ маски облачности и маски географических величин.
+\end_layout
+
+\begin_layout Standard
+При этом сами массивы можно хранить как двумерные вектора библиотеки STL.
+\end_layout
+
+\begin_layout Standard
+Заведем дополнительные типы данных для хранения маски облачности
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие типы данных>>=
+\end_layout
+
+\begin_layout Scrap
+
+typedef std::vector<short> TProjShortLine; 
+\end_layout
+
+\begin_layout Scrap
+
+typedef std::vector<TProjShortLine> TProjShortData;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+и геофизических величин (температур).
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие типы данных>>=
+\end_layout
+
+\begin_layout Scrap
+
+typedef std::vector<float> TProjFloatLine; 
+\end_layout
+
+\begin_layout Scrap
+
+typedef std::vector<TProjFloatLine> TProjFloatData;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Так как переменные данного типа почти всегда используются вместе, определим
+ соответствующую структуру, включив в неё блок описания данных.
+ 
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие типы данных>>=
+\end_layout
+
+\begin_layout Scrap
+
+/// данные и нулевой блок проекции нового формата lab34
+\end_layout
+
+\begin_layout Scrap
+
+struct TLab34NProj {
+\end_layout
+
+\begin_layout Scrap
+
+public :
+\end_layout
+
+\begin_layout Scrap
+
+    TProjFloatData geo; ///< матрица физических величин проекции
+\end_layout
+
+\begin_layout Scrap
+
+    TProjShortData raw; ///< матрица сырых данных проекции
+\end_layout
+
+\begin_layout Scrap
+
+    TBlk0_Proj blk0;    ///< нулевой блок нового формата
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    <<Определения функции TLab34NProj>>
+\end_layout
+
+\begin_layout Scrap
+
+private :
+\end_layout
+
+\begin_layout Scrap
+
+    <<Определения закрытых функций TLab34NProj>>
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Разумеется, необходимо добавить в список заголовочных файлов 
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие заголовки>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <vector>
+\end_layout
+
+\begin_layout Scrap
+
+// Для TBlk0_Proj
+\end_layout
+
+\begin_layout Scrap
+
+#include <c_types.hpp>  
+\end_layout
+
+\begin_layout Scrap
+
+#include <c_b0.hpp>
+\end_layout
+
+\begin_layout Scrap
+
+#include <c_b0proj.hpp>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Коструктор
+\end_layout
+
+\begin_layout Standard
+Конструктор сделаем пустым.
+ Чтение данных из файлов должно осуществляться отдельной функцией.
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj(); ///< конструктор пустой (проекция инициализируется из файла
+ вызовом функции read)
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj::TLab34NProj(){
+\end_layout
+
+\begin_layout Scrap
+
+    memset( &blk0, 0, sizeof(blk0) );
+\end_layout
+
+\begin_layout Scrap
+
+    raw.clear();
+\end_layout
+
+\begin_layout Scrap
+
+    geo.clear();
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Чтение данных
+\end_layout
+
+\begin_layout Standard
+Теперь можно определить функцию чтения данных.
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+загрузка данных в объект-проекцию
+\end_layout
+
+\begin_layout Scrap
+
+@param file_name имя файла-проекции нового формата
+\end_layout
+
+\begin_layout Scrap
+
+@param proj данный объект-проекция будет модифицирован
+\end_layout
+
+\begin_layout Scrap
+
+@return функция возвращает ссылку на модифицированный объект-проекцию
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+В случае ошибки функция прерывает выполнение программы
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+static TLab34NProj& read( std::string file_name,  TLab34NProj& proj );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы мы могли её определить, необходима добавить следующие заголовочн
+ые файлы:
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие заголовки>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <string>
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Для чтения данных включаем заголовочный файл:
+\end_layout
+
+\begin_layout Scrap
+
+<<Собственные заголовки>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdio.h>
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdlib.h>
+\end_layout
+
+\begin_layout Scrap
+
+#include <math.h>
+\end_layout
+
+\begin_layout Scrap
+
+#include <string.h>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Функция чтения данных.
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+// Чтение файла - проекции нового формата
+\end_layout
+
+\begin_layout Scrap
+
+// вход : file_name - имя файла
+\end_layout
+
+\begin_layout Scrap
+
+// выход : содержимое проекции (сырые данные и геофизические величины и
+ нулевой блок)
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj& TLab34NProj::read( std::string file_name,  TLab34NProj& proj
+ )
+\end_layout
+
+\begin_layout Scrap
+
+{	
+\end_layout
+
+\begin_layout Scrap
+
+    FILE* file_header = fopen(file_name.c_str(), "rb");
+\end_layout
+
+\begin_layout Scrap
+
+    if( file_header == 0 ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        printf( "header is NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        perror( file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    else { 
+\end_layout
+
+\begin_layout Scrap
+
+        //printf( "header is not NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+    } 
+\end_layout
+
+\begin_layout Scrap
+
+    if( fread( &proj.blk0, sizeof( proj.blk0 ), 1, file_header ) != 1 ){
+\end_layout
+
+\begin_layout Scrap
+
+        printf( "header is NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        perror( file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    unsigned int lines = proj.blk0.scanNum;
+\end_layout
+
+\begin_layout Scrap
+
+    unsigned int cols =  proj.blk0.pixNum; 
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    proj.geo.resize(lines); 
+\end_layout
+
+\begin_layout Scrap
+
+    proj.raw.resize(lines);
+\end_layout
+
+\begin_layout Scrap
+
+    for( unsigned int i = 0; i < lines; i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        proj.geo[i].resize(cols); 
+\end_layout
+
+\begin_layout Scrap
+
+        proj.raw[i].resize(cols);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    static short line_buf[1000 * 1000];
+\end_layout
+
+\begin_layout Scrap
+
+    for( unsigned int i = 0; i < lines; i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        if( fread( line_buf, sizeof(short), cols, file_header ) != cols
+ ){
+\end_layout
+
+\begin_layout Scrap
+
+            printf( "header is NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+            perror( file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+            exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+        };
+\end_layout
+
+\begin_layout Scrap
+
+        for( unsigned int j = 0; j < cols; j++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+            short a = line_buf[j];
+\end_layout
+
+\begin_layout Scrap
+
+            proj.raw[i][j] = a;
+\end_layout
+
+\begin_layout Scrap
+
+            if( a < 0 ){
+\end_layout
+
+\begin_layout Scrap
+
+                proj.geo[i][j] = -999;
+\end_layout
+
+\begin_layout Scrap
+
+            }
+\end_layout
+
+\begin_layout Scrap
+
+            else {
+\end_layout
+
+\begin_layout Scrap
+
+                proj.geo[i][j] = a * proj.blk0.ka + proj.blk0.kb;
+\end_layout
+
+\begin_layout Scrap
+
+            }
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    fclose( file_header ); 
+\end_layout
+
+\begin_layout Scrap
+
+    return proj;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Копирование данных
+\end_layout
+
+\begin_layout Standard
+Теперь можно определить функцию чтения данных.
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+копирование данных из одной проекции в другую
+\end_layout
+
+\begin_layout Scrap
+
+@param from_proj источник данных
+\end_layout
+
+\begin_layout Scrap
+
+@param to_proj   данный объект-проекция будет модифицирован
+\end_layout
+
+\begin_layout Scrap
+
+@return функция возвращает ссылку на модифицированный объект-проекцию
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+В случае ошибки функция прерывает выполнение программы
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+static TLab34NProj& copyFromTo( TLab34NProj& from_proj, TLab34NProj& to_proj
+ );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы мы могли её определить, необходима добавить следующие заголовочн
+ые файлы:
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие заголовки>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <string>
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Для чтения данных включаем заголовочный файл:
+\end_layout
+
+\begin_layout Scrap
+
+<<Собственные заголовки>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdio.h>
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdlib.h>
+\end_layout
+
+\begin_layout Scrap
+
+#include <math.h>
+\end_layout
+
+\begin_layout Scrap
+
+#include <string.h>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Функция чтения данных.
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+// Чтение файла - проекции нового формата
+\end_layout
+
+\begin_layout Scrap
+
+// вход : file_name - имя файла
+\end_layout
+
+\begin_layout Scrap
+
+// выход : содержимое проекции (сырые данные и геофизические величины и
+ нулевой блок)
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj& TLab34NProj::copyFromTo( TLab34NProj& from_proj, TLab34NProj&
+ to_proj )
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    to_proj.blk0 = from_proj.blk0;
+\end_layout
+
+\begin_layout Scrap
+
+    unsigned int lines = to_proj.blk0.scanNum;
+\end_layout
+
+\begin_layout Scrap
+
+    unsigned int cols =  to_proj.blk0.pixNum; 
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    to_proj.geo.resize(lines); 
+\end_layout
+
+\begin_layout Scrap
+
+    to_proj.raw.resize(lines);
+\end_layout
+
+\begin_layout Scrap
+
+    for( unsigned int i = 0; i < lines; i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        to_proj.geo[i].resize(cols); 
+\end_layout
+
+\begin_layout Scrap
+
+        to_proj.raw[i].resize(cols);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    for( unsigned int i = 0; i < lines; i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        for( unsigned int j = 0; j < cols; j++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+            to_proj.raw[i][j] = from_proj.raw[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+            to_proj.geo[i][j] = from_proj.geo[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    return to_proj;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Получение размера проекции
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+/// количество строк в проекции
+\end_layout
+
+\begin_layout Scrap
+
+int lines() const {  
+\end_layout
+
+\begin_layout Scrap
+
+   return  blk0.scanNum; 
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+/// количество пикселей в строке проекции
+\end_layout
+
+\begin_layout Scrap
+
+int cols() const {  
+\end_layout
+
+\begin_layout Scrap
+
+   return  blk0.pixNum;
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Section
+Запись данных
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Standard
+Аналогично реализуем функцию сохранения данных.
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+сохранение данных объект-проекции в файл
+\end_layout
+
+\begin_layout Scrap
+
+@param file_name имя файла-проекции нового формата
+\end_layout
+
+\begin_layout Scrap
+
+@return функция возвращает ссылку на объект-проекцию
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+В случае ошибки функция прерывает выполнение программы
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj& write( std::string file_name);
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj& TLab34NProj::write( std::string file_name )
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    // Подготовка к записи
+\end_layout
+
+\begin_layout Scrap
+
+    // Корректируем коэффициенты представления данных и максимальное значение
+ пикселя
+\end_layout
+
+\begin_layout Scrap
+
+    double min_value = 1000.*1000.*1000.*1000.;
+\end_layout
+
+\begin_layout Scrap
+
+    for( int line = 0; line < lines(); line++ ){
+\end_layout
+
+\begin_layout Scrap
+
+        for( int col = 0; col < cols(); col++ ){
+\end_layout
+
+\begin_layout Scrap
+
+            if( raw[line][col] >= 0 ){
+\end_layout
+
+\begin_layout Scrap
+
+                if( geo[line][col] < min_value ) {
+\end_layout
+
+\begin_layout Scrap
+
+                    min_value = geo[line][col];
+\end_layout
+
+\begin_layout Scrap
+
+                }
+\end_layout
+
+\begin_layout Scrap
+
+            }
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    blk0.kb = floor( min_value );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    // выполняем преобразование данных к коротким целым
+\end_layout
+
+\begin_layout Scrap
+
+    int max_pixel_value = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    for( int line = 0; line < lines(); line++ ){
+\end_layout
+
+\begin_layout Scrap
+
+        for( int col = 0; col < cols(); col++ ){
+\end_layout
+
+\begin_layout Scrap
+
+            if( raw[line][col] >= 0 ){
+\end_layout
+
+\begin_layout Scrap
+
+                double a = geo[line][col];
+\end_layout
+
+\begin_layout Scrap
+
+                double c = floor( (a - blk0.kb) / blk0.ka + 0.5 );
+\end_layout
+
+\begin_layout Scrap
+
+                raw[line][col] = c;
+\end_layout
+
+\begin_layout Scrap
+
+                if ( c > max_pixel_value ) { 
+\end_layout
+
+\begin_layout Scrap
+
+                    max_pixel_value = c;
+\end_layout
+
+\begin_layout Scrap
+
+                }
+\end_layout
+
+\begin_layout Scrap
+
+            }
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    short M = max_pixel_value;
+\end_layout
+
+\begin_layout Scrap
+
+    if( (int)M != max_pixel_value ){
+\end_layout
+
+\begin_layout Scrap
+
+        printf( "Слишком большое максимальное значение в файле %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    blk0.maxPixelValue = M;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    FILE* file_header = fopen(file_name.c_str(), "wb");
+\end_layout
+
+\begin_layout Scrap
+
+    if( file_header == 0 ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        printf( "header is NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        perror( file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    else { 
+\end_layout
+
+\begin_layout Scrap
+
+        //printf( "header is not NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+    } 
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+   if( fwrite( &blk0, sizeof( blk0 ), 1, file_header ) != 1 ){
+\end_layout
+
+\begin_layout Scrap
+
+        printf( "header is NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        perror( file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    static short line_buf[1000 * 1000];
+\end_layout
+
+\begin_layout Scrap
+
+    for( int i = 0; i < lines(); i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        for( int j = 0; j < cols(); j++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+            line_buf[j] = raw[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+       if( (int)fwrite( line_buf, sizeof(short), cols(), file_header ) !=
+ cols() ){
+\end_layout
+
+\begin_layout Scrap
+
+            printf( "header is NULL for file %s
+\backslash
+n", file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+            perror( file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+            exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+        };
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    if( fclose( file_header ) != 0 ){
+\end_layout
+
+\begin_layout Scrap
+
+        perror( file_name.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+        exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+    };
+\end_layout
+
+\begin_layout Scrap
+
+    return *this;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Создание копии проекции
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/// Копирующий конструктор
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj( const TLab34NProj& old );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj::TLab34NProj( const TLab34NProj& old ){
+\end_layout
+
+\begin_layout Scrap
+
+    blk0 = old.blk0;
+\end_layout
+
+\begin_layout Scrap
+
+    raw.resize(old.lines()); 
+\end_layout
+
+\begin_layout Scrap
+
+    geo.resize(old.lines()); 
+\end_layout
+
+\begin_layout Scrap
+
+    for( int i = 0; i < old.lines(); i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        raw[i].resize(old.cols() ); 
+\end_layout
+
+\begin_layout Scrap
+
+        geo[i].resize(old.cols());
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+ 
+\end_layout
+
+\begin_layout Scrap
+
+    for( int i = 0; i < old.lines(); i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+       for( int j = 0; j < old.cols(); j++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+          raw[i][j] = old.raw[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+          geo[i][j] = old.geo[i][j];
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Section
+Очистка проекции
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+@brief Очистка проекции
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+Все пиксели проекции маркируются указанным значением
+\end_layout
+
+\begin_layout Scrap
+
+@param cloud_value заносится во все пиксели массива raw 
+\end_layout
+
+\begin_layout Scrap
+
+       (рекомендумое значение -1)
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj& clear( int cloud_value );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj& TLab34NProj::clear( int cloud_value )
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    for(  int i = 0; i < lines(); i++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+        for(  int j = 0; j < cols(); j++ ){ 
+\end_layout
+
+\begin_layout Scrap
+
+            raw[i][j] = cloud_value; 
+\end_layout
+
+\begin_layout Scrap
+
+            geo[i][j] = -999;
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    return *this;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Координаты строк и столбцов проекций нового формата
+\end_layout
+
+\begin_layout Standard
+Проекция нового формата это прямоугольная матрица значений.
+ При этом пиксели строки матрицы лежат на одной широте а пиксели столбцы
+ матрицы --- на одной долготе.
+\end_layout
+
+\begin_layout Standard
+Пиксели в строке расположены с запада на восток, а строки - с юга на север.
+\end_layout
+
+\begin_layout Standard
+Существует набор полей нулевого блока определяющих соответствие пикселей
+ и координат.
+\end_layout
+
+\begin_layout Subsection
+Преобразование номера столбца в долготу и обратно
+\end_layout
+
+\begin_layout Standard
+Получить долготу столбца проекции можно с помощью следующих полей нулевого
+ блока файла-проекции.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt lon}
+\end_layout
+
+\end_inset
+
+ --- долгота середины первого столбца проекции
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt lon + lonSize}
+\end_layout
+
+\end_inset
+
+ --- долгота середины последного столбца проекции
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt pixNum}
+\end_layout
+
+\end_inset
+
+--- количество столбцов проекции
+\end_layout
+
+\begin_layout Standard
+Пиксели с строке расположены равномерно, и, следовательно, этих значений
+ достаточно для того, чтобы определить долготу середины отдельно взятого
+ столбца.
+\end_layout
+
+\begin_layout Standard
+Существует еще одна величина 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt lonRes}
+\end_layout
+
+\end_inset
+
+ --- разрешение проекции в секундах.
+ На этапе создания прокции на её основе рассчитывается количество столбцов
+ проекции.
+ После того, как количество столбцов определено про данную величину проще
+ забыть, так-как реальный шаг проекции определяется её размером по долготе
+ и количеством пикселей в строке.
+\end_layout
+
+\begin_layout Standard
+Юра Эпштейн определил формулу определения количества столбцов следующим
+ образом:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{{\tt pixNum}}=\left\lfloor \frac{\text{{\tt LonSize}}}{\text{{\tt lonRes}}/3600}+0.5\right\rfloor +1\,\,\,\,\,\text{\text{.}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Можно использовать её при создании новых проекций, но при работе с уже созданным
+и проекциями от нее стоит отказаться и использовать значений 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt pixNum}
+\end_layout
+
+\end_inset
+
+ находящиеся в нулевом блоке файла-проекции.
+\end_layout
+
+\begin_layout Standard
+Таким образом, получить долготу 
+\emph on
+центра
+\emph default
+ столбца для новой проекции легко.
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+ @brief Долгота центра пикселя в градусах
+\end_layout
+
+\begin_layout Scrap
+
+ @param  column 0 <= column  < pixNum
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup coords
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup lon
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+double centerLon_for_Column( double column ) const;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+double TLab34NProj::centerLon_for_Column( double column ) const
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    double res = blk0.lonSize / (blk0.pixNum-1);
+\end_layout
+
+\begin_layout Scrap
+
+    return blk0.lon + column * res;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Можно определить обратную функцию
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+ Номер колонки в которую попадают пиксели с указанной долготой
+\end_layout
+
+\begin_layout Scrap
+
+    (долгота в градусах восточной долготы)
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup coords
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup lon
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+int getColumn_for_Lon( double lon ) const;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+int TLab34NProj::getColumn_for_Lon( double lon ) const
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    double res = blk0.lonSize / (blk0.pixNum-1);
+\end_layout
+
+\begin_layout Scrap
+
+    double column = (lon - blk0.lon) / res;
+\end_layout
+
+\begin_layout Scrap
+
+    double rounded_col = floor(column + 0.5);
+\end_layout
+
+\begin_layout Scrap
+
+    return int( rounded_col );
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Преобразование номера строки в широту и обратно
+\end_layout
+
+\begin_layout Standard
+Получить широту строки проекции можно с помощью следующих полей нулевого
+ блока файла-проекции.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt lat}
+\end_layout
+
+\end_inset
+
+ --- широта середины первой строки проекции
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt lat + latSize}
+\end_layout
+
+\end_inset
+
+ --- широта середины последней строки проекции
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt scanNum}
+\end_layout
+
+\end_inset
+
+--- количество строк проекции
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt projType}
+\end_layout
+
+\end_inset
+
+--- вид проекции.
+ Если 
+\begin_inset Formula $\text{{\tt projType}}=1$
+\end_inset
+
+ то данная проекция является проекцией Меркатора, а если 
+\begin_inset Formula $\text{{\tt projType}}=2$
+\end_inset
+
+ то данная проекция является равнопромежуточной проекцией.
+\end_layout
+
+\begin_layout Standard
+Для равнопромежуточной проекции широта пикселей проекции изменяется равномерно
+ от строки к строке.
+\end_layout
+
+\begin_layout Standard
+Для проекции Меркатора равномерно растет значение функции 
+\begin_inset Formula $M(l)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M(l)=\log\left(\tan\left(\frac{l}{2}+\frac{\pi}{4}\right)\right)\,\,\,\,\text{.}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Следовательно, рассчитывая широту строки проекции для проекции Меркатора
+ необходимо сначала получить Меркаторскую широту и затем преобразовать её
+ в обычную с помощью функции 
+\begin_inset Formula $invM$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+invM(\text{{\tt mercLat}})=2\left(\arctan\left(\exp\left(\text{{\tt mercLat}}\right)\right)-\frac{\pi}{4}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Величина 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt latRes}
+\end_layout
+
+\end_inset
+
+ --- разрешение проекции по широте (обычной для равнопромежуточной проеции
+ и меркаторской для проекции Меркатора) в секундах.
+ На этапе создания прокции на её основе рассчитывается количество строк
+ проекции.
+ После того, как количество столбцов определено про данную величину проще
+ забыть, так-как реальный шаг проекции по широте определяется её размером
+ по широте и количеством строк в проекции.
+\end_layout
+
+\begin_layout Standard
+Для равнопромежуточных проекций Юра Эпштейн определил формулу определения
+ количества строк следующим образом:
+\begin_inset Formula 
+\[
+\text{{\tt scanNum}}=\left\lfloor \frac{\text{{\tt latSize}}}{\text{{\tt latRes}}/3600}+0.5\right\rfloor +1\,\,\,\,\,\text{\text{.}}
+\]
+
+\end_inset
+
+а для проекций Меркатора так:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{{\tt scanNum}}=\left\lfloor \frac{M\left(\text{{\tt lat}}+\text{{\tt latSize}}\right)-M\left(\text{{\tt lat}}\right)}{\text{{\tt latRes}}/3600}+0.5\right\rfloor +1\,\,\,\,\,\text{\text{.}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Можно использовать её при создании новых прокций, но при работе с уже созданными
+ проекциями от неё стоит отказаться и использовать значений 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt scanNum}
+\end_layout
+
+\end_inset
+
+ находящиеся в нулевом блоке файла-проекции.
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+ @brief широта центра пикселя в градусах
+\end_layout
+
+\begin_layout Scrap
+
+ @param  line 0 <= line  < blk0.scanNum
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup coords
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup lat
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+double centerLat_for_Line( double line ) const;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+// 0 <= line < scanNum
+\end_layout
+
+\begin_layout Scrap
+
+double TLab34NProj::centerLat_for_Line( double line ) const
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    double min_lat = blk0.lat;
+\end_layout
+
+\begin_layout Scrap
+
+    if( blk0.projType == 1 ) min_lat = mercatorLat( min_lat );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double max_lat = blk0.lat + blk0.latSize;
+\end_layout
+
+\begin_layout Scrap
+
+    if( blk0.projType == 1 ) max_lat = mercatorLat( max_lat );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double res = ( max_lat - min_lat ) / (blk0.pixNum-1);
+\end_layout
+
+\begin_layout Scrap
+
+    double lat = min_lat + line * res;
+\end_layout
+
+\begin_layout Scrap
+
+    if( blk0.projType == 1 ) lat = unmercatorLat( lat );
+\end_layout
+
+\begin_layout Scrap
+
+    return lat;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения закрытых функций TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+double mercatorLat( double lat ) const;
+\end_layout
+
+\begin_layout Scrap
+
+double unmercatorLat( double mlat ) const;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+double TLab34NProj::mercatorLat( double lat ) const {
+\end_layout
+
+\begin_layout Scrap
+
+   lat = lat * atan2(1,1) / 90;
+\end_layout
+
+\begin_layout Scrap
+
+   double mLat = log( tan( 0.5*lat + atan2(1,1) ) );
+\end_layout
+
+\begin_layout Scrap
+
+   mLat = 90 * mLat / atan2(1,1);
+\end_layout
+
+\begin_layout Scrap
+
+   return mLat;
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+double TLab34NProj::unmercatorLat( double mlat ) const {
+\end_layout
+
+\begin_layout Scrap
+
+   mlat = mlat * atan2(1,1) / 90;
+\end_layout
+
+\begin_layout Scrap
+
+   double lat = 2.0 *( atan(exp(mlat)) - atan2(1,1) ) ;
+\end_layout
+
+\begin_layout Scrap
+
+   lat = 90 * lat / atan2(1,1);
+\end_layout
+
+\begin_layout Scrap
+
+   return lat;
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Standard
+Обратная функция
+\end_layout
+
+\begin_layout Scrap
+
+<<Определения функции TLab34NProj>>=
+\end_layout
+
+\begin_layout Scrap
+
+/**
+\end_layout
+
+\begin_layout Scrap
+
+ @brief строка, в которую попадают пиксели с указанной широтой
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup coords
+\end_layout
+
+\begin_layout Scrap
+
+ @ingroup lat
+\end_layout
+
+\begin_layout Scrap
+
+*/
+\end_layout
+
+\begin_layout Scrap
+
+int getLine_for_Lat( double lat ) const ;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+int TLab34NProj::getLine_for_Lat( double lat ) const
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    if( blk0.projType == 1 ) lat = mercatorLat( lat );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double min_lat = blk0.lat;
+\end_layout
+
+\begin_layout Scrap
+
+    if( blk0.projType == 1 ) min_lat = mercatorLat( min_lat );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double max_lat = blk0.lat + blk0.latSize;
+\end_layout
+
+\begin_layout Scrap
+
+    if( blk0.projType == 1 ) max_lat = mercatorLat( max_lat );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double res = ( max_lat - min_lat ) / (blk0.pixNum-1);
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double line = (lat - min_lat) / res;
+\end_layout
+
+\begin_layout Scrap
+
+    double rounded_line = floor(line + 0.5);
+\end_layout
+
+\begin_layout Scrap
+
+    return int( rounded_line );
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Исходные файлы
+\end_layout
+
+\begin_layout Scrap
+
+<<lab34NProjLib.cpp>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <lab34NProjLib.hpp>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Собственные заголовки>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<lab34NProjLib.hpp>>=
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие заголовки>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Общие типы данных>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Section
+Сборка библиотеки
+\end_layout
+
+\begin_layout Scrap
+
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+
+#!/bin/sh
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+A=lab34NProjLib
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+P=`pwd`
+\end_layout
+
+\begin_layout Scrap
+
+SRC=$P/temp/src
+\end_layout
+
+\begin_layout Scrap
+
+BIN=$P/temp/bin
+\end_layout
+
+\begin_layout Scrap
+
+OBJ=$P/temp/lib
+\end_layout
+
+\begin_layout Scrap
+
+INCL=$P/temp/include
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $INCL
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $OBJ
+\end_layout
+
+\begin_layout Scrap
+
+EXE=$BIN/${A}.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+LNW_notangle.sh "${A}.cpp" "$SRC/"
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+LNW_notangle.sh "${A}.hpp" "$INCL/"
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+gcc -Wall -c "$SRC/${A}.cpp" 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    "-I$INCL" -Iexternal/INCLUDE -Iexternal/INCLUDE/C_LIB 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    -o "$OBJ/$A.o"
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+doxygen >/dev/null 2>/dev/null
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\end_body
+\end_document

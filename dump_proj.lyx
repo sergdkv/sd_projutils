@@ -1,0 +1,3574 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+\noweboptions{longchunks,smallcode}
+\lstset { 
+basicstyle=\footnotesize,
+breaklines=true,
+breakatwhitespace=true,
+resetmargins=true,
+xleftmargin=3em
+}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format pdf
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language french
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+dumpProj
+\begin_inset Newline newline
+\end_inset
+
+Чтение новых проекций формата формата lab34 
+\begin_inset Newline newline
+\end_inset
+
+и преобразование их в текстовой файл
+\end_layout
+
+\begin_layout Author
+Сергей Дьяков
+\begin_inset Newline newline
+\end_inset
+
+лаб.
+\begin_inset space \thinspace{}
+\end_inset
+
+34 ИАПУ ДВО РАН
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Введение
+\end_layout
+
+\begin_layout Standard
+Простая программа преобразующую файл-проекцию в текстовой формат.
+\end_layout
+
+\begin_layout Standard
+Предшественником данной программы является программа 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt proj2txt}
+\end_layout
+
+\end_inset
+
+, выполняющая те-же функции.
+\end_layout
+
+\begin_layout Standard
+Эксплуатация программы 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt proj2txt}
+\end_layout
+
+\end_inset
+
+ показала что формату вызова данной программы свойственен ряд недостатков.
+\end_layout
+
+\begin_layout Enumerate
+Имена исходных проекций передаются в формате 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt mt201012012300 
+\backslash
+_ir1.pro 
+\backslash
+_ir2.pro}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+что запутывает пользователей программы
+\end_layout
+
+\begin_layout Enumerate
+При выводе данных часто необходимо исследовать одну строку, один столбец
+ или регион исходных файлов.
+\end_layout
+
+\begin_layout Enumerate
+Желательно иметь возможность вывода как геофизических величин, так и кодов
+ фильтрации облачности.
+\end_layout
+
+\begin_layout Enumerate
+Простой формат вывода не вполне удобен для чтения как человеком, так и программо
+й.
+ Желательно ввести дополнительные, самодокументируемые форматы вывода данных.
+\end_layout
+
+\begin_layout Enumerate
+Желательна возможность добавления в начало каждой строки уникального ключа.
+ Данный ключ позволит объединять или 
+\begin_inset Quotes fld
+\end_inset
+
+сливать вместе
+\begin_inset Quotes frd
+\end_inset
+
+ данные с помощью текстовой утилиты 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt join}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.gnu.org/software/coreutils/manual/html_node/join-invocation.html
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+При чтении данных желательно считывать данные как нового так и старого формата
+ lab34.
+\end_layout
+
+\begin_layout Enumerate
+Программа должна оставаться переносимой (компилируемой и исполняемой) как
+ в среде Linux так и в win34, в среде MinGW.
+\end_layout
+
+\begin_layout Standard
+Данная программа должна обеспечить возможность вывода содержимого файлов
+ проекций в текстовом виде с учетом перечисленных выше требований.
+\end_layout
+
+\begin_layout Standard
+Программа должна быть написана на языке C++ с использованием библиотеки
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt lab34NProjLib}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Вызов программы
+\end_layout
+
+\begin_layout Standard
+Результат работы программа должна выводить на стандартный вывод
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://en.wikipedia.org/wiki/Standard_streams
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+Программа должна вызываться следующим образом (далее скрипт): 
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "language=bash"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+# выводим содержимое проекций
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 --fileext .pro --cols lat,lon,datetime,_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+# выводим содержимое проекций указывая и коды фильтрации, если значение
+ отфильтровано
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 --with-masked --fileext .pro --cols lat,lon,datetime,_ir1,_vi
+s
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+# добавляя заголовки
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 --add-colheaders  --fileext .pro --cols lat,lon,timeu,datetim
+e,_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 --add-joinheaders --fileext .pro --cols lat,lon,timeu,datetim
+e,_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+# с указанным разделителем
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 --delim '%' --fileext .pro --cols lat,lon,datetime,_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+# выводим данные одной строки
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 --line-lat 45.00 --fileext .pro --cols lat,lon,timeu,datetime,
+_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+# выводим данные одного стоблца
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 --column-lon 130.00 --fileext .pro --cols lat,lon,timeu,dateti
+me,_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+# выводим данные по региону
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+        --minlat 40 --maxlat 41 --minlon 130 --maxlon 131 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+        --fileext .pro --cols lat,lon,timeu,datetime,_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+# выводим данные вдоль линии (разрез)
+\end_layout
+
+\begin_layout LyX-Code
+
+dumpProj -B mt21344 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+        --line 40,135-41,136 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+
+        --fileext .pro --cols lat,lon,timeu,datetime,_ir1,_vis
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Структура программы и разбор параметров
+\end_layout
+
+\begin_layout Standard
+Программа должна
+\end_layout
+
+\begin_layout Enumerate
+Разобрать опции командной строки, создав список исходных файлов и заполнив
+ переменные вывода
+\end_layout
+
+\begin_layout Enumerate
+Прочитать исходные файлы
+\end_layout
+
+\begin_layout Enumerate
+Обойти набор пикселей исходных файлов и для каждого пикселя получить набор
+ значений из проекций и вывести их на стандартный вывод
+\end_layout
+
+\begin_layout Standard
+Поэтому текст программы должен быть следующим:
+\end_layout
+
+\begin_layout Scrap
+<<dumpProj.cpp>>=
+\end_layout
+
+\begin_layout Scrap
+/// @file dumpProj.cpp
+\end_layout
+
+\begin_layout Scrap
+#include <stdio.h>
+\end_layout
+
+\begin_layout Scrap
+#include <getopt.h>
+\end_layout
+
+\begin_layout Scrap
+#include <iostream>
+\end_layout
+
+\begin_layout Scrap
+<<includes>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+using namespace std;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+// Настройки программы
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+// Список исходных файлов
+\end_layout
+
+\begin_layout Scrap
+<<список исходных файлов>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<наименования выводимых колонок>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<список прочитанных проекций>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<глобальные переменные>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<прототипы функций>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<функции>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+int main( int argc, char ** argv ){
+\end_layout
+
+\begin_layout Scrap
+    <<разбор опций командной строки>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    <<считывание исходных файлов>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    <<обойти пиксели проекции>>
+\end_layout
+
+\begin_layout Scrap
+    return 0;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Сборка программы
+\end_layout
+
+\begin_layout Scrap
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+#!/bin/sh
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Scrap
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Scrap
+A=dumpProj
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+P=`pwd`
+\end_layout
+
+\begin_layout Scrap
+SRC=$P/temp/src
+\end_layout
+
+\begin_layout Scrap
+BIN=$P/temp/bin
+\end_layout
+
+\begin_layout Scrap
+INCL=$P/temp/include
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Scrap
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+EXE=$BIN/${A}.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+LNW_notangle.sh ${A}.cpp $SRC/${A}.cpp
+\end_layout
+
+\begin_layout Scrap
+INCLUDES="-I $P/external/INCLUDE  -I $P/external/INCLUDE/C_LIB -I $INCL
+ "
+\end_layout
+
+\begin_layout Scrap
+#COPT="-D_GLIBCXX_DEBUG -Wall -ggdb -O0"
+\end_layout
+
+\begin_layout Scrap
+COPT="-O3" 
+\end_layout
+
+\begin_layout Scrap
+echo g++ -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp -o
+ $EXE -lpcre++ -lpcre
+\end_layout
+
+\begin_layout Scrap
+     g++ -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp -o
+ $EXE -lpcre++ -lpcre
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+doxygen >/dev/null 2>&1
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Разбор опций командной строки
+\end_layout
+
+\begin_layout Standard
+Разбор опций программы производиться с помощью функции getopt
+\end_layout
+
+\begin_layout Standard
+(описание: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://habrahabr.ru/blogs/nix_coding/55665/
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Scrap
+<<разбор опций командной строки>>=
+\end_layout
+
+\begin_layout Scrap
+if( parse_startup_options( argc , argv, &error_message ) ){
+\end_layout
+
+\begin_layout Scrap
+     fprintf( stderr, "Ошибка разбора опций командной строки.
+\backslash
+n%s
+\backslash
+n", error_message.c_str() );
+\end_layout
+
+\begin_layout Scrap
+     return -1;
+\end_layout
+
+\begin_layout Scrap
+};
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<глобальные переменные>>=
+\end_layout
+
+\begin_layout Scrap
+std::string error_message; ///< Сообщение о последней ошибке
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<функции>>=
+\end_layout
+
+\begin_layout Scrap
+/// @brief Разбор опций командной строки
+\end_layout
+
+\begin_layout Scrap
+/// @param argc - количество опций
+\end_layout
+
+\begin_layout Scrap
+/// @param argv - массив опций командной строки
+\end_layout
+
+\begin_layout Scrap
+/// @param error_message - в случае ошибки в данную строку будет занесено
+ сообщение о ошибке
+\end_layout
+
+\begin_layout Scrap
+/// @return 0 - опции разобраны удачно
+\end_layout
+
+\begin_layout Scrap
+int  parse_startup_options( int argc , char **argv, std::string *error_message
+ ){
+\end_layout
+
+\begin_layout Scrap
+     <<реализация разбора опций командной строки>>
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Реализация разбора опций командной строки достаточно простая.
+\end_layout
+
+\begin_layout Scrap
+<<реализация разбора опций командной строки>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+const char *short_options = "" <<однобуквенные опции>>;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+static struct option long_options[] = {
+\end_layout
+
+\begin_layout Scrap
+    <<длинные опции>>
+\end_layout
+
+\begin_layout Scrap
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+int optIdx;
+\end_layout
+
+\begin_layout Scrap
+while (1){
+\end_layout
+
+\begin_layout Scrap
+    int opt_char;
+\end_layout
+
+\begin_layout Scrap
+    opt_char = getopt_long( argc, &(argv[0]), short_options, long_options,
+ &optIdx );
+\end_layout
+
+\begin_layout Scrap
+    if( opt_char == -1 ) {
+\end_layout
+
+\begin_layout Scrap
+        break;  
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    switch( opt_char ){
+\end_layout
+
+\begin_layout Scrap
+         <<последовательная обработка опций комадной строки>>
+\end_layout
+
+\begin_layout Scrap
+         default:
+\end_layout
+
+\begin_layout Scrap
+            *error_message = std::string("Неизвестная опция.
+ ") + argv[optind];
+\end_layout
+
+\begin_layout Scrap
+            return -1;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+<<проверка правильности вызова программы>>
+\end_layout
+
+\begin_layout Scrap
+return 0;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+help
+\end_layout
+
+\begin_layout Scrap
+<<однобуквенные опции>>=
+\end_layout
+
+\begin_layout Scrap
+"h"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"help",          0, 0, 'h' },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"-h      
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--help     вывод справки
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 'h':
+\end_layout
+
+\begin_layout Scrap
+    use_message();
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Subsection
+base
+\end_layout
+
+\begin_layout Scrap
+<<однобуквенные опции>>=
+\end_layout
+
+\begin_layout Scrap
+"B:"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"base",          1, 0, 'B' },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"-B      
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--base  [base file name]  Общая часть имен файлов
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 'B':
+\end_layout
+
+\begin_layout Scrap
+    base_part_file_names = optarg;
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+std::string base_part_file_names = ""; ///< Общая часть имен файлов
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Subsection
+withext
+\end_layout
+
+\begin_layout Scrap
+<<однобуквенные опции>>=
+\end_layout
+
+\begin_layout Scrap
+"E:"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"withext",          1, 0, 'E' },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"-E      
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--withext  [extension]  расширение файлов
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 'E':
+\end_layout
+
+\begin_layout Scrap
+    extension_file_names = optarg;
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+std::string extension_file_names = ""; ///< Расширения файлов
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+with-masked
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"with-masked",          0, 0, 129 },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"--with-masked     включать в результат результат маскирования
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 129:
+\end_layout
+
+\begin_layout Scrap
+    with_masked_points = true;
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+bool with_masked_points = false; ///< включать в вывод замаскированные пиксели
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+add-colheaders
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"add-colheaders",          0, 0, 130 },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"--add-colheaders     добавлять имена колонок в каждую строку
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 130:
+\end_layout
+
+\begin_layout Scrap
+    add_colheaders = true;
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+bool add_colheaders = false; ///< добавлять имена колонок в каждую строку
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+add-joinheaders
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"add-joinheaders",          0, 0, 131 },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"--add-joinheaders     в начало каждой строки добавить уникальный идентификатор
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 131:
+\end_layout
+
+\begin_layout Scrap
+    add_joinheaders = true;
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+bool add_joinheaders = false; ///< в начало каждой строки добавить уникальный
+ идентификатор
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+delim
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"delim",          1, 0, 132 },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"--delim     разделитель для колонок
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 132:
+\end_layout
+
+\begin_layout Scrap
+    delim = optarg;
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+std::string delim = "
+\backslash
+t"; ///< разделитель колонок
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+line-lat, column-lon
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"line-lat",          1, 0, 133 },
+\end_layout
+
+\begin_layout Scrap
+{"column-lon",        1, 0, 134 },
+\end_layout
+
+\begin_layout Scrap
+{"min-lat",           1, 0, 135 },
+\end_layout
+
+\begin_layout Scrap
+{"max-lat",           1, 0, 136 },
+\end_layout
+
+\begin_layout Scrap
+{"min-lon",           1, 0, 137 },
+\end_layout
+
+\begin_layout Scrap
+{"max-lon",           1, 0, 138 },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+"--line-lat     вывести строку с указанной широтой
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--column-lon     вывести строку с указанной долготой
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--min-lat      минимальная выводимая широта
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--max-lat      максимальная выводимая широта
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--min-lon      минимальная выводимая долгота
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+"--max-lon      максимальная выводимая долгота
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+собственно обработка записи
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 133:
+\end_layout
+
+\begin_layout Scrap
+case 134:
+\end_layout
+
+\begin_layout Scrap
+case 135:
+\end_layout
+
+\begin_layout Scrap
+case 136:
+\end_layout
+
+\begin_layout Scrap
+case 137:
+\end_layout
+
+\begin_layout Scrap
+case 138:
+\end_layout
+
+\begin_layout Scrap
+    {
+\end_layout
+
+\begin_layout Scrap
+    double a;
+\end_layout
+
+\begin_layout Scrap
+    if( parseLongDouble( optarg, &a, NULL ) != 0 ){
+\end_layout
+
+\begin_layout Scrap
+        *error_message  = std::string("Ошибка разбора арумента ") + optarg
+  + " ожидается плавающее число";
+\end_layout
+
+\begin_layout Scrap
+        return 1;
+\end_layout
+
+\begin_layout Scrap
+    };
+\end_layout
+
+\begin_layout Scrap
+    {
+\end_layout
+
+\begin_layout Scrap
+        switch ( opt_char ){
+\end_layout
+
+\begin_layout Scrap
+            case 133: line_lat = a; break;
+\end_layout
+
+\begin_layout Scrap
+            case 134: column_lon = a; break;
+\end_layout
+
+\begin_layout Scrap
+            case 135: min_lat = a; break;
+\end_layout
+
+\begin_layout Scrap
+            case 136: max_lat = a; break;
+\end_layout
+
+\begin_layout Scrap
+            case 137: min_lon = a; break;
+\end_layout
+
+\begin_layout Scrap
+            case 138: max_lon = a; break;
+\end_layout
+
+\begin_layout Scrap
+        }
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+Преобразование строки в 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tt double
+\end_layout
+
+\end_inset
+
+ и 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tt long
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Если преобразование удалось --- возвращает ноль.
+\end_layout
+
+\begin_layout Scrap
+
+<<прототипы функций>>=
+\end_layout
+
+\begin_layout Scrap
+
+int parseLongDouble( const char *buffer, double *ret_double, long*ret_long
+ );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+int parseLongDouble( const char *buffer, double *ret_double, long*ret_long
+ ){
+\end_layout
+
+\begin_layout Scrap
+
+    const char *begin;
+\end_layout
+
+\begin_layout Scrap
+
+    char *end;
+\end_layout
+
+\begin_layout Scrap
+
+    double d;
+\end_layout
+
+\begin_layout Scrap
+
+    long l;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    begin = buffer;
+\end_layout
+
+\begin_layout Scrap
+
+    while( *begin && isspace(*begin) ) begin++;
+\end_layout
+
+\begin_layout Scrap
+
+    if( ret_double ) 
+\end_layout
+
+\begin_layout Scrap
+
+       d = strtod( begin, &end );
+\end_layout
+
+\begin_layout Scrap
+
+    else 
+\end_layout
+
+\begin_layout Scrap
+
+       l = strtol( begin, &end, 10 );
+\end_layout
+
+\begin_layout Scrap
+
+    if( begin == end ){
+\end_layout
+
+\begin_layout Scrap
+
+        return 1;
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    else {
+\end_layout
+
+\begin_layout Scrap
+
+        while( *end && isspace(*end) ) end++;
+\end_layout
+
+\begin_layout Scrap
+
+        if( *end ) return 2;
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    if( ret_double ) 
+\end_layout
+
+\begin_layout Scrap
+
+        *ret_double = d;
+\end_layout
+
+\begin_layout Scrap
+
+    else if ( ret_long ) 
+\end_layout
+
+\begin_layout Scrap
+
+        *ret_long = l;
+\end_layout
+
+\begin_layout Scrap
+
+    return 0;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+int parseLong( const char *buffer, long *ret_long ){
+\end_layout
+
+\begin_layout Scrap
+
+    return parseLongDouble( buffer, NULL, ret_long );
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+int parseDouble( const char *buffer, double *ret_double ){
+\end_layout
+
+\begin_layout Scrap
+
+    return parseLongDouble( buffer, ret_double, NULL );
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<includes>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdlib.h>
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+double line_lat = 999; ///< выводим только указанную строку (если 999 -
+ опция не задана)
+\end_layout
+
+\begin_layout Scrap
+double column_lon = 999; ///< выводим только указанную строку (если 999
+ - опция не задана)
+\end_layout
+
+\begin_layout Scrap
+double max_lat = 999; ///< максимальная выводимая широта
+\end_layout
+
+\begin_layout Scrap
+double min_lat = 999; ///< минимальная выводимая широта
+\end_layout
+
+\begin_layout Scrap
+double max_lon = 999; ///< максимальная выводимая долгота
+\end_layout
+
+\begin_layout Scrap
+double min_lon = 999; ///< минимальная выводимая долгота
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+line
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"line",          1, 0, 139 },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+ "--line <lat1,lon1-lat2,lon2>    вывести значения расположенные вдоль указанной
+ строки
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<настройки программы>>=
+\end_layout
+
+\begin_layout Scrap
+bool output_profile = false; ///< вывод значений расположенных вдоль указанной
+ строки
+\end_layout
+
+\begin_layout Scrap
+double profile_lat1 = 999; ///<
+\end_layout
+
+\begin_layout Scrap
+double profile_lon1 = 999; ///<
+\end_layout
+
+\begin_layout Scrap
+double profile_lat2 = 999; ///<
+\end_layout
+
+\begin_layout Scrap
+double profile_lon2 = 999; ///<
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+разбор полученной строки будет производиться с помощью регулярных выражений
+\end_layout
+
+\begin_layout Scrap
+<<includes>>=
+\end_layout
+
+\begin_layout Scrap
+#include <pcre++.h>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 139:
+\end_layout
+
+\begin_layout Scrap
+    {
+\end_layout
+
+\begin_layout Scrap
+    std::string  d = "[0-9]*
+\backslash
+
+\backslash
+.[0-9]*|
+\backslash
+
+\backslash
+.[0-9]*|[0-9]*
+\backslash
+
+\backslash
+.|[0-9]*";
+\end_layout
+
+\begin_layout Scrap
+    std::string pattern = "^(" +d+ "),(" +d+ ")-(" +d+ "),(" +d+ ")$";
+\end_layout
+
+\begin_layout Scrap
+    pcrepp::Pcre reg(  pattern );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    if(reg.search(optarg) == true) {
+\end_layout
+
+\begin_layout Scrap
+        output_profile = true;
+\end_layout
+
+\begin_layout Scrap
+        parseLongDouble( reg[0].c_str(), &profile_lat1, NULL );
+\end_layout
+
+\begin_layout Scrap
+        parseLongDouble( reg[1].c_str(), &profile_lon1, NULL );
+\end_layout
+
+\begin_layout Scrap
+        parseLongDouble( reg[2].c_str(), &profile_lat2, NULL );
+\end_layout
+
+\begin_layout Scrap
+        parseLongDouble( reg[3].c_str(), &profile_lon2, NULL );
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    else {
+\end_layout
+
+\begin_layout Scrap
+        *error_message  = std::string("Ошибка разбора арумента ") + optarg
+  + " ожидаются четыре числа в          формате 35,140-40,155";
+\end_layout
+
+\begin_layout Scrap
+        return 1;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Subsection
+cols
+\end_layout
+
+\begin_layout Scrap
+<<длинные опции>>=
+\end_layout
+
+\begin_layout Scrap
+{"cols",          1, 0, 140 },
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+справка
+\end_layout
+
+\begin_layout Scrap
+<<Справка>>=
+\end_layout
+
+\begin_layout Scrap
+ "--cols <col,col2,col3,...>    выводить значения из указанных колонок
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+ <<Описания колонок>>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<наименования выводимых колонок>>=
+\end_layout
+
+\begin_layout Scrap
+std::vector <std::string> col_names; ///< имена колонок
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Standard
+разбор полученной строки будет производиться с помощью регулярных выражений
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<последовательная обработка опций комадной строки>>=
+\end_layout
+
+\begin_layout Scrap
+case 140:
+\end_layout
+
+\begin_layout Scrap
+    {
+\end_layout
+
+\begin_layout Scrap
+    vector <string> a = split( optarg, "," );
+\end_layout
+
+\begin_layout Scrap
+    for( unsigned int i = 0; i < a.size(); i++ ) {
+\end_layout
+
+\begin_layout Scrap
+        col_names.push_back( a[i] );
+\end_layout
+
+\begin_layout Scrap
+        string column = a[i];
+\end_layout
+
+\begin_layout Scrap
+        if( special_column( column ) ){  // имя колонки - зарезервировано
+ 
+\end_layout
+
+\begin_layout Scrap
+            file_names.push_back( "" );
+\end_layout
+
+\begin_layout Scrap
+        }
+\end_layout
+
+\begin_layout Scrap
+        else {
+\end_layout
+
+\begin_layout Scrap
+            file_names.push_back( base_part_file_names + column + extension_file_
+names  );
+\end_layout
+
+\begin_layout Scrap
+        }
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    break;;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<список исходных файлов>>=
+\end_layout
+
+\begin_layout Scrap
+vector<string> file_names; ///< спискок имен исходных файлов
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<прототипы функций>>=
+\end_layout
+
+\begin_layout Scrap
+bool special_column( string column );
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<функции>>=
+\end_layout
+
+\begin_layout Scrap
+bool special_column( string column ){
+\end_layout
+
+\begin_layout Scrap
+    <<return true if column - специальная колонка>>
+\end_layout
+
+\begin_layout Scrap
+    return false;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+Разбиение строки на подстроки
+\end_layout
+
+\begin_layout Scrap
+
+<<прототипы функций>>=
+\end_layout
+
+\begin_layout Scrap
+
+vector<string> split( const string & theString, const string & theDelimiter);
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+vector<string> split( const string & theString, const string & theDelimiter)
+ 
+\end_layout
+
+\begin_layout Scrap
+
+{ 
+\end_layout
+
+\begin_layout Scrap
+
+    vector<string> theStringVector;
+\end_layout
+
+\begin_layout Scrap
+
+    size_t start = 0, end = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    while ( end != string::npos) { 
+\end_layout
+
+\begin_layout Scrap
+
+       end = theString.find( theDelimiter, start);
+\end_layout
+
+\begin_layout Scrap
+
+       if( end == string::npos) {
+\end_layout
+
+\begin_layout Scrap
+
+           string token = theString.substr( start );
+\end_layout
+
+\begin_layout Scrap
+
+           theStringVector.push_back( token );
+\end_layout
+
+\begin_layout Scrap
+
+           return theStringVector;
+\end_layout
+
+\begin_layout Scrap
+
+       }
+\end_layout
+
+\begin_layout Scrap
+
+       string token = theString.substr( start, end-start );
+\end_layout
+
+\begin_layout Scrap
+
+       theStringVector.push_back( token );
+\end_layout
+
+\begin_layout Scrap
+
+       start = end + theDelimiter.size(); 
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    return theStringVector;
+\end_layout
+
+\begin_layout Scrap
+
+} 
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+После разбора опций в массиве file_names должны быть непустые имена файлов.
+\end_layout
+
+\begin_layout Scrap
+<<проверка правильности вызова программы>>=
+\end_layout
+
+\begin_layout Scrap
+{
+\end_layout
+
+\begin_layout Scrap
+int n = 0;
+\end_layout
+
+\begin_layout Scrap
+for( int i = 0; i < (int) file_names.size(); i++ ){
+\end_layout
+
+\begin_layout Scrap
+    if( file_names[i] != "" ){
+\end_layout
+
+\begin_layout Scrap
+        n+=1;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+if( n == 0 ){
+\end_layout
+
+\begin_layout Scrap
+    use_message();
+\end_layout
+
+\begin_layout Scrap
+    return -1;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Вывод справки
+\end_layout
+
+\begin_layout Scrap
+<<прототипы функций>>=
+\end_layout
+
+\begin_layout Scrap
+void use_message();
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<функции>>=
+\end_layout
+
+\begin_layout Scrap
+void use_message(){
+\end_layout
+
+\begin_layout Scrap
+   string message = "dumpProj
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "Вывод содержимого файлов-проекций в текстовом виде
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "Вывод содержимого файлов-проекций в текстовом виде
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "пример использования:
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "   dumpProj -B mt21344
+\backslash
+
+\backslash
+ 
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "      --line 40,135-41,136
+\backslash
+
+\backslash
+  
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "      --fileext .pro --cols lat,lon,timeu,datetime,_ir1,_vis
+ 
+\backslash
+n
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "Формат вызова:
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "   dumpProj [опиции]
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    "Список опций
+\backslash
+n"
+\end_layout
+
+\begin_layout Scrap
+                    <<Справка>>;
+\end_layout
+
+\begin_layout Scrap
+    puts( message.c_str() );
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Считывание исходных файлов
+\end_layout
+
+\begin_layout Scrap
+<<includes>>=
+\end_layout
+
+\begin_layout Scrap
+#include <lab34NProjLib.hpp>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<список прочитанных проекций>>=
+\end_layout
+
+\begin_layout Scrap
+vector<TLab34NProj> input_projections; ///< спискок проекций исходных файлов
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Считываем исходные файлы.
+ Номер первого исходного файла помещаем в отдельную переменную 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\backslash
+tt first
+\backslash
+_proj
+\backslash
+_file}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Scrap
+<<считывание исходных файлов>>=
+\end_layout
+
+\begin_layout Scrap
+for( unsigned int i = 0; i < file_names.size(); i++ ){
+\end_layout
+
+\begin_layout Scrap
+    TLab34NProj p;
+\end_layout
+
+\begin_layout Scrap
+    input_projections.push_back( p );
+\end_layout
+
+\begin_layout Scrap
+    if( file_names[i] != "" ){
+\end_layout
+
+\begin_layout Scrap
+       TLab34NProj::read( file_names[i], input_projections[i] );
+\end_layout
+
+\begin_layout Scrap
+       first_proj_file = i;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<глобальные переменные>>=
+\end_layout
+
+\begin_layout Scrap
+int first_proj_file = 999; ///< номер первой колонки связанной с исходным
+ файлом
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Обход пикселей проекции
+\end_layout
+
+\begin_layout Standard
+В зависимости от того, надо ли вывести все пикслели проекции, или, например,
+ сделать разрез данных проеции, перебор пикселей должен производится различными
+ способами.
+ 
+\end_layout
+
+\begin_layout Standard
+Рассмотрим случай разреза.
+\end_layout
+
+\begin_layout Standard
+Обойти пиксели проекции 
+\end_layout
+
+\begin_layout Scrap
+<<обойти пиксели проекции>>=
+\end_layout
+
+\begin_layout Scrap
+if( output_profile ){
+\end_layout
+
+\begin_layout Scrap
+    const int max_profile_points = 100000;
+\end_layout
+
+\begin_layout Scrap
+    int col2 = 99999;
+\end_layout
+
+\begin_layout Scrap
+    int line2 = 99999;
+\end_layout
+
+\begin_layout Scrap
+    for( int i = 0; i <= max_profile_points; i++ ){
+\end_layout
+
+\begin_layout Scrap
+        double lat = profile_lat1 + i * double(profile_lat2 - profile_lat1)
+ / max_profile_points; 
+\end_layout
+
+\begin_layout Scrap
+        double lon = profile_lon1 + i * double(profile_lon2 - profile_lon1)
+ / max_profile_points; 
+\end_layout
+
+\begin_layout Scrap
+        int col = input_projections[first_proj_file].getColumn_for_Lon( lon
+ );
+\end_layout
+
+\begin_layout Scrap
+        int line = input_projections[first_proj_file].getLine_for_Lat( lat
+ );
+\end_layout
+
+\begin_layout Scrap
+        if( col == col2 && line == line2 ) continue;
+\end_layout
+
+\begin_layout Scrap
+        <<если пиксель за пределами снимка или обозначенной области, выходим
+ из цикла>>
+\end_layout
+
+\begin_layout Scrap
+        <<вывести пиксель line col>>
+\end_layout
+
+\begin_layout Scrap
+        col2 = col;
+\end_layout
+
+\begin_layout Scrap
+        line2 = line;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Если точка выходит за пределы обозначенной области, мы должны пропустить
+ текущую точку.
+\end_layout
+
+\begin_layout Scrap
+<<если пиксель за пределами снимка или обозначенной области, выходим из
+ цикла>>=
+\end_layout
+
+\begin_layout Scrap
+if( col < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( col >= input_projections[first_proj_file].cols() ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( line < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( line >= input_projections[first_proj_file].lines() ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( min_lat != 999 && lat < min_lat ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( max_lat != 999 && lat > max_lat ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( min_lon != 999 && lon < min_lon ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( max_lat != 999 && lon > max_lon ) continue;
+\end_layout
+
+\begin_layout Scrap
+if( !with_masked_points && input_projections[first_proj_file].raw[line][col]
+ < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Другим важным случаем является обработка горизонтального и вертикального
+ разрезов.
+\end_layout
+
+\begin_layout Scrap
+<<обойти пиксели проекции>>=
+\end_layout
+
+\begin_layout Scrap
+if( line_lat != 999 ){
+\end_layout
+
+\begin_layout Scrap
+    double lat = line_lat;
+\end_layout
+
+\begin_layout Scrap
+    int line = input_projections[first_proj_file].getLine_for_Lat( lat );
+\end_layout
+
+\begin_layout Scrap
+    for( int col = 0 ; col < input_projections[first_proj_file].cols(); col++
+ ){
+\end_layout
+
+\begin_layout Scrap
+        double lon = input_projections[first_proj_file].centerLon_for_Column(
+ col );
+\end_layout
+
+\begin_layout Scrap
+        <<если пиксель за пределами снимка или обозначенной области, выходим
+ из цикла>>
+\end_layout
+
+\begin_layout Scrap
+        <<вывести пиксель line col>>
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+горизонтальный разрез
+\end_layout
+
+\begin_layout Scrap
+<<обойти пиксели проекции>>=
+\end_layout
+
+\begin_layout Scrap
+if( column_lon != 999 ){
+\end_layout
+
+\begin_layout Scrap
+    double lon = column_lon;
+\end_layout
+
+\begin_layout Scrap
+    int col = input_projections[first_proj_file].getColumn_for_Lon( lon );
+\end_layout
+
+\begin_layout Scrap
+    for( int line = 0 ; line < input_projections[first_proj_file].lines();
+ line++ ){
+\end_layout
+
+\begin_layout Scrap
+        double lat = input_projections[first_proj_file].centerLat_for_Line(
+ line );
+\end_layout
+
+\begin_layout Scrap
+        <<если пиксель за пределами снимка или обозначенной области, выходим
+ из цикла>>
+\end_layout
+
+\begin_layout Scrap
+        <<вывести пиксель line col>>
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Вывод всех пикселей изображения.
+\end_layout
+
+\begin_layout Scrap
+<<обойти пиксели проекции>>=
+\end_layout
+
+\begin_layout Scrap
+if( column_lon == 999 && line_lat == 999 && !output_profile ){
+\end_layout
+
+\begin_layout Scrap
+    for( int line = 0 ; line < input_projections[first_proj_file].lines();
+ line++ ){
+\end_layout
+
+\begin_layout Scrap
+        double lat = input_projections[first_proj_file].centerLat_for_Line(
+ line );
+\end_layout
+
+\begin_layout Scrap
+        for( int col = 0 ; col < input_projections[first_proj_file].cols();
+ col++ ){
+\end_layout
+
+\begin_layout Scrap
+           double lon = input_projections[first_proj_file].centerLon_for_Column(
+ col );
+\end_layout
+
+\begin_layout Scrap
+           <<если пиксель за пределами снимка или обозначенной области,
+ выходим из цикла>>
+\end_layout
+
+\begin_layout Scrap
+           <<вывести пиксель line col>>
+\end_layout
+
+\begin_layout Scrap
+        }
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Вывод пикселя
+\end_layout
+
+\begin_layout Standard
+Вывод отдельного пикселя разумно вынести в функцию.
+\end_layout
+
+\begin_layout Scrap
+<<вывести пиксель line col>>=
+\end_layout
+
+\begin_layout Scrap
+print_pixel( line, col );
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<includes>>=
+\end_layout
+
+\begin_layout Scrap
+#include <string.h>
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<функции>>=
+\end_layout
+
+\begin_layout Scrap
+void print_pixel( int line, int col ){
+\end_layout
+
+\begin_layout Scrap
+    int s = col_names.size();
+\end_layout
+
+\begin_layout Scrap
+    static char b[300];
+\end_layout
+
+\begin_layout Scrap
+    static char res[20000] = "";
+\end_layout
+
+\begin_layout Scrap
+    res[0] = '
+\backslash
+0';
+\end_layout
+
+\begin_layout Scrap
+    int n = 0;
+\end_layout
+
+\begin_layout Scrap
+    if( add_joinheaders ){
+\end_layout
+
+\begin_layout Scrap
+        if( add_colheaders ){
+\end_layout
+
+\begin_layout Scrap
+            strcat( res, "N=" );
+\end_layout
+
+\begin_layout Scrap
+        }
+\end_layout
+
+\begin_layout Scrap
+        sprintf( b, "%05d%05d", line, col );
+\end_layout
+
+\begin_layout Scrap
+        strcat( res, b );
+\end_layout
+
+\begin_layout Scrap
+        n++;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    for( int i = 0; i < s; i++ ){
+\end_layout
+
+\begin_layout Scrap
+       const char *name = col_names[i].c_str();
+\end_layout
+
+\begin_layout Scrap
+       static char value[256] = "NONE";
+\end_layout
+
+\begin_layout Scrap
+       <<определяем значение колонки вывода>>
+\end_layout
+
+\begin_layout Scrap
+       if( n > 0 ) strcat( res, delim.c_str() );
+\end_layout
+
+\begin_layout Scrap
+       if( add_colheaders ){
+\end_layout
+
+\begin_layout Scrap
+            strcat( res, name );
+\end_layout
+
+\begin_layout Scrap
+            strcat( res, "=" );
+\end_layout
+
+\begin_layout Scrap
+       }
+\end_layout
+
+\begin_layout Scrap
+       strcat( res, value );
+\end_layout
+
+\begin_layout Scrap
+       n += 1;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    puts( res );
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Определение значение выводимого поля
+\end_layout
+
+\begin_layout Standard
+Существуют поля двух видов: поля геофизических величин и поля вспомогательных
+ данных.
+\end_layout
+
+\begin_layout Standard
+Если поле не является полем вспомогательных данных --- значит это поле вывода.
+\end_layout
+
+\begin_layout Standard
+Последовательно обработаем поля вспомогательных данных.
+\end_layout
+
+\begin_layout Subsubsection
+lat
+\end_layout
+
+\begin_layout Scrap
+<<Описания колонок>>=
+\end_layout
+
+\begin_layout Scrap
+"lat (широта в градусах), "
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<определяем значение колонки вывода>>=
+\end_layout
+
+\begin_layout Scrap
+if( strcmp( name, "lat" ) == 0 ){ 
+\end_layout
+
+\begin_layout Scrap
+   sprintf( value, "%.5lf", input_projections[first_proj_file].centerLat_for_Line(
+ line )  );
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<return true if column - специальная колонка>>=
+\end_layout
+
+\begin_layout Scrap
+if( column == "lat" ) return true;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+lon
+\end_layout
+
+\begin_layout Scrap
+<<Описания колонок>>=
+\end_layout
+
+\begin_layout Scrap
+"lon (долгота в градусах), "
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<определяем значение колонки вывода>>=
+\end_layout
+
+\begin_layout Scrap
+else if( strcmp( name, "lon" ) == 0 ){ 
+\end_layout
+
+\begin_layout Scrap
+   sprintf( value, "%.5lf", input_projections[first_proj_file].centerLon_for_Colum
+n( col ) );
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<return true if column - специальная колонка>>=
+\end_layout
+
+\begin_layout Scrap
+if( column == "lon" ) return true;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+line
+\end_layout
+
+\begin_layout Scrap
+<<Описания колонок>>=
+\end_layout
+
+\begin_layout Scrap
+"line (номер строки), "
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<определяем значение колонки вывода>>=
+\end_layout
+
+\begin_layout Scrap
+else if( strcmp( name, "line" ) == 0 ){ 
+\end_layout
+
+\begin_layout Scrap
+   sprintf( value, "%d", line  );
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<return true if column - специальная колонка>>=
+\end_layout
+
+\begin_layout Scrap
+if( column == "line" ) return true;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+col
+\end_layout
+
+\begin_layout Scrap
+<<Описания колонок>>=
+\end_layout
+
+\begin_layout Scrap
+"col (номер колонки), "
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<определяем значение колонки вывода>>=
+\end_layout
+
+\begin_layout Scrap
+else if( strcmp( name, "col" ) == 0 ){ 
+\end_layout
+
+\begin_layout Scrap
+   sprintf( value, "%d", col );
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+<<return true if column - специальная колонка>>=
+\end_layout
+
+\begin_layout Scrap
+if( column == "col" ) return true;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+вывод данных
+\end_layout
+
+\begin_layout Scrap
+<<определяем значение колонки вывода>>=
+\end_layout
+
+\begin_layout Scrap
+else { 
+\end_layout
+
+\begin_layout Scrap
+   int raw = input_projections[i].raw[line][col];
+\end_layout
+
+\begin_layout Scrap
+   double geo = input_projections[i].geo[line][col];
+\end_layout
+
+\begin_layout Scrap
+   if( raw < 0 ){
+\end_layout
+
+\begin_layout Scrap
+       sprintf( value, "MASKED%d", -raw );
+\end_layout
+
+\begin_layout Scrap
+   }
+\end_layout
+
+\begin_layout Scrap
+   else {
+\end_layout
+
+\begin_layout Scrap
+       sprintf( value, "%.4lf", geo );
+\end_layout
+
+\begin_layout Scrap
+   }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\end_body
+\end_document

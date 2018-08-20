@@ -1,0 +1,3812 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+\noweboptions{longchunks,footnotesizecode}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language russian
+\language_package babel
+\inputencoding utf8
+\fontencoding T2A
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 1
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 3cm
+\rightmargin 1in
+\bottommargin 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+smoothDiffIR12
+\end_layout
+
+\begin_layout Author
+С.
+ Дьяков
+\end_layout
+
+\begin_layout Standard
+smoothDiffIR12 - программа для сглаживания разницы двух каналов разделенного
+ окна.
+\end_layout
+
+\begin_layout Section*
+Введение
+\end_layout
+
+\begin_layout Standard
+Разность двух каналов разделенного окна (например близких.
+ ИК-каналов) шумит.
+ Шум разности критичен так-как на основе разницы и измерений одного из ИК-канало
+в рассчитываются значения температуры поверхности океана при этом величина
+ шума утраивается.
+ В настоящее время обнаружен шум у данных спутников POES NOAA и MTSAT-1R,
+ причем у последнего шум носит полосовой характер.
+\end_layout
+
+\begin_layout Standard
+Разность двух каналов зависит от атмосферной массы, температуры подстилающей
+ поверхности и свойств атмосферы.
+ При наблюдении за поверхностью океана наиболее изменчивым параметром является
+ температура поверхности океана.
+ Поэтому данная программа реализует способ сглаживания данных который учитывает
+ изменчивость данных связанную с изменением температуры подстилающей поверхности
+ и использует грубую медианную фильтрацию в бегущем окне для восстановления
+ колебаний разности связанную с изменениями свойств атмосферы.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Математическая модель сглаживания данных
+\end_layout
+
+\begin_layout Standard
+Пусть существует матрица радиационных температур 
+\begin_inset Formula $T_{1}$
+\end_inset
+
+, матрица разностей 
+\begin_inset Formula $dT_{12}$
+\end_inset
+
+ и матрица облачности 
+\begin_inset Formula $C$
+\end_inset
+
+ .
+ 
+\end_layout
+
+\begin_layout Standard
+Необходимо определить сглаженное значение разности температур в точке 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Сглаженное значение определяется как сумма двух величин первая из которых
+ связана с изменчивостью атмосферы а вторая с изменчивостью температуры.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+dT_{12}^{s}(i,\, j)=dT_{12}^{athm}(i,\, j)+dT_{12}^{T}(i,\, j)\label{eq:dT12s}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Первую величину можно определить как медиану не отфильтрованных фильтрацией
+ облачности значений находящихся в бегущем окне размером 
+\begin_inset Formula $W_{x}\times W_{y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+dT_{12}^{athm}(i,\, j)=Me\left\{ dT_{12}(l,m):\qquad\begin{array}{l}
+l\in\left[i-\lfloor W_{y}/2\rfloor,\, i+W_{y}-1-\lfloor W_{y}/2\rfloor\right]\;\wedge\\
+m\in\left[j-\lfloor W_{x}/2\rfloor,\, j+W_{x}-1-\lfloor W_{x}/2\rfloor\right]\;\wedge\\
+C(l,m)
+\end{array}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Такую операцию проще определить с помощью функции 
+\begin_inset Formula $Mew$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Mew_{ij}^{W}(A,C)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Тогда:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+dT_{12}^{athm}(i,\, j)=Mew_{i\, j}^{W}(dT_{12},C)\label{eq:dT12_athm}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Далее, определим 
+\begin_inset Formula $dT_{12}^{T}(i,\, j)$
+\end_inset
+
+ следующим образом:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+dT_{12}^{T}(i,\, j)=S_{ij}\left(T_{1}(i,j)-Mew_{i\, j}^{W}(T_{1},C)\right)\label{eq:dT12_T}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+где 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ --- коэффициент зависимости разности каналов от температуры подстилающей
+ поверхности.
+ Мы можем попытаться определить его на основе метода наименьших квадратов.
+ Используя фильтрованные данные бегущего окна
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+XY_{ij}=\left\{ \left(T_{1}(l,m),dT_{12}(l,m)\right):\qquad\begin{array}{l}
+l\in\left[i-\lfloor Z/2\rfloor,\, i+Z-1-\lfloor Z/2\rfloor\right]\;\wedge\\
+m\in\left[j-\lfloor Z/2\rfloor,\, j+Z-1-\lfloor Z/2\rfloor\right]\;\wedge\\
+C(l,m)
+\end{array}\right\} 
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы определить 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ можно применить метод наименьших квадратов
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+S_{ji}=\frac{\left|X_{ij}\right|\sum X_{ij}Y_{ij}-\sum X_{ij}\sum Y_{ij}}{\left|X_{ij}\right|\sum X_{ij}^{2}-\left(\sum X_{ij}\right)^{2}}\label{eq:S_ij}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Реализация программы
+\end_layout
+
+\begin_layout Standard
+Программа будет командно-строчным приложением, созданным на базе программы
+ makeComposion.
+\end_layout
+
+\begin_layout Scrap
+<<smoothDiffIR12.cpp>>=
+\end_layout
+
+\begin_layout Scrap
+#include <getopt.h> 
+\end_layout
+
+\begin_layout Scrap
+#include <stdio.h> 
+\end_layout
+
+\begin_layout Scrap
+#include <stdlib.h> 
+\end_layout
+
+\begin_layout Scrap
+#include <math.h> 
+\end_layout
+
+\begin_layout Scrap
+#include <iostream> 
+\end_layout
+
+\begin_layout Scrap
+#include <algorithm> 
+\end_layout
+
+\begin_layout Scrap
+#include <lab34NProjLib.hpp>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Типы данных>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Глобальные переменные>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+int main( int argc, char** argv ) {
+\end_layout
+
+\begin_layout Scrap
+    <<Разбор параметров>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    <<Чтение данных>>
+\end_layout
+
+\begin_layout Scrap
+ 
+\end_layout
+
+\begin_layout Scrap
+    <<Преобразование>>
+\end_layout
+
+\begin_layout Scrap
+ 
+\end_layout
+
+\begin_layout Scrap
+    <<Запись результата>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    return 0;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Формат вызова
+\end_layout
+
+\begin_layout Standard
+Формат вызова программы следующий
+\end_layout
+
+\begin_layout Scrap
+<<help message>>=
+\end_layout
+
+\begin_layout Scrap
+smoothDiffIR12.exe [опции] <имя исходного файла> <имя конечного файла> 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+Опции:   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    -h   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --help   --- эта справка   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    -C   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --cloud <файл с маской суши>   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    -S   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --SST <файл с данными ТПО>   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+   -v   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --verbose --- выводить отладочные сообщения   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    -W   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --smoothwinsize 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        <Размер бегущего окна медианного осреднения T12 (в пикселях)> 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        (по умолчанию smoothwinsize=20)   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --smoothwinsize_x <--- по X   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --smoothwinsize_y <--- по Y   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    -Z   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --regwinsize 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        <Размер бегущего окна определения зависимости T12 от T1 (в пикселях)>
+ 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        (по умолчанию regwinsize=20)   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --save-dIR12-median 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        Сохранить в выходной файл сглаженную разницу температур dT12^athm
+ 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --save-temp-median 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        Сохранить в выходной файл сглаженную температуру SST --- Mew_ij
+ (T_1,C) 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --save-temp-diff 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        Сохранить в выходной файл величину температурной аномалии T1 - Mew_ij
+ (T_1,C) 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --save-Sij  
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        Сохранить в выходной файл коэффициент линейной зависимости> Sij
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    --save-Rij 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        Сохранить в выходной файл коэффициент детерминации Rij 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+Пример вызова:   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    smoothDiffIR12.exe -W 25 -C mt08_sst_f.pro mt08_ir12.pro mt08_ir12_new.pro
+  
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Разбор опций программы
+\end_layout
+
+\begin_layout Standard
+Разбор опций программы производиться с помощью функции getopt
+\end_layout
+
+\begin_layout Standard
+(описание: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://habrahabr.ru/blogs/nix_coding/55665/
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Scrap
+<<Глобальные переменные>>=
+\end_layout
+
+\begin_layout Scrap
+int smoothwinsize_x = 20;
+\end_layout
+
+\begin_layout Scrap
+int smoothwinsize_y = 20;
+\end_layout
+
+\begin_layout Scrap
+int regwinsize = 20;
+\end_layout
+
+\begin_layout Scrap
+bool verbose = false;
+\end_layout
+
+\begin_layout Scrap
+bool save_dIR12_median = false;
+\end_layout
+
+\begin_layout Scrap
+bool save_temp_median = false;
+\end_layout
+
+\begin_layout Scrap
+bool save_temp_diff = false;
+\end_layout
+
+\begin_layout Scrap
+bool save_Sij = false;
+\end_layout
+
+\begin_layout Scrap
+bool save_Rij = false;
+\end_layout
+
+\begin_layout Scrap
+std::string cloud_fname = "";
+\end_layout
+
+\begin_layout Scrap
+std::string SST_fname = "";
+\end_layout
+
+\begin_layout Scrap
+const char* help_message = 
+\end_layout
+
+\begin_layout Scrap
+"
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+<<help message>>
+\end_layout
+
+\begin_layout Scrap
+";
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Разбор параметров>>=
+\end_layout
+
+\begin_layout Scrap
+static struct option long_opt[] = { 
+\end_layout
+
+\begin_layout Scrap
+    {"help", 0, 0, 'h'}, 
+\end_layout
+
+\begin_layout Scrap
+    {"verbose", 0, 0, 'V'}, 
+\end_layout
+
+\begin_layout Scrap
+    {"smoothwinsize", 1, 0, 'W'}, 
+\end_layout
+
+\begin_layout Scrap
+    {"smoothwinsize_x", 1, 0, 301 }, 
+\end_layout
+
+\begin_layout Scrap
+    {"smoothwinsize_y", 1, 0, 302 }, 
+\end_layout
+
+\begin_layout Scrap
+    {"regwinsize", 1, 0, 'Z'}, 
+\end_layout
+
+\begin_layout Scrap
+    {"cloud",   1, 0, 'C'}, 
+\end_layout
+
+\begin_layout Scrap
+    {"SST",     1, 0, 'S'}, 
+\end_layout
+
+\begin_layout Scrap
+    {"save-dIR12-median", 0, 0, 303 },
+\end_layout
+
+\begin_layout Scrap
+    {"save-temp-median",  0, 0, 304 },
+\end_layout
+
+\begin_layout Scrap
+    {"save-temp-diff",    0, 0, 305 },
+\end_layout
+
+\begin_layout Scrap
+    {"save-Sij",          0, 0, 306 },
+\end_layout
+
+\begin_layout Scrap
+    {"save-Rij",          0, 0, 307 },
+\end_layout
+
+\begin_layout Scrap
+    {0,0,0,0} 
+\end_layout
+
+\begin_layout Scrap
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+if( argc == 1 ){
+\end_layout
+
+\begin_layout Scrap
+    puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+    return(-1);
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+int optIdx;
+\end_layout
+
+\begin_layout Scrap
+while (1){
+\end_layout
+
+\begin_layout Scrap
+    int c;
+\end_layout
+
+\begin_layout Scrap
+    if( ( c = getopt_long(argc, argv, "Z:S:C:W:Vh", long_opt, &optIdx) )
+ == -1 ) {
+\end_layout
+
+\begin_layout Scrap
+        break;  
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+   switch( c ){
+\end_layout
+
+\begin_layout Scrap
+       case 'h':
+\end_layout
+
+\begin_layout Scrap
+         puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+         return(-1);
+\end_layout
+
+\begin_layout Scrap
+       case 'C':
+\end_layout
+
+\begin_layout Scrap
+         cloud_fname = optarg;
+\end_layout
+
+\begin_layout Scrap
+         break;
+\end_layout
+
+\begin_layout Scrap
+       case 'S':
+\end_layout
+
+\begin_layout Scrap
+         SST_fname = optarg;
+\end_layout
+
+\begin_layout Scrap
+         break;
+\end_layout
+
+\begin_layout Scrap
+      case 'V':
+\end_layout
+
+\begin_layout Scrap
+         verbose=true;
+\end_layout
+
+\begin_layout Scrap
+         break;
+\end_layout
+
+\begin_layout Scrap
+      case 'W':  
+\end_layout
+
+\begin_layout Scrap
+         {
+\end_layout
+
+\begin_layout Scrap
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+            smoothwinsize_x = strtol( optarg,&pEnd,10);
+\end_layout
+
+\begin_layout Scrap
+            smoothwinsize_y = smoothwinsize_x;
+\end_layout
+
+\begin_layout Scrap
+         }
+\end_layout
+
+\begin_layout Scrap
+         break;
+\end_layout
+
+\begin_layout Scrap
+     case 301:  
+\end_layout
+
+\begin_layout Scrap
+         {
+\end_layout
+
+\begin_layout Scrap
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+            smoothwinsize_x = strtol( optarg,&pEnd,10);
+\end_layout
+
+\begin_layout Scrap
+         }
+\end_layout
+
+\begin_layout Scrap
+         break;
+\end_layout
+
+\begin_layout Scrap
+     case 302:  
+\end_layout
+
+\begin_layout Scrap
+         {
+\end_layout
+
+\begin_layout Scrap
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+            smoothwinsize_y = strtol( optarg,&pEnd,10);
+\end_layout
+
+\begin_layout Scrap
+         }
+\end_layout
+
+\begin_layout Scrap
+         break;
+\end_layout
+
+\begin_layout Scrap
+     case 303:
+\end_layout
+
+\begin_layout Scrap
+            save_dIR12_median = true; 
+\end_layout
+
+\begin_layout Scrap
+            break;
+\end_layout
+
+\begin_layout Scrap
+     case 304:
+\end_layout
+
+\begin_layout Scrap
+            save_temp_median = true; 
+\end_layout
+
+\begin_layout Scrap
+            break;
+\end_layout
+
+\begin_layout Scrap
+     case 305:
+\end_layout
+
+\begin_layout Scrap
+            save_temp_diff = true; 
+\end_layout
+
+\begin_layout Scrap
+            break;
+\end_layout
+
+\begin_layout Scrap
+     case 306:
+\end_layout
+
+\begin_layout Scrap
+            save_Sij = true; 
+\end_layout
+
+\begin_layout Scrap
+            break;
+\end_layout
+
+\begin_layout Scrap
+     case 307:
+\end_layout
+
+\begin_layout Scrap
+            save_Rij = true; 
+\end_layout
+
+\begin_layout Scrap
+            break;
+\end_layout
+
+\begin_layout Scrap
+    case 'Z':  
+\end_layout
+
+\begin_layout Scrap
+         {
+\end_layout
+
+\begin_layout Scrap
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+            regwinsize = strtol( optarg,&pEnd,10);
+\end_layout
+
+\begin_layout Scrap
+         }
+\end_layout
+
+\begin_layout Scrap
+         break;
+\end_layout
+
+\begin_layout Scrap
+      default:
+\end_layout
+
+\begin_layout Scrap
+         puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+         return(-1);   
+\end_layout
+
+\begin_layout Scrap
+    } 
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Глобальные переменные>>=
+\end_layout
+
+\begin_layout Scrap
+std::string input_fname = "";
+\end_layout
+
+\begin_layout Scrap
+std::string output_fname = "";
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Разбор параметров>>=
+\end_layout
+
+\begin_layout Scrap
+if( argc - 2 != optind ){
+\end_layout
+
+\begin_layout Scrap
+   puts( "Ошибка: не указано имя входного и/или выходного файла
+\backslash
+n" );
+\end_layout
+
+\begin_layout Scrap
+   puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+   return(-1);   
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+else {
+\end_layout
+
+\begin_layout Scrap
+   input_fname = argv[optind+0];
+\end_layout
+
+\begin_layout Scrap
+   output_fname = argv[optind+1];
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+if( verbose ) {
+\end_layout
+
+\begin_layout Scrap
+    printf( "Входной файл: %s
+\backslash
+n", input_fname.c_str() );
+\end_layout
+
+\begin_layout Scrap
+    printf( "Выходной файл: %s
+\backslash
+n", output_fname.c_str() );
+\end_layout
+
+\begin_layout Scrap
+    if( cloud_fname == "" ){
+\end_layout
+
+\begin_layout Scrap
+        printf( "Имя файла маски облачности не задано
+\backslash
+n" );
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    else {
+\end_layout
+
+\begin_layout Scrap
+        printf( "Имя файла маски облачности: %s
+\backslash
+n", cloud_fname.c_str() );
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    if( SST_fname == "" ){
+\end_layout
+
+\begin_layout Scrap
+        printf( "Имя файла ТПО не задано
+\backslash
+n" );
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    else {
+\end_layout
+
+\begin_layout Scrap
+        printf( "Имя файла ТПО: %s
+\backslash
+n", SST_fname.c_str() );
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    printf( "Размер бегущего окна сглаживания: X=%d, Y=%d
+\backslash
+n", smoothwinsize_x, smoothwinsize_y );
+\end_layout
+
+\begin_layout Scrap
+    printf( "Размер бегущего окна восстановления коэффициента зависимости
+ T12 от T1: %d
+\backslash
+n", regwinsize );
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Чтение исходных данных
+\end_layout
+
+\begin_layout Standard
+Надо скачать две или три проекции, создать и заполнить соответствующие массивы.
+\end_layout
+
+\begin_layout Standard
+Данные проекций будем хранить векторах STL, причем будем одновременно хранить
+ температуры и величины, находящиеся в файле.
+\end_layout
+
+\begin_layout Standard
+Соответствующие функции вынесены в библиотеку lab34NProjLib.
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<Чтение данных>>=
+\end_layout
+
+\begin_layout Scrap
+TLab34NProj inp_proj;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+TLab34NProj::read( input_fname,  inp_proj );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+TLab34NProj cloud_proj;
+\end_layout
+
+\begin_layout Scrap
+bool cloud_data_exist = false;
+\end_layout
+
+\begin_layout Scrap
+if( cloud_fname != "" ){
+\end_layout
+
+\begin_layout Scrap
+    TLab34NProj::read( cloud_fname, cloud_proj );
+\end_layout
+
+\begin_layout Scrap
+    cloud_data_exist  = true;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+TLab34NProj SST_proj;
+\end_layout
+
+\begin_layout Scrap
+bool SST_data_exist = false;
+\end_layout
+
+\begin_layout Scrap
+if( SST_fname != "" ){
+\end_layout
+
+\begin_layout Scrap
+   TLab34NProj::read( SST_fname, SST_proj );
+\end_layout
+
+\begin_layout Scrap
+   SST_data_exist = true;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+//инициализируем выходной массив
+\end_layout
+
+\begin_layout Scrap
+TLab34NProj out_proj( inp_proj );
+\end_layout
+
+\begin_layout Scrap
+out_proj.clear( -1 );
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Преобразование данных
+\end_layout
+
+\begin_layout Scrap
+<<Преобразование>>=
+\end_layout
+
+\begin_layout Scrap
+int lines = inp_proj.lines();
+\end_layout
+
+\begin_layout Scrap
+int cols = inp_proj.cols();
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+for( int line = 0; line < lines; line++ ){
+\end_layout
+
+\begin_layout Scrap
+    printf ( "%d/%d
+\backslash
+r", line, lines );
+\end_layout
+
+\begin_layout Scrap
+    for( int col = 0; col < cols; col++ ){
+\end_layout
+
+\begin_layout Scrap
+        // Ищем медианы значений T1 и T12 
+\end_layout
+
+\begin_layout Scrap
+        <<Ищем медианы значений T1 и T12>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+        // Определяем коэффициент линейной зависимости S_ij
+\end_layout
+
+\begin_layout Scrap
+        <<Определяем коэффициент линейной зависимости $S_ij$>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+       // Рассчитываем значение dT12 
+\end_layout
+
+\begin_layout Scrap
+       <<Рассчитываем значение dT12>>
+\end_layout
+
+\begin_layout Scrap
+   } // for( int col
+\end_layout
+
+\begin_layout Scrap
+} // for( int line
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+Ищем медианы значений исходных данных
+\end_layout
+
+\begin_layout Standard
+Ищем медианы значений исходных данных (
+\begin_inset Formula $dT_{12}^{athm}$
+\end_inset
+
+для формулы (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dT12s"
+
+\end_inset
+
+) ) и ТПО (
+\begin_inset Formula $Mew_{i\, j}^{W}(T_{1},C)$
+\end_inset
+
+ для формулы (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dT12_T"
+
+\end_inset
+
+) )
+\end_layout
+
+\begin_layout Scrap
+<<Ищем медианы значений T1 и T12>>=
+\end_layout
+
+\begin_layout Scrap
+bool empty_median_window=false;
+\end_layout
+
+\begin_layout Scrap
+double inp_median = -999;
+\end_layout
+
+\begin_layout Scrap
+double SST_median = -999;
+\end_layout
+
+\begin_layout Scrap
+{
+\end_layout
+
+\begin_layout Scrap
+    int win_x1, win_x2, win_y1, win_y2;
+\end_layout
+
+\begin_layout Scrap
+    get_win_bounds( col, smoothwinsize_x, cols - 1, &win_x1, &win_x2 );
+\end_layout
+
+\begin_layout Scrap
+    get_win_bounds( line, smoothwinsize_y, lines - 1, &win_y1, &win_y2 );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    static std::vector<double> inp_med_vec;
+\end_layout
+
+\begin_layout Scrap
+    static std::vector<double> SST_med_vec;
+\end_layout
+
+\begin_layout Scrap
+    inp_med_vec.resize(0);
+\end_layout
+
+\begin_layout Scrap
+    SST_med_vec.resize(0);
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    // Проходим по всем точкам бегущего окна, заполняя вектора 
+\end_layout
+
+\begin_layout Scrap
+    for( int x = win_x1; x <= win_x2; x++ ){
+\end_layout
+
+\begin_layout Scrap
+        for( int y = win_y1; y <= win_y2; y++ ){
+\end_layout
+
+\begin_layout Scrap
+            if( cloud_data_exist && cloud_proj.raw[y][x] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+            if( SST_data_exist && SST_proj.raw[y][x] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+            if( inp_proj.geo[y][x] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+            inp_med_vec.push_back( inp_proj.geo[y][x] );
+\end_layout
+
+\begin_layout Scrap
+            if( SST_data_exist ) SST_med_vec.push_back( SST_proj.geo[y][x]
+ );
+\end_layout
+
+\begin_layout Scrap
+        } // for( int y
+\end_layout
+
+\begin_layout Scrap
+    } // for( int x
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    if ( inp_med_vec.size() == 0 ){
+\end_layout
+
+\begin_layout Scrap
+       empty_median_window=true;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    else {
+\end_layout
+
+\begin_layout Scrap
+        std::sort( inp_med_vec.begin(), inp_med_vec.end() );
+\end_layout
+
+\begin_layout Scrap
+        inp_median = inp_med_vec[inp_med_vec.size() / 2 ];
+\end_layout
+
+\begin_layout Scrap
+        if( SST_data_exist )  {
+\end_layout
+
+\begin_layout Scrap
+           std::sort( SST_med_vec.begin(), SST_med_vec.end() );
+\end_layout
+
+\begin_layout Scrap
+           SST_median = SST_med_vec[SST_med_vec.size() / 2 ];
+\end_layout
+
+\begin_layout Scrap
+        }
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Для удобства определим функцию определяющую первую и последнюю точки отрезка
+ для бегущего окна.
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+// Определение границ бегущего отрезка
+\end_layout
+
+\begin_layout Scrap
+// X2 - X1 = win_size - 1
+\end_layout
+
+\begin_layout Scrap
+// ( X2 + X1 ) / 2 = X
+\end_layout
+
+\begin_layout Scrap
+void get_win_bounds( int X, int win_size, int max_X, int *p_win_x1, int
+ *p_win_x2 ){
+\end_layout
+
+\begin_layout Scrap
+    int left_hand = win_size/2;
+\end_layout
+
+\begin_layout Scrap
+    int right_hand = win_size - 1 - left_hand;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    int win_x1 = X - left_hand;   
+\end_layout
+
+\begin_layout Scrap
+    if( win_x1 < 0 ) win_x1 = 0;
+\end_layout
+
+\begin_layout Scrap
+    int win_x2 = X + right_hand;
+\end_layout
+
+\begin_layout Scrap
+    if( win_x2 > max_X ) win_x2 = max_X;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    *p_win_x1 = win_x1;
+\end_layout
+
+\begin_layout Scrap
+    *p_win_x2 = win_x2;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsubsection
+Определяем коэффициент линейной зависимости 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:S_ij"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы определить то, как зависит 
+\begin_inset Formula $dT_{12}$
+\end_inset
+
+ от 
+\begin_inset Formula $T_{1}$
+\end_inset
+
+ в окрестности точки 
+\begin_inset Formula $i,j$
+\end_inset
+
+ необходимо собрать данные и проанализировать их.
+\end_layout
+
+\begin_layout Scrap
+<<Определяем коэффициент линейной зависимости $S_ij$>>=
+\end_layout
+
+\begin_layout Scrap
+bool empty_Sij_window=false;
+\end_layout
+
+\begin_layout Scrap
+double S_ij = 0;
+\end_layout
+
+\begin_layout Scrap
+double B_ij = 0;
+\end_layout
+
+\begin_layout Scrap
+double R2_ij = 0;
+\end_layout
+
+\begin_layout Scrap
+if ( SST_data_exist ) {
+\end_layout
+
+\begin_layout Scrap
+    <<Сбор данных для анализа>>
+\end_layout
+
+\begin_layout Scrap
+    if( linear_regression( X, Y, &S_ij, &B_ij, &R2_ij ) != 0 ){
+\end_layout
+
+\begin_layout Scrap
+       empty_Sij_window=true;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Paragraph
+Сбор данных для анализа.
+\end_layout
+
+\begin_layout Scrap
+<<Сбор данных для анализа>>=
+\end_layout
+
+\begin_layout Scrap
+static std::vector<float> X;
+\end_layout
+
+\begin_layout Scrap
+static std::vector<float> Y;
+\end_layout
+
+\begin_layout Scrap
+X.resize(0);
+\end_layout
+
+\begin_layout Scrap
+Y.resize(0);
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+int win_x1, win_x2, win_y1, win_y2;
+\end_layout
+
+\begin_layout Scrap
+get_win_bounds( col,  regwinsize, cols - 1, &win_x1, &win_x2 );
+\end_layout
+
+\begin_layout Scrap
+get_win_bounds( line, regwinsize, lines - 1, &win_y1, &win_y2 );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+int N=0;
+\end_layout
+
+\begin_layout Scrap
+double sum_XijYij = 0;
+\end_layout
+
+\begin_layout Scrap
+double sum_Xij = 0;
+\end_layout
+
+\begin_layout Scrap
+double sum_XijXij = 0;
+\end_layout
+
+\begin_layout Scrap
+double sum_Yij = 0;
+\end_layout
+
+\begin_layout Scrap
+for( int x = win_x1; x <= win_x2; x++ ){
+\end_layout
+
+\begin_layout Scrap
+    for( int y = win_y1; y <= win_y2; y++ ){
+\end_layout
+
+\begin_layout Scrap
+        if( cloud_data_exist && cloud_proj.raw[y][x] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+        if( SST_data_exist && SST_proj.raw[y][x] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+        if( inp_proj.geo[y][x] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+        X.push_back(SST_proj.geo[y][x]);
+\end_layout
+
+\begin_layout Scrap
+        Y.push_back(inp_proj.geo[y][x]);
+\end_layout
+
+\begin_layout Scrap
+    } // for( int y
+\end_layout
+
+\begin_layout Scrap
+} // for( int x
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Paragraph
+Анализ данных 
+\end_layout
+
+\begin_layout Standard
+Анализ данных проще проводить с помощью небольшой обобщенной процедуры,
+ выполняющей поиск коэффициентов линейной регрессии.
+\end_layout
+
+\begin_layout Standard
+Кроме наклона 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ прямой регрессии 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $Y=X*S_{ij}+B_{ij}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang russian
+ рассчитываем аддитивный член регрессии
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+B_{ij}=\frac{\sum Y_{ij}-S_{ij}\sum X_{ij}}{\left|X_{ij}\right|}
+\]
+
+\end_inset
+
+и определяем коэффициент детерминации 
+\begin_inset Formula 
+\[
+R2_{ij}=1-\frac{\sum\left(X_{ij}S_{ij}+B_{ij}-Y_{ij}\right)^{2}}{\sum\left(Y_{ij}-\sum Y_{ij}/\left|Y_{ij}\right|\right)^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+// Определяем коэффициенты линейной зависимости Y от X
+\end_layout
+
+\begin_layout Scrap
+// y = x*a + b
+\end_layout
+
+\begin_layout Scrap
+// Рассчитываем коэффициент детерминации R2
+\end_layout
+
+\begin_layout Scrap
+// В случае успеха возвращаем 0.
+\end_layout
+
+\begin_layout Scrap
+int linear_regression( std::vector<float> & X, std::vector<float> & Y, 
+\end_layout
+
+\begin_layout Scrap
+      double *p_a, double *p_b, double *p_R2 )
+\end_layout
+
+\begin_layout Scrap
+{
+\end_layout
+
+\begin_layout Scrap
+    int i;
+\end_layout
+
+\begin_layout Scrap
+    if( X.size() != Y.size() ) return -1;
+\end_layout
+
+\begin_layout Scrap
+    int N = X.size();
+\end_layout
+
+\begin_layout Scrap
+    if ( N <= 2 ) return -1;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    double sum_XY = 0;
+\end_layout
+
+\begin_layout Scrap
+    double sum_X = 0;
+\end_layout
+
+\begin_layout Scrap
+    double sum_XX = 0;
+\end_layout
+
+\begin_layout Scrap
+    double sum_Y = 0;
+\end_layout
+
+\begin_layout Scrap
+    for( i = 0; i < N; i++ ){
+\end_layout
+
+\begin_layout Scrap
+        sum_XY += (Y[i] * X[i]);
+\end_layout
+
+\begin_layout Scrap
+        sum_X += X[i];
+\end_layout
+
+\begin_layout Scrap
+        sum_Y += Y[i];
+\end_layout
+
+\begin_layout Scrap
+        sum_XX += (X[i]*X[i]);
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+    double a = (N*sum_XY - sum_X*sum_Y) / (N*sum_XX-sum_X*sum_X);
+\end_layout
+
+\begin_layout Scrap
+    double b = (sum_Y - a * sum_X) / N;
+\end_layout
+
+\begin_layout Scrap
+    double average_Y = sum_Y / N;
+\end_layout
+
+\begin_layout Scrap
+    double D1 = 0;
+\end_layout
+
+\begin_layout Scrap
+    double D2 = 0;
+\end_layout
+
+\begin_layout Scrap
+    for( i = 0; i < N; i++ ){
+\end_layout
+
+\begin_layout Scrap
+        double new_Y = a*X[i]+b;
+\end_layout
+
+\begin_layout Scrap
+        D1 += (new_Y-Y[i])*(new_Y-Y[i]);
+\end_layout
+
+\begin_layout Scrap
+        D2 += (Y[i]-average_Y)*(Y[i]-average_Y);
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    double R2 = 1 - D1/D2;
+\end_layout
+
+\begin_layout Scrap
+    if( p_a ) *p_a = a;
+\end_layout
+
+\begin_layout Scrap
+    if( p_b ) *p_b = b;
+\end_layout
+
+\begin_layout Scrap
+    if( p_R2 ) *p_R2 = R2;
+\end_layout
+
+\begin_layout Scrap
+    return 0;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Subsubsection
+Рассчитываем значение 
+\begin_inset Formula $dT_{12}^{s}(i,\, j)$
+\end_inset
+
+ согласно (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dT12s"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Scrap
+<<Рассчитываем значение dT12>>=
+\end_layout
+
+\begin_layout Scrap
+double dT12 = -999;
+\end_layout
+
+\begin_layout Scrap
+bool point_or_median_dont_exist = 
+\end_layout
+
+\begin_layout Scrap
+    ( cloud_data_exist && cloud_proj.raw[line][col] < 0 ) ||
+\end_layout
+
+\begin_layout Scrap
+    ( SST_data_exist && SST_proj.raw[line][col] < 0 )     ||
+\end_layout
+
+\begin_layout Scrap
+    ( empty_Sij_window || empty_median_window )       ||
+\end_layout
+
+\begin_layout Scrap
+    ( inp_proj.raw[line][col] < 0 );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+if( point_or_median_dont_exist ) {
+\end_layout
+
+\begin_layout Scrap
+    out_proj.raw[line][col] = -5;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+else {
+\end_layout
+
+\begin_layout Scrap
+    if( SST_data_exist ){
+\end_layout
+
+\begin_layout Scrap
+       if( save_dIR12_median ){
+\end_layout
+
+\begin_layout Scrap
+           dT12 = inp_median;
+\end_layout
+
+\begin_layout Scrap
+       }
+\end_layout
+
+\begin_layout Scrap
+       else if( save_temp_median ){
+\end_layout
+
+\begin_layout Scrap
+           dT12 = SST_median;
+\end_layout
+
+\begin_layout Scrap
+       }
+\end_layout
+
+\begin_layout Scrap
+       else if( save_temp_diff ){
+\end_layout
+
+\begin_layout Scrap
+           dT12 = SST_proj.geo[line][col] - SST_median;
+\end_layout
+
+\begin_layout Scrap
+       }
+\end_layout
+
+\begin_layout Scrap
+       else if( save_Sij ){
+\end_layout
+
+\begin_layout Scrap
+           dT12 = S_ij*10;
+\end_layout
+
+\begin_layout Scrap
+       }
+\end_layout
+
+\begin_layout Scrap
+       else if( save_Rij ){
+\end_layout
+
+\begin_layout Scrap
+           dT12 = R2_ij*10;
+\end_layout
+
+\begin_layout Scrap
+       }
+\end_layout
+
+\begin_layout Scrap
+       else {
+\end_layout
+
+\begin_layout Scrap
+           dT12 = inp_median + S_ij * ( SST_proj.geo[line][col] - SST_median
+ );
+\end_layout
+
+\begin_layout Scrap
+       }
+\end_layout
+
+\begin_layout Scrap
+       // dT12 = S_ij;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    else 
+\end_layout
+
+\begin_layout Scrap
+    {
+\end_layout
+
+\begin_layout Scrap
+       dT12 = inp_median;
+\end_layout
+
+\begin_layout Scrap
+    }
+\end_layout
+
+\begin_layout Scrap
+    out_proj.raw[line][col] = 1;
+\end_layout
+
+\begin_layout Scrap
+}
+\end_layout
+
+\begin_layout Scrap
+out_proj.geo[line][col] = dT12;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Запись данных
+\end_layout
+
+\begin_layout Scrap
+<<Запись результата>>=
+\end_layout
+
+\begin_layout Scrap
+out_proj.write( output_fname );
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection*
+Сборка программы
+\end_layout
+
+\begin_layout Scrap
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+#!/bin/sh
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Scrap
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Scrap
+A=smoothDiffIR12
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+P=`pwd`
+\end_layout
+
+\begin_layout Scrap
+SRC=$P/temp/src
+\end_layout
+
+\begin_layout Scrap
+BIN=$P/temp/bin
+\end_layout
+
+\begin_layout Scrap
+INCL=$P/temp/include
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Scrap
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+EXE=$BIN/${A}.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+LNW_notangle.sh ${A}.cpp $SRC/
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+INCLUDES="-I $P/external/INCLUDE  -I $P/external/INCLUDE/C_LIB -I $INCL
+ "
+\end_layout
+
+\begin_layout Scrap
+COPT="-D_GLIBCXX_DEBUG -Wall -ggdb -O0"
+\end_layout
+
+\begin_layout Scrap
+COPT="-O3"
+\end_layout
+
+\begin_layout Scrap
+g++ -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp -o $EXE
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Section
+Пример использования программы
+\end_layout
+
+\begin_layout Standard
+Данные для проверки работы программы сохранены в директории 
+\family typewriter
+test_data
+\family default
+ .
+\end_layout
+
+\begin_layout Standard
+Это набор проекций спутника MTSAT-1R за 8 октября 2011 года.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+имя файла
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+описание
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mt201110082201_ir1.pro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+радиационные данные канала 10,5 мкм
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mt201110082201_sst_filtered.pro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+температура поверхности океана
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mt201110082201_ir12.pro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+разность каналов 11,5 и 10,5 мкм
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mt201110082201_sst_filtered-ir1.pro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+температурный дефицит.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Тогда для того, чтобы построить сглаженное поле температурного дефицита
+ необходимо выполнить следующую команду:
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<makeDemo.sh>>=
+\end_layout
+
+\begin_layout Scrap
+#!/bin/bash
+\end_layout
+
+\begin_layout Scrap
+cd ../test_data 
+\end_layout
+
+\begin_layout Scrap
+if false ; then
+\end_layout
+
+\begin_layout Scrap
+diffProj.exe -01 -5 -10 -5 mt201110082201_sst_filtered.pro mt201110082201_ir1.pro
+ 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+      mt201110082201_sst_filtered-ir1.pro
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+for O in 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+  ""  ; do
+\end_layout
+
+\begin_layout Scrap
+# --save-dIR12-median  --save-temp-median --save-temp-diff --save-Sij --save-Rij
+\end_layout
+
+\begin_layout Scrap
+nice ionice -c 3 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+  ../temp/bin/smoothDiffIR12.exe $O -V -W 20 -Z 70 -C mt201110082201_sst_filtered.pr
+o 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+   -S mt201110082201_ir1.pro      
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+   mt201110082201_sst_filtered-ir1.pro out/mt201110082201_sst_filtered-ir1_new$O.p
+ro
+\end_layout
+
+\begin_layout Scrap
+done;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+../temp/bin/smoothDiffIR12.exe -V -W 30 -Z 100 -C mt201110082201_sst_filtered.pro
+ 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+   -S mt201110082201_ir1.pro      
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+   mt201110082201_sst_filtered-ir1.pro out/mt201110082201_sst_filtered-ir1_new.pro
+\end_layout
+
+\begin_layout Scrap
+fi 
+\end_layout
+
+\begin_layout Scrap
+../external/bin/cutProj.exe out/mt201110082201_sst_filtered_new.pro mt201110082201_i
+r1.pro 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+                            out/mt201110082201_sst_filtered_new.pro
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Теперь в файле mt201110082201_sst_filtered-ir1-new.pro --- новый, сглаженный
+ температурный дефицит.
+\end_layout
+
+\begin_layout Standard
+Его можно применить к данным файла mt201110082201_ir1.pro и получить новое
+ поле температуры.
+\end_layout
+
+\begin_layout Scrap
+<<makeDemo.sh>>=
+\end_layout
+
+\begin_layout Scrap
+proj2txt_f.exe "" 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+           mt201110082201_ir1.pro out/mt201110082201_sst_filtered-ir1_new.pro
+ | 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+     awk '{print $5, $6, $7+$8 }' | 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+     lltxt2proj.exe 0.1 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        out/mt201110082201_sst_filtered-ir1_new.pro 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+        out/mt201110082201_sst_filtered_new.pro
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Отобразим полученные карты-проекции в районе острова Хоккайдо
+\end_layout
+
+\begin_layout Scrap
+<<makeDemo.sh>>=
+\end_layout
+
+\begin_layout Scrap
+LATLON=46,143
+\end_layout
+
+\begin_layout Scrap
+ZOOM=200
+\end_layout
+
+\begin_layout Scrap
+ln -s out/mt201110082201_sst_filtered_new.pro ./
+\end_layout
+
+\begin_layout Scrap
+ln -s out/mt201110082201_sst_filtered-ir1_new.pro ./
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+DELAY=5
+\end_layout
+
+\begin_layout Scrap
+glancew.py -D ${DELAY} -C ${LATLON} -Z ${ZOOM} -P RAINBOW,5,20  
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+                     -O mt201110082201_sst_filtered.pro
+\end_layout
+
+\begin_layout Scrap
+glance_shutter.sh ; sleep 2 ; killall Glance.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+glancew.py -D ${DELAY} -C ${LATLON} -Z ${ZOOM} -P RAINBOW,5,20  
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+                     -O mt201110082201_sst_filtered_new.pro
+\end_layout
+
+\begin_layout Scrap
+glance_shutter.sh ; sleep 2 ; killall Glance.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+glancew.py -D ${DELAY} -C ${LATLON} -Z ${ZOOM} -P RAINBOW,2,5  
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+                     -O mt201110082201_sst_filtered-ir1_new.pro
+\end_layout
+
+\begin_layout Scrap
+glance_shutter.sh ; sleep 2 ; killall Glance.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+glancew.py -D ${DELAY} -C ${LATLON} -Z ${ZOOM} -P RAINBOW,2,5  
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+                     -O mt201110082201_sst_filtered-ir1.pro
+\end_layout
+
+\begin_layout Scrap
+glance_shutter.sh ; sleep 2 ; killall Glance.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+glancew.py -D ${DELAY} -C ${LATLON} -Z ${ZOOM} -P RAINBOW,2,17 -O mt201110082201_
+ir1.pro
+\end_layout
+
+\begin_layout Scrap
+glance_shutter.sh ; sleep 5 ; killall Glance.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+glancew.py -D ${DELAY} -C ${LATLON} -Z ${ZOOM} -P "B-W LINEAR,2,7" -O mt201110082
+201_vis.pro
+\end_layout
+
+\begin_layout Scrap
+glance_shutter.sh ; sleep 5 ; killall Glance.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+mv *.png ../smoothDiffIR12.files/
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+LNW_notangle.sh makeDemo.sh smoothDiffIR12.files/
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Результат представлен на рисунке 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Результат-сглаживания-изображени"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Результат-сглаживания-изображени"
+
+\end_inset
+
+Результат сглаживания изображений
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="48text%">
+<column alignment="left" valignment="top" width="48text%">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename smoothDiffIR12.files/mt201110082201_sst_filtered.pro.png
+	lyxscale 35
+	width 46text%
+	BoundingBox 0bp 100bp 1024bp 600bp
+	clip
+	groupId STD proj
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename smoothDiffIR12.files/mt201110082201_sst_filtered_new.pro.png
+	lyxscale 35
+	width 46text%
+	BoundingBox 0bp 100bp 1024bp 600bp
+	clip
+	groupId STD proj
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="block" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Стандартная и улучшенная карты ТПО (палитра 5 -- 
+\begin_inset Formula $20^{\circ}$
+\end_inset
+
+C).
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="block" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename smoothDiffIR12.files/mt201110082201_sst_filtered-ir1.pro.png
+	lyxscale 35
+	width 46text%
+	BoundingBox 0bp 100bp 1024bp 600bp
+	clip
+	groupId STD proj
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename smoothDiffIR12.files/mt201110082201_sst_filtered-ir1_new.pro.png
+	lyxscale 35
+	width 46text%
+	BoundingBox 0bp 100bp 1024bp 600bp
+	clip
+	groupId STD proj
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="block" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Карты температурного дефицита стандартной и улучшенной карт ТПО (палитра
+ 2 -- 
+\begin_inset Formula $5^{\circ}$
+\end_inset
+
+C).
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="block" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename smoothDiffIR12.files/mt201110082201_ir1.pro.png
+	lyxscale 35
+	width 46text%
+	BoundingBox 0bp 100bp 1024bp 600bp
+	clip
+	groupId STD proj
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename smoothDiffIR12.files/mt201110082201_vis.pro.png
+	lyxscale 35
+	width 46text%
+	BoundingBox 0bp 100bp 1024bp 600bp
+	clip
+	groupId STD proj
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Карта основного инфракрасного канала MTSAT-1R/IR1 (палитра 2 -- 
+\begin_inset Formula $17^{\circ}$
+\end_inset
+
+C), 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Карта видимого канала MTSAT-1R/VIS (палитра 2 -- 7% альбедо).
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Дополнение.
+ Интеграция программы в систему DSYS
+\end_layout
+
+\begin_layout Standard
+Задача интеграции программы в систему автоматической обработки заключается
+\end_layout
+
+\begin_layout Enumerate
+В создании программы-обертки которая сможет проверить корректность входных
+ параметров, подготовить рабочее окружение и выполнить запустить расчетную
+ программу на выполнение.
+\end_layout
+
+\begin_layout Enumerate
+Установки программы обертки и расчетную программу на вычислителе и настройки
+ системы.
+\end_layout
+
+\begin_layout Subsection
+Программа-оболочка
+\end_layout
+
+\begin_layout Standard
+Взаимодействие пользователя с программой должно производиться следующим
+ образом.
+\end_layout
+
+\begin_layout Standard
+Пользователь должен создать каталог в папке //process/SD/smoothDiffIR12/
+ (например каталог test), разместить в нем файлы для обработки и вызвать
+ программу с помощью систему указав имя созданного каталога а также прочие
+ параметры вызова программы.
+ После завершения работы программы, выходные файлы будут размещены в указанном
+ каталоге.
+\end_layout
+
+\begin_layout Scrap
+<<smoothDiffIR12Scheme.py>>=
+\end_layout
+
+\begin_layout Scrap
+#!/usr/bin/python
+\end_layout
+
+\begin_layout Scrap
+import sys
+\end_layout
+
+\begin_layout Scrap
+import re
+\end_layout
+
+\begin_layout Scrap
+import os
+\end_layout
+
+\begin_layout Scrap
+import subprocess
+\end_layout
+
+\begin_layout Scrap
+import getopt
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+DSYS_arg_parsed = False
+\end_layout
+
+\begin_layout Scrap
+for DSYS_argc in [ 1+2, 1+3, 1+4 ] :
+\end_layout
+
+\begin_layout Scrap
+   try :
+\end_layout
+
+\begin_layout Scrap
+       opts, args = getopt.getopt(sys.argv[1:DSYS_argc], "F:", ["id=", "folder="]
+ )
+\end_layout
+
+\begin_layout Scrap
+   except getopt.GetoptError as e:
+\end_layout
+
+\begin_layout Scrap
+       pass
+\end_layout
+
+\begin_layout Scrap
+       continue
+\end_layout
+
+\begin_layout Scrap
+   if len(args) != 0: continue
+\end_layout
+
+\begin_layout Scrap
+   ID=None
+\end_layout
+
+\begin_layout Scrap
+   FOLDER=None
+\end_layout
+
+\begin_layout Scrap
+   for o, a in opts:
+\end_layout
+
+\begin_layout Scrap
+        if o in [ "--id" ]:
+\end_layout
+
+\begin_layout Scrap
+            ID=a
+\end_layout
+
+\begin_layout Scrap
+        elif o in [ "--folder", "-F" ] :
+\end_layout
+
+\begin_layout Scrap
+            FOLDER=a 
+\end_layout
+
+\begin_layout Scrap
+        else:
+\end_layout
+
+\begin_layout Scrap
+            assert False, "unhandled option" + o
+\end_layout
+
+\begin_layout Scrap
+   if ID is not None and FOLDER is not None :
+\end_layout
+
+\begin_layout Scrap
+        DSYS_argc = DSYS_argc
+\end_layout
+
+\begin_layout Scrap
+        DSYS_arg_parsed = True
+\end_layout
+
+\begin_layout Scrap
+        break
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+if not DSYS_arg_parsed :
+\end_layout
+
+\begin_layout Scrap
+    print "First parameters must be --id <id> --folder <folder name>"
+\end_layout
+
+\begin_layout Scrap
+    sys.exit(1);
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+process_argv = sys.argv[DSYS_argc+1:]
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+p = re.compile(r'^[
+\backslash
+-+!=@#%^a-zA-Z0-9_.,]*$')
+\end_layout
+
+\begin_layout Scrap
+for arg in process_argv:
+\end_layout
+
+\begin_layout Scrap
+    if not p.match( arg ):
+\end_layout
+
+\begin_layout Scrap
+        print "paramer " + arg + " is not match pattern"
+\end_layout
+
+\begin_layout Scrap
+        sys.exit(1);
+\end_layout
+
+\begin_layout Scrap
+os.chdir( os.getenv( 'HOME' ) )
+\end_layout
+
+\begin_layout Scrap
+os.chdir( "mnt/process/SD/smoothDiffIR12/" );
+\end_layout
+
+\begin_layout Scrap
+os.chdir( FOLDER )
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+exe_path='<<Путь к выполняемой программе на вычислителе>>/smoothDiffIR12.exe'
+\end_layout
+
+\begin_layout Scrap
+subprocess.check_call(  [ exe_path ] + process_argv )
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+LNW_notangle.sh smoothDiffIR12Scheme.py $BIN/
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Отдельно определим директорию, в которую должна устанавливаться программа
+\end_layout
+
+\begin_layout Scrap
+<<Путь к выполняемой программе на вычислителе>>=
+\end_layout
+
+\begin_layout Scrap
+/home/SD/SML/DSYSNEWC/schemes/
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Настройка системы автоматической обработки и копирование исполняемых файлов
+ на вычислитель
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы взаимодействовать с системой Паши необходимо использовать
+ ssh следующим образом:
+\end_layout
+
+\begin_layout LyX-Code
+ssh -p 12020 sergdkv@vault13.satellite.dvo.ru <команда>
+\end_layout
+
+\begin_layout Standard
+При этом для того, чтобы получить список машин достаточно использовать команду
+\end_layout
+
+\begin_layout LyX-Code
+ssh -p 12020 sergdkv@vault13.satellite.dvo.ru list machine
+\end_layout
+
+\begin_layout Standard
+А для того, чтобы получить информацию о машине можно:
+\end_layout
+
+\begin_layout LyX-Code
+ssh -p 12020 sergdkv@vault13.satellite.dvo.ru list machine SD_icecube
+\end_layout
+
+\begin_layout Standard
+Для того, чтобы автоматизировать настройку системы и загрузку программы
+ на вычислитель создадим подраздел в скрипте построения программы.
+ Данный подраздел должен выполняться только в случае существования переменной
+ окружения 
+\family typewriter
+DSYS
+\family default
+ .
+\end_layout
+
+\begin_layout Scrap
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+if [ -n "$DSYS" ] ; then
+\end_layout
+
+\begin_layout Scrap
+    <<DSYS>>
+\end_layout
+
+\begin_layout Scrap
+fi;
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Схема создается командой 
+\end_layout
+
+\begin_layout Scrap
+<<DSCOMM>>=
+\end_layout
+
+\begin_layout Scrap
+ssh -p 12020 sergdkv@vault13.satellite.dvo.ru
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+<<DSYS>>=
+\end_layout
+
+\begin_layout Scrap
+<<DSCOMM>> create scheme smoothDiffIR12 command=echo
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Необходимо загрузить исполняемый файл и скрипт-обертку на вычислитель
+\end_layout
+
+\begin_layout Scrap
+<<DSYS>>=
+\end_layout
+
+\begin_layout Scrap
+DSYSEXEPATH=<<Путь к выполняемой программе на вычислителе>>
+\end_layout
+
+\begin_layout Scrap
+scp 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    $BIN/smoothDiffIR12Scheme.py 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    $BIN/smoothDiffIR12.exe 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+    SD@icecube:$DSYSEXEPATH
+\end_layout
+
+\begin_layout Scrap
+ssh SD@icecube chmod +x $DSYSEXEPATH/smoothDiffIR12.exe
+\end_layout
+
+\begin_layout Scrap
+ssh SD@icecube chmod +x $DSYSEXEPATH/smoothDiffIR12.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Определить на какой машине и какая программа должна выполняться
+\end_layout
+
+\begin_layout Scrap
+<<DSYS>>=
+\end_layout
+
+\begin_layout Scrap
+<<DSCOMM>> update scheme smoothDiffIR12 
+\end_layout
+
+\begin_layout Scrap
+       set command=$DSYSEXEPATH/smoothDiffIR12Scheme.py
+\end_layout
+
+\begin_layout Scrap
+<<DSCOMM>> update scheme smoothDiffIR12 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+       set  machines=SD_icecube
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Standard
+Добавим описание программы:
+\end_layout
+
+\begin_layout Scrap
+<<DSYS>>=
+\end_layout
+
+\begin_layout Scrap
+DESCRIPTION=`$BIN/smoothDiffIR12.exe --help`
+\end_layout
+
+\begin_layout Scrap
+DESCRIPTION2="
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+Дополнение:
+\end_layout
+
+\begin_layout Scrap
+    Опции для системы DSYS:
+\end_layout
+
+\begin_layout Scrap
+    --id <идентификатор задачи>
+\end_layout
+
+\begin_layout Scrap
+    -F
+\end_layout
+
+\begin_layout Scrap
+    --folder <имя папки>
+\end_layout
+
+\begin_layout Scrap
+         имя папки в //process/SD/smoothDiffIR12/ в которой должны 
+\end_layout
+
+\begin_layout Scrap
+         распологаться исходные данные
+\end_layout
+
+\begin_layout Scrap
+"
+\end_layout
+
+\begin_layout Scrap
+<<DSCOMM>> update scheme smoothDiffIR12 
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+   set  "description=
+\backslash
+"$DESCRIPTION ${DESCRIPTION2}
+\backslash
+""
+\end_layout
+
+\begin_layout Scrap
+@
+\end_layout
+
+\begin_layout Subsection
+Запуск программы с помощью системы DSYS
+\end_layout
+
+\begin_layout Standard
+После этого можно запустить программу сглаживания через схему обработки,
+ предварительно поместив исходные данные в каталог //process/SD/smoothDiffIR12/t
+est
+\end_layout
+
+\begin_layout LyX-Code
+ssh -p 12020 sergdkv@vault13.satellite.dvo.ru 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+    start smoothDiffIR12 -F test 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+    -V -W 20 -Z 70 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+    -C mt201110082201_sst_filtered.pro -S mt201110082201_ir1.pro   
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+    mt201110082201_sst_filtered-ir1.pro 
+\backslash
+
+\end_layout
+
+\begin_layout LyX-Code
+    mt201110082201_sst_filtered-ir1_new.pro >schema_id
+\end_layout
+
+\begin_layout Standard
+Тогда состояние обработки схемы можно определить с помощью команды
+\end_layout
+
+\begin_layout LyX-Code
+ssh -p 12020 sergdkv@vault13.satellite.dvo.ru  info `cat schema_id`
+\end_layout
+
+\begin_layout Standard
+Результат будет размещен в каталоге 
+\family typewriter
+//process/SD/smoothDiffIR12/test
+\family default
+ .
+\end_layout
+
+\begin_layout Subparagraph
+Примечание:
+\end_layout
+
+\begin_layout Standard
+Пользователи OC Windows могут использовать программу plink входящую в состав
+ пакета PuTTY.
+\end_layout
+
+\begin_layout LyX-Code
+for /F %A in (schema_id) do SET ID=%A
+\end_layout
+
+\begin_layout LyX-Code
+plink -P 12020 sergdkv@vault13.satellite.dvo.ru  info %ID%
+\end_layout
+
+\end_body
+\end_document

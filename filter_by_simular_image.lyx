@@ -1,0 +1,3132 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+\noweboptions{longchunks,footnotesizecode}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language russian
+\language_package babel
+\inputencoding utf8
+\fontencoding T2A
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 1
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 3cm
+\rightmargin 1in
+\bottommargin 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+filter_by_simular_image
+\end_layout
+
+\begin_layout Author
+С.
+ Дьяков
+\end_layout
+
+\begin_layout Standard
+filter_by_simular_image - программа фильтрации изображений по похожим изображени
+ям, несколько сдвинутым и линейно трансформированным.
+\end_layout
+
+\begin_layout Section*
+Введение
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Содержание фильтрации данных.
+\end_layout
+
+\begin_layout Standard
+Если два изображения имеют одинаковый смысл (ИК-температура в канале 10,5
+ мкм, измеренная почти одновременно различными спутниками) то средняя температур
+а одинаковых участков и структура температур должны совпадать или почти
+ совпадать.
+ Следовательно можно фильтровать облачность сопоставлением двух участков.
+\end_layout
+
+\begin_layout Standard
+Препятствием для аккуратной фильтрации облачности являются следующие факты:
+\end_layout
+
+\begin_layout Enumerate
+Из-за ошибок навигации изображения могут быть сдвинуты относительно друг-друга.
+\end_layout
+
+\begin_layout Enumerate
+Из-за ошибок калибровки температуры могут не совпадать (необходимо линейное
+ преобразование)
+\end_layout
+
+\begin_layout Enumerate
+Так-как съемка производится под разными углами, возможна аддитивная добавка
+ связанная с влиянием атмосферы.
+\end_layout
+
+\begin_layout Standard
+Таким образом, если первое изображение 
+\begin_inset Formula $T$
+\end_inset
+
+ а второе 
+\begin_inset Formula $O$
+\end_inset
+
+ то можно подобрать такие коэффициенты 
+\begin_inset Formula $a$
+\end_inset
+
+, 
+\begin_inset Formula $b$
+\end_inset
+
+, 
+\begin_inset Formula $c$
+\end_inset
+
+, 
+\begin_inset Formula $d$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta i$
+\end_inset
+
+, 
+\begin_inset Formula $\Delta j$
+\end_inset
+
+ чтобы 
+\begin_inset Formula $O$
+\end_inset
+
+ переходило в 
+\begin_inset Formula $T$
+\end_inset
+
+ наиболее точно
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T_{ij}\approx W_{ij}=a+b\, O_{i+\Delta i,j+\Delta j}+c\, i+d\, j
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+и затем отфильтровать данные
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left|T_{ij}-W_{ij}\right|<\Delta T
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Реализация программы
+\end_layout
+
+\begin_layout Standard
+Программа будет командно-строчным приложением, созданным на базе программы
+ makeComposion.
+\end_layout
+
+\begin_layout Scrap
+
+<<filter_by_simular_image.cpp>>=
+\end_layout
+
+\begin_layout Scrap
+
+#include <getopt.h> 
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdio.h> 
+\end_layout
+
+\begin_layout Scrap
+
+#include <stdlib.h> 
+\end_layout
+
+\begin_layout Scrap
+
+#include <math.h> 
+\end_layout
+
+\begin_layout Scrap
+
+#include <iostream> 
+\end_layout
+
+\begin_layout Scrap
+
+#include <algorithm> 
+\end_layout
+
+\begin_layout Scrap
+
+#include <lab34NProjLib.hpp>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Типы данных>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Глобальные переменные>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+int main( int argc, char** argv ) {
+\end_layout
+
+\begin_layout Scrap
+
+    <<Разбор параметров>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    <<Чтение данных>>
+\end_layout
+
+\begin_layout Scrap
+
+ 
+\end_layout
+
+\begin_layout Scrap
+
+    <<Преобразование>>
+\end_layout
+
+\begin_layout Scrap
+
+ 
+\end_layout
+
+\begin_layout Scrap
+
+    <<Запись результата>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    return 0;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Формат вызова
+\end_layout
+
+\begin_layout Standard
+Формат вызова программы следующий
+\end_layout
+
+\begin_layout Scrap
+
+<<help message>>=
+\end_layout
+
+\begin_layout Scrap
+
+filter_by_simular_image.exe [опции] <имя исходного файла> <имя базового файла>
+ <имя конечного файла> 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+Опции:   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    -h   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --help   --- эта справка   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --maxdelta <число> --- максимальное возможное отклонение  
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --maxsmoothdelta <число> --- максимальное возможное отклонение в окне
+ сглаживания 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --maxshift <целое число> --- максимальный сдвиг изображения относительно
+ базового 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --smoothwinsize <число> --- размер бегущего окна определения коэффициентов
+ 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --filterwinsize <число> --- размер бегущего окна фильтрации 
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --minpercent <число> --- минимальный процент безоблачных неотфильтрованных
+ пикселей в окне фильтрации для работы алгоритма
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    -v   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    --verbose --- выводить отладочные сообщения   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+Пример вызова:   
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+    filter_by_simular_image.exe --maxdelta 0.4 --maxshift 5 --winsize1 100
+ --winsize2 50 -W 25 --minpersent 25 -C mt08_sst_f.pro mt09_sst_f.pro mt08_sst_new.
+pro  
+\backslash
+n
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Разбор опций программы
+\end_layout
+
+\begin_layout Standard
+Разбор опций программы производиться с помощью функции getopt
+\end_layout
+
+\begin_layout Standard
+(описание: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://habrahabr.ru/blogs/nix_coding/55665/
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Scrap
+
+<<Глобальные переменные>>=
+\end_layout
+
+\begin_layout Scrap
+
+int smooth_winsize = 20;
+\end_layout
+
+\begin_layout Scrap
+
+int max_shift = 5;
+\end_layout
+
+\begin_layout Scrap
+
+int filter_winsize = 20;
+\end_layout
+
+\begin_layout Scrap
+
+bool verbose = false;
+\end_layout
+
+\begin_layout Scrap
+
+double max_delta = 1.0;
+\end_layout
+
+\begin_layout Scrap
+
+double max_smooth_delta = 1.0;
+\end_layout
+
+\begin_layout Scrap
+
+double min_percent  = 100;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+std::string input_fname = "";
+\end_layout
+
+\begin_layout Scrap
+
+std::string base_fname = "";
+\end_layout
+
+\begin_layout Scrap
+
+std::string output_fname = "";
+\end_layout
+
+\begin_layout Scrap
+
+const char* help_message = 
+\end_layout
+
+\begin_layout Scrap
+
+"
+\backslash
+
+\end_layout
+
+\begin_layout Scrap
+
+<<help message>>
+\end_layout
+
+\begin_layout Scrap
+
+";
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Разбор параметров>>=
+\end_layout
+
+\begin_layout Scrap
+
+static struct option long_opt[] = { 
+\end_layout
+
+\begin_layout Scrap
+
+    {"help", 0, 0, 'h'}, 
+\end_layout
+
+\begin_layout Scrap
+
+    {"verbose", 0, 0, 'V'}, 
+\end_layout
+
+\begin_layout Scrap
+
+    {"smoothwinsize", 1, 0, 'W'}, 
+\end_layout
+
+\begin_layout Scrap
+
+    {"filterwinsize", 1, 0, 'F' }, 
+\end_layout
+
+\begin_layout Scrap
+
+    {"maxshift",      1, 0, 'S' }, 
+\end_layout
+
+\begin_layout Scrap
+
+    {"minpercent",    1, 0, 'L' }, 
+\end_layout
+
+\begin_layout Scrap
+
+    {"maxdelta",      1, 0, 'D' }, 
+\end_layout
+
+\begin_layout Scrap
+
+    {"maxsmoothdelta",  1, 0, 'M' }, 
+\end_layout
+
+\begin_layout Scrap
+
+    {0, 0, 0, 0 }
+\end_layout
+
+\begin_layout Scrap
+
+};
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+if( argc == 1 ){
+\end_layout
+
+\begin_layout Scrap
+
+    puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+
+    return(-1);
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+int optIdx;
+\end_layout
+
+\begin_layout Scrap
+
+while (1){
+\end_layout
+
+\begin_layout Scrap
+
+    int c;
+\end_layout
+
+\begin_layout Scrap
+
+    if( ( c = getopt_long(argc, argv, "W:F:S:L:D:M:Vh", long_opt, &optIdx)
+ ) == -1 ) {
+\end_layout
+
+\begin_layout Scrap
+
+        break;  
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+   switch( c ){
+\end_layout
+
+\begin_layout Scrap
+
+       case 'h':
+\end_layout
+
+\begin_layout Scrap
+
+         puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+
+         return(-1);
+\end_layout
+
+\begin_layout Scrap
+
+      case 'V':
+\end_layout
+
+\begin_layout Scrap
+
+         verbose=true;
+\end_layout
+
+\begin_layout Scrap
+
+         break;
+\end_layout
+
+\begin_layout Scrap
+
+      case 'W':  
+\end_layout
+
+\begin_layout Scrap
+
+         {
+\end_layout
+
+\begin_layout Scrap
+
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+
+            smooth_winsize = strtol( optarg,&pEnd,10);
+\end_layout
+
+\begin_layout Scrap
+
+         }
+\end_layout
+
+\begin_layout Scrap
+
+         break;
+\end_layout
+
+\begin_layout Scrap
+
+      case 'F':  
+\end_layout
+
+\begin_layout Scrap
+
+         {
+\end_layout
+
+\begin_layout Scrap
+
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+
+            filter_winsize = strtol( optarg,&pEnd,10);
+\end_layout
+
+\begin_layout Scrap
+
+         }
+\end_layout
+
+\begin_layout Scrap
+
+         break;
+\end_layout
+
+\begin_layout Scrap
+
+      case 'L':  
+\end_layout
+
+\begin_layout Scrap
+
+         {
+\end_layout
+
+\begin_layout Scrap
+
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+
+            min_percent = strtod(optarg,&pEnd);
+\end_layout
+
+\begin_layout Scrap
+
+         }
+\end_layout
+
+\begin_layout Scrap
+
+         break;
+\end_layout
+
+\begin_layout Scrap
+
+      case 'S':  
+\end_layout
+
+\begin_layout Scrap
+
+         {
+\end_layout
+
+\begin_layout Scrap
+
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+
+            max_shift = strtod(optarg,&pEnd);
+\end_layout
+
+\begin_layout Scrap
+
+         }
+\end_layout
+
+\begin_layout Scrap
+
+         break;
+\end_layout
+
+\begin_layout Scrap
+
+      case 'D':  
+\end_layout
+
+\begin_layout Scrap
+
+         {
+\end_layout
+
+\begin_layout Scrap
+
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+
+            max_delta = strtod(optarg,&pEnd);
+\end_layout
+
+\begin_layout Scrap
+
+         }
+\end_layout
+
+\begin_layout Scrap
+
+         break;
+\end_layout
+
+\begin_layout Scrap
+
+      case 'M':  
+\end_layout
+
+\begin_layout Scrap
+
+         {
+\end_layout
+
+\begin_layout Scrap
+
+            char* pEnd = 0;
+\end_layout
+
+\begin_layout Scrap
+
+            max_smooth_delta = strtod(optarg,&pEnd);
+\end_layout
+
+\begin_layout Scrap
+
+         }
+\end_layout
+
+\begin_layout Scrap
+
+         break;
+\end_layout
+
+\begin_layout Scrap
+
+      default:
+\end_layout
+
+\begin_layout Scrap
+
+         puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+
+         return(-1);   
+\end_layout
+
+\begin_layout Scrap
+
+    } 
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Разбор параметров>>=
+\end_layout
+
+\begin_layout Scrap
+
+if( argc - 3 != optind ){
+\end_layout
+
+\begin_layout Scrap
+
+   puts( "Ошибка: не указано имя входного, базового и/или выходного файла
+\backslash
+n" );
+\end_layout
+
+\begin_layout Scrap
+
+   puts( help_message );
+\end_layout
+
+\begin_layout Scrap
+
+   return(-1);   
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+else {
+\end_layout
+
+\begin_layout Scrap
+
+   input_fname = argv[optind+0];
+\end_layout
+
+\begin_layout Scrap
+
+   base_fname = argv[optind+1];
+\end_layout
+
+\begin_layout Scrap
+
+   output_fname = argv[optind+2];
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+if( verbose ) {
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Входной файл: %s
+\backslash
+n", input_fname.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Базовый файл: %s
+\backslash
+n", base_fname.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Выходной файл: %s
+\backslash
+n", output_fname.c_str() );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Размер бегущего окна сглаживания (smoothwinsize): %d
+\backslash
+n", smooth_winsize );
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Размер бегущего окна фильтрации (filterwinsize): %d
+\backslash
+n", filter_winsize );
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Размер окна поиска смещения (maxshift): %d
+\backslash
+n", max_shift );
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Порог фильтрации (maxdelta): %lf
+\backslash
+n", max_delta );
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Порог отбора точек для сглаживания (maxsmoothdelta): %lf
+\backslash
+n", max_smooth_delta );
+\end_layout
+
+\begin_layout Scrap
+
+    printf( "Порог качества сглаживания (minpercent): %lf
+\backslash
+n", min_percent );
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Чтение исходных данных
+\end_layout
+
+\begin_layout Standard
+Надо скачать две или три проекции, создать и заполнить соответствующие массивы.
+\end_layout
+
+\begin_layout Standard
+Данные проекций будем хранить векторах STL, причем будем одновременно хранить
+ температуры и величины, находящиеся в файле.
+\end_layout
+
+\begin_layout Standard
+Соответствующие функции вынесены в библиотеку lab34NProjLib.
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Чтение данных>>=
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj inp_proj;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj::read( input_fname,  inp_proj );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj base_proj;
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj::read( base_fname, base_proj );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+//инициализируем выходной массив
+\end_layout
+
+\begin_layout Scrap
+
+TLab34NProj out_proj( inp_proj );
+\end_layout
+
+\begin_layout Scrap
+
+// out_proj.clear( -1 );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Преобразование данных
+\end_layout
+
+\begin_layout Scrap
+
+<<Преобразование>>=
+\end_layout
+
+\begin_layout Scrap
+
+int lines = inp_proj.lines();
+\end_layout
+
+\begin_layout Scrap
+
+int cols = inp_proj.cols();
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+int debug_found = 0;
+\end_layout
+
+\begin_layout Scrap
+
+<<for fwins>>
+\end_layout
+
+\begin_layout Scrap
+
+        if( fwin_bottom > 3600 && fwin_left > 2100 ){
+\end_layout
+
+\begin_layout Scrap
+
+            debug_found += 1;
+\end_layout
+
+\begin_layout Scrap
+
+            printf( "Found
+\backslash
+n" );
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+        <<set smoothwin>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+         
+\end_layout
+
+\begin_layout Scrap
+
+        {  // определяем, стоит ли работать с данным окном фильтрации (слишком
+ мало точек?)
+\end_layout
+
+\begin_layout Scrap
+
+           int nonfiltered = 0;
+\end_layout
+
+\begin_layout Scrap
+
+           int shift_i = 0;
+\end_layout
+
+\begin_layout Scrap
+
+           int shift_j = 0;
+\end_layout
+
+\begin_layout Scrap
+
+           <<for i_input,j_input in fwin>>=
+\end_layout
+
+\begin_layout Scrap
+
+              if( inp_proj.raw[i_input][j_input] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+              if( base_proj.raw[i_base][j_base] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+              //printf( "%d %d %d
+\backslash
+n",  i_input, j_input, inp_proj.raw[i_input][j_input] );
+\end_layout
+
+\begin_layout Scrap
+
+              double filter_diff = base_proj.geo[i_base][j_base] - inp_proj.geo[i_
+input][j_input];
+\end_layout
+
+\begin_layout Scrap
+
+              if( fabs(filter_diff) > max_smooth_delta ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+              nonfiltered += 1;
+\end_layout
+
+\begin_layout Scrap
+
+           <<end for i_input,j_input in fwin>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+           printf( "? filtered fwin_bottom=%d fwin_left=%d nonfiltered=%d
+ filter_winsize=%d
+\backslash
+n", 
+\end_layout
+
+\begin_layout Scrap
+
+                fwin_bottom, fwin_left, nonfiltered, filter_winsize );
+\end_layout
+
+\begin_layout Scrap
+
+           if( nonfiltered < filter_winsize ){
+\end_layout
+
+\begin_layout Scrap
+
+              <<for i_input,j_input in fwin>>
+\end_layout
+
+\begin_layout Scrap
+
+                 out_proj.raw[i_input][j_input] = -5;
+\end_layout
+
+\begin_layout Scrap
+
+              <<end for i_input,j_input in fwin>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+              printf( "filtered fwin_bottom=%d fwin_left=%d
+\backslash
+n", 
+\end_layout
+
+\begin_layout Scrap
+
+                fwin_bottom, fwin_left );
+\end_layout
+
+\begin_layout Scrap
+
+              continue;
+\end_layout
+
+\begin_layout Scrap
+
+           }
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+        // определяем коэффициенты a,b,c,d
+\end_layout
+
+\begin_layout Scrap
+
+        double best_R = 1000000;
+\end_layout
+
+\begin_layout Scrap
+
+        double best_a, best_b, best_c, best_d;
+\end_layout
+
+\begin_layout Scrap
+
+        int best_shift_i, best_shift_j;
+\end_layout
+
+\begin_layout Scrap
+
+        {
+\end_layout
+
+\begin_layout Scrap
+
+           int n, nonfiltered_n;
+\end_layout
+
+\begin_layout Scrap
+
+           int shift_i = 0;
+\end_layout
+
+\begin_layout Scrap
+
+           int shift_j = 0;
+\end_layout
+
+\begin_layout Scrap
+
+           // определяем количество точек сглаживания и общее количество
+ точек
+\end_layout
+
+\begin_layout Scrap
+
+           <<определяем количество точек сглаживания и общее количество
+ точек>>
+\end_layout
+
+\begin_layout Scrap
+
+           if( nonfiltered_n < n * min_percent / 100 ){
+\end_layout
+
+\begin_layout Scrap
+
+               printf( "empty fwin_bottom=%d fwin_left=%d shift_i=%d "
+\end_layout
+
+\begin_layout Scrap
+
+                       "shift_j=%d nonfiltered_n=%d n=%d min_percent=%lf
+\backslash
+n", 
+\end_layout
+
+\begin_layout Scrap
+
+                       fwin_bottom, fwin_left, shift_i, 
+\end_layout
+
+\begin_layout Scrap
+
+                       shift_j, nonfiltered_n, n, min_percent );
+\end_layout
+
+\begin_layout Scrap
+
+           } 
+\end_layout
+
+\begin_layout Scrap
+
+           else {
+\end_layout
+
+\begin_layout Scrap
+
+               printf( "fwin_bottom=%d fwin_left=%d shift_i=%d "
+\end_layout
+
+\begin_layout Scrap
+
+                  "shift_j=%d nonfiltered_n=%d n=%d min_percent=%lf
+\backslash
+n", 
+\end_layout
+
+\begin_layout Scrap
+
+                  fwin_bottom, fwin_left, shift_i, 
+\end_layout
+
+\begin_layout Scrap
+
+                  shift_j, nonfiltered_n, n, min_percent );
+\end_layout
+
+\begin_layout Scrap
+
+               double a=0, b=1, c=0, d=0, R=0;
+\end_layout
+
+\begin_layout Scrap
+
+               <<определяем коэффициенты преобразования a,b,c,d>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+               <<рассчитываем рассогласование R>>
+\end_layout
+
+\begin_layout Scrap
+
+ 
+\end_layout
+
+\begin_layout Scrap
+
+               best_R = R;
+\end_layout
+
+\begin_layout Scrap
+
+               best_shift_i = shift_i;
+\end_layout
+
+\begin_layout Scrap
+
+               best_shift_j = shift_j;
+\end_layout
+
+\begin_layout Scrap
+
+               best_a = a;
+\end_layout
+
+\begin_layout Scrap
+
+               best_b = b;
+\end_layout
+
+\begin_layout Scrap
+
+               best_c = c;
+\end_layout
+
+\begin_layout Scrap
+
+               best_d = d;
+\end_layout
+
+\begin_layout Scrap
+
+           }
+\end_layout
+
+\begin_layout Scrap
+
+        }
+\end_layout
+
+\begin_layout Scrap
+
+        printf( "shift_i=0, shift_j=0, R=%lf (best-%lf)
+\backslash
+n", best_R, best_R );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+        // определяем коэффициенты shift_i, shift_j
+\end_layout
+
+\begin_layout Scrap
+
+        for( int shift_i = -max_shift; shift_i <= max_shift; shift_i++ ){
+\end_layout
+
+\begin_layout Scrap
+
+            for( int shift_j = -max_shift; shift_j <= max_shift; shift_j++
+ ){
+\end_layout
+
+\begin_layout Scrap
+
+                double a = best_a;
+\end_layout
+
+\begin_layout Scrap
+
+                double b = best_b;
+\end_layout
+
+\begin_layout Scrap
+
+                double c = best_c;
+\end_layout
+
+\begin_layout Scrap
+
+                double d = best_d;
+\end_layout
+
+\begin_layout Scrap
+
+                double R = best_R;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+                // рассчитываем рассогласование R
+\end_layout
+
+\begin_layout Scrap
+
+                <<рассчитываем рассогласование R>>
+\end_layout
+
+\begin_layout Scrap
+
+                //printf( "shift_i=%d, shift_j=%d, R=%lf (best-%lf)
+\backslash
+n", shift_i, shift_j, R, best_R );
+\end_layout
+
+\begin_layout Scrap
+
+                if( R < best_R ){
+\end_layout
+
+\begin_layout Scrap
+
+                     best_R = R;
+\end_layout
+
+\begin_layout Scrap
+
+                     best_shift_i = shift_i;
+\end_layout
+
+\begin_layout Scrap
+
+                     best_shift_j = shift_j;
+\end_layout
+
+\begin_layout Scrap
+
+                     best_a = a;
+\end_layout
+
+\begin_layout Scrap
+
+                     best_b = b;
+\end_layout
+
+\begin_layout Scrap
+
+                     best_c = c;
+\end_layout
+
+\begin_layout Scrap
+
+                     best_d = d;
+\end_layout
+
+\begin_layout Scrap
+
+                }                
+\end_layout
+
+\begin_layout Scrap
+
+            } // for( int delta_j =
+\end_layout
+
+\begin_layout Scrap
+
+       } // for( int delta_i =
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+       printf( "result: fwin_bottom=%d fwin_left=%d shift_i=%d "
+\end_layout
+
+\begin_layout Scrap
+
+               "shift_j=%d best_R=%lf (%lf %lf %lf %lf)
+\backslash
+n", 
+\end_layout
+
+\begin_layout Scrap
+
+                fwin_bottom, fwin_left, best_shift_i, 
+\end_layout
+
+\begin_layout Scrap
+
+                best_shift_j, best_R, best_a, best_b, best_c, best_d );
+\end_layout
+
+\begin_layout Scrap
+
+       
+\end_layout
+
+\begin_layout Scrap
+
+       // фильтрация данных
+\end_layout
+
+\begin_layout Scrap
+
+       double a = best_a;
+\end_layout
+
+\begin_layout Scrap
+
+       double b = best_b;
+\end_layout
+
+\begin_layout Scrap
+
+       double c = best_c;
+\end_layout
+
+\begin_layout Scrap
+
+       double d = best_d;
+\end_layout
+
+\begin_layout Scrap
+
+       int shift_i = best_shift_i;
+\end_layout
+
+\begin_layout Scrap
+
+       int shift_j = best_shift_j;
+\end_layout
+
+\begin_layout Scrap
+
+       <<for i_input,j_input in fwin>>
+\end_layout
+
+\begin_layout Scrap
+
+          if( inp_proj.raw[i_input][j_input] < 0 ) {
+\end_layout
+
+\begin_layout Scrap
+
+              continue;
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+          if( base_proj.raw[i_base][j_base] < 0 ) {
+\end_layout
+
+\begin_layout Scrap
+
+              out_proj.raw[i_input][j_input] = base_proj.raw[i_base][j_base];
+\end_layout
+
+\begin_layout Scrap
+
+              continue;
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+          if( best_R == 1000000 ) {
+\end_layout
+
+\begin_layout Scrap
+
+              out_proj.raw[i_input][j_input] = -5;
+\end_layout
+
+\begin_layout Scrap
+
+              continue;
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+          else {  
+\end_layout
+
+\begin_layout Scrap
+
+              double geo2 = 
+\end_layout
+
+\begin_layout Scrap
+
+                 a + 
+\end_layout
+
+\begin_layout Scrap
+
+                 b*base_proj.geo[i_base][j_base] + 
+\end_layout
+
+\begin_layout Scrap
+
+                 c*delta_i + 
+\end_layout
+
+\begin_layout Scrap
+
+                 d*delta_j;
+\end_layout
+
+\begin_layout Scrap
+
+              double delta = inp_proj.geo[i_input][j_input] - geo2;
+\end_layout
+
+\begin_layout Scrap
+
+              if( fabs(delta) > max_delta ){
+\end_layout
+
+\begin_layout Scrap
+
+                 out_proj.raw[i_input][j_input] = -5;
+\end_layout
+
+\begin_layout Scrap
+
+              }
+\end_layout
+
+\begin_layout Scrap
+
+          }
+\end_layout
+
+\begin_layout Scrap
+
+       <<end for i_input,j_input in fwin>>
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<end for fwins>>
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<for fwins>>=
+\end_layout
+
+\begin_layout Scrap
+
+for( int fwin_bottom = 0; fwin_bottom < lines; fwin_bottom += filter_winsize
+ ){
+\end_layout
+
+\begin_layout Scrap
+
+    int fwin_top = fwin_bottom + filter_winsize;
+\end_layout
+
+\begin_layout Scrap
+
+    if ( fwin_top > lines ) fwin_top = lines;
+\end_layout
+
+\begin_layout Scrap
+
+    printf ( "lines %d-%d/%d
+\backslash
+n", fwin_bottom, fwin_top-1, lines );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    for( int fwin_left = 0; fwin_left < cols; fwin_left += filter_winsize
+ ){
+\end_layout
+
+\begin_layout Scrap
+
+        int fwin_right = fwin_left + filter_winsize;
+\end_layout
+
+\begin_layout Scrap
+
+        if ( fwin_right > cols ) fwin_right = cols;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<end for fwins>>=
+\end_layout
+
+\begin_layout Scrap
+
+    } // for( int fwin_left
+\end_layout
+
+\begin_layout Scrap
+
+} // for( int fwin_bottom
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<set smoothwin>>=
+\end_layout
+
+\begin_layout Scrap
+
+int smoothwin_bottom = (fwin_bottom+fwin_top)/2 - smooth_winsize/2;
+\end_layout
+
+\begin_layout Scrap
+
+int smoothwin_top = smoothwin_bottom + smooth_winsize;
+\end_layout
+
+\begin_layout Scrap
+
+if( smoothwin_bottom < 0 ) smoothwin_bottom = 0;
+\end_layout
+
+\begin_layout Scrap
+
+if( smoothwin_top >lines ) smoothwin_top = lines;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+int smoothwin_left = (fwin_left+fwin_right)/2 - smooth_winsize/2;
+\end_layout
+
+\begin_layout Scrap
+
+int smoothwin_right = smoothwin_left + smooth_winsize;
+\end_layout
+
+\begin_layout Scrap
+
+if( smoothwin_left < 0 ) smoothwin_left = 0;
+\end_layout
+
+\begin_layout Scrap
+
+if( smoothwin_right > cols ) smoothwin_right = cols;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Subsection
+определяем количество точек сглаживания и общее количество точек в окне
+ сглаживания
+\end_layout
+
+\begin_layout Scrap
+
+<<определяем количество точек сглаживания и общее количество точек>>=
+\end_layout
+
+\begin_layout Scrap
+
+n = (smoothwin_top - smoothwin_bottom)*(smoothwin_right - smoothwin_left);
+\end_layout
+
+\begin_layout Scrap
+
+nonfiltered_n = 0;
+\end_layout
+
+\begin_layout Scrap
+
+<<for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+   double filter_diff = base_proj.geo[i_base][j_base] - inp_proj.geo[i_input][j_in
+put];
+\end_layout
+
+\begin_layout Scrap
+
+   if( fabs(filter_diff) > max_smooth_delta ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+   nonfiltered_n += 1;
+\end_layout
+
+\begin_layout Scrap
+
+<<end for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Цикл по окну сглаживания
+\end_layout
+
+\begin_layout Scrap
+
+<<for i_input,j_input in smooth_window>>=
+\end_layout
+
+\begin_layout Scrap
+
+for( int i_input = smoothwin_bottom; i_input < smoothwin_top; i_input++){
+\end_layout
+
+\begin_layout Scrap
+
+    double delta_i = double(i_input - smoothwin_bottom) / (smoothwin_top
+ - smoothwin_bottom);
+\end_layout
+
+\begin_layout Scrap
+
+    delta_i = delta_i*2 - 1;
+\end_layout
+
+\begin_layout Scrap
+
+    for( int j_input = smoothwin_left; j_input < smoothwin_right; j_input++){
+\end_layout
+
+\begin_layout Scrap
+
+       double delta_j = double(j_input - smoothwin_left) / (smoothwin_right
+ - smoothwin_left);
+\end_layout
+
+\begin_layout Scrap
+
+       delta_j = delta_j*2 - 1;
+\end_layout
+
+\begin_layout Scrap
+
+       int i_base = i_input + shift_i;
+\end_layout
+
+\begin_layout Scrap
+
+       int j_base = j_input + shift_j;
+\end_layout
+
+\begin_layout Scrap
+
+       if( i_base < 0 || i_base >= lines || j_base < 0 || j_base >= cols
+ ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+       if( inp_proj.raw[i_input][j_input] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+       if( base_proj.raw[i_base][j_base] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<end for i_input,j_input in smooth_window>>=
+\end_layout
+
+\begin_layout Scrap
+
+    } // for( int j_input = smoothwin_left; 
+\end_layout
+
+\begin_layout Scrap
+
+} // for( int i_input = smoothwin_bottom;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+Цикл по окну фильтрации
+\end_layout
+
+\begin_layout Scrap
+
+<<for i_input,j_input in fwin>>=
+\end_layout
+
+\begin_layout Scrap
+
+// for i_input,j_input in fwin (header start)
+\end_layout
+
+\begin_layout Scrap
+
+for( int i_input = fwin_bottom; i_input < fwin_top; i_input++){
+\end_layout
+
+\begin_layout Scrap
+
+    double delta_i = double(i_input - smoothwin_bottom) / (smoothwin_top
+ - smoothwin_bottom);
+\end_layout
+
+\begin_layout Scrap
+
+    delta_i = delta_i*2 - 1;
+\end_layout
+
+\begin_layout Scrap
+
+    for( int j_input = fwin_left; j_input < fwin_right; j_input++){
+\end_layout
+
+\begin_layout Scrap
+
+       double delta_j = double(j_input - smoothwin_left) / (smoothwin_right
+ - smoothwin_left);
+\end_layout
+
+\begin_layout Scrap
+
+       delta_j = delta_j*2 - 1;
+\end_layout
+
+\begin_layout Scrap
+
+       int i_base = i_input + shift_i;
+\end_layout
+
+\begin_layout Scrap
+
+       int j_base = j_input + shift_j;
+\end_layout
+
+\begin_layout Scrap
+
+       if( i_base < 0 || i_base >= lines || j_base < 0 || j_base >= cols
+ ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+       // for i_input,j_input in fwin (header end)
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<end for i_input,j_input in fwin>>=
+\end_layout
+
+\begin_layout Scrap
+
+      //end for i_input,j_input in fwin
+\end_layout
+
+\begin_layout Scrap
+
+    } // for( int j_input = fwin_left;
+\end_layout
+
+\begin_layout Scrap
+
+} // for( int i_input = fwin_bottom;
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection
+определяем коэффициенты преобразования a,b,c,d
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T_{ij}\approx W_{ij}=a+b\, O_{i+\Delta i,j+\Delta j}+c\, i+d\, j
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+
+<<определяем коэффициенты преобразования a,b,c,d>>=
+\end_layout
+
+\begin_layout Scrap
+
+a = 0;
+\end_layout
+
+\begin_layout Scrap
+
+b = 0;
+\end_layout
+
+\begin_layout Scrap
+
+c = 0;
+\end_layout
+
+\begin_layout Scrap
+
+d = 0;
+\end_layout
+
+\begin_layout Scrap
+
+double R2;
+\end_layout
+
+\begin_layout Scrap
+
+static double X[1000000];
+\end_layout
+
+\begin_layout Scrap
+
+static double Y[1000000];
+\end_layout
+
+\begin_layout Scrap
+
+int X_num = 0;
+\end_layout
+
+\begin_layout Scrap
+
+for( int k = 0; k < 2; k++ ){
+\end_layout
+
+\begin_layout Scrap
+
+  // определяем коэффициенты преобразовния a,b
+\end_layout
+
+\begin_layout Scrap
+
+  X_num = 0;
+\end_layout
+
+\begin_layout Scrap
+
+  <<for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+     if( inp_proj.raw[i_input][j_input] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     if( base_proj.raw[i_base][j_base] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     double filter_diff = base_proj.geo[i_base][j_base] - inp_proj.geo[i_input][j_
+input];
+\end_layout
+
+\begin_layout Scrap
+
+     if( fabs(filter_diff) > max_smooth_delta ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     X[X_num] = base_proj.geo[i_base][j_base];
+\end_layout
+
+\begin_layout Scrap
+
+     Y[X_num] = inp_proj.geo[i_input][j_input]-c*delta_i - d *delta_j;
+\end_layout
+
+\begin_layout Scrap
+
+     X_num += 1;
+\end_layout
+
+\begin_layout Scrap
+
+  <<end for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+  linear_regression( X, Y, X_num, &a, &b, &R2 )  ;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+  // определяем коэффициенты преобразовния a,c
+\end_layout
+
+\begin_layout Scrap
+
+  X_num = 0;
+\end_layout
+
+\begin_layout Scrap
+
+  <<for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+     if( inp_proj.raw[i_input][j_input] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     if( base_proj.raw[i_base][j_base] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     double filter_diff = base_proj.geo[i_base][j_base] - inp_proj.geo[i_input][j_
+input];
+\end_layout
+
+\begin_layout Scrap
+
+     if( fabs(filter_diff) > max_smooth_delta ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     X[X_num] = delta_i;
+\end_layout
+
+\begin_layout Scrap
+
+     Y[X_num] = inp_proj.geo[i_input][j_input] - b*base_proj.geo[i_base][j_base]
+ - d*delta_j;
+\end_layout
+
+\begin_layout Scrap
+
+     X_num += 1;
+\end_layout
+
+\begin_layout Scrap
+
+  <<end for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+  linear_regression( X, Y, X_num, &a, &c, &R2 )  ;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+  // определяем коэффициенты преобразовния a,d
+\end_layout
+
+\begin_layout Scrap
+
+  X_num = 0;
+\end_layout
+
+\begin_layout Scrap
+
+  <<for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+     if( inp_proj.raw[i_input][j_input] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     if( base_proj.raw[i_base][j_base] < 0 ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     double filter_diff = base_proj.geo[i_base][j_base] - inp_proj.geo[i_input][j_
+input];
+\end_layout
+
+\begin_layout Scrap
+
+     if( fabs(filter_diff) > max_smooth_delta ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     X[X_num] = delta_j;
+\end_layout
+
+\begin_layout Scrap
+
+     Y[X_num] = inp_proj.geo[i_input][j_input] - b*base_proj.geo[i_base][j_base]
+ - c *delta_i;
+\end_layout
+
+\begin_layout Scrap
+
+     X_num += 1;
+\end_layout
+
+\begin_layout Scrap
+
+  <<end for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+  linear_regression( X, Y, X_num, &a, &d, &R2 )  ;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+printf( "shift_i=%d shift_j=%d R2=%lf (%lf %lf %lf %lf)
+\backslash
+n", 
+\end_layout
+
+\begin_layout Scrap
+
+         shift_i, shift_j, R2, a, b, c, d );
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+<<рассчитываем рассогласование R>>=
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+  R=0;
+\end_layout
+
+\begin_layout Scrap
+
+  int X_num = 0;
+\end_layout
+
+\begin_layout Scrap
+
+  <<for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+     double filter_diff = base_proj.geo[i_base][j_base] - inp_proj.geo[i_input][j_
+input];
+\end_layout
+
+\begin_layout Scrap
+
+     if( fabs(filter_diff) > max_smooth_delta ) continue;
+\end_layout
+
+\begin_layout Scrap
+
+     double t1 = inp_proj.geo[i_input][j_input];
+\end_layout
+
+\begin_layout Scrap
+
+     double t2 = a + b*base_proj.geo[i_base][j_base] + c *delta_i + d*delta_j;
+\end_layout
+
+\begin_layout Scrap
+
+     double t = t1 - t2;
+\end_layout
+
+\begin_layout Scrap
+
+     R += fabs(t);
+\end_layout
+
+\begin_layout Scrap
+
+     X_num += 1;
+\end_layout
+
+\begin_layout Scrap
+
+  <<end for i_input,j_input in smooth_window>>
+\end_layout
+
+\begin_layout Scrap
+
+  R = R/X_num;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsubsection
+Определяем коэффициент линейной зависимости
+\end_layout
+
+\begin_layout Standard
+Анализ данных проще проводить с помощью небольшой обобщенной процедуры,
+ выполняющей поиск коэффициентов линейной регрессии.
+\end_layout
+
+\begin_layout Standard
+Кроме наклона 
+\begin_inset Formula $S_{ij}$
+\end_inset
+
+ прямой регрессии 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+
+\begin_inset Formula $Y=X*S_{ij}+B_{ij}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang russian
+ рассчитываем аддитивный член регрессии
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+B_{ij}=\frac{\sum Y_{ij}-S_{ij}\sum X_{ij}}{\left|X_{ij}\right|}
+\]
+
+\end_inset
+
+и определяем коэффициент детерминации 
+\begin_inset Formula 
+\[
+R2_{ij}=1-\frac{\sum\left(X_{ij}S_{ij}+B_{ij}-Y_{ij}\right)^{2}}{\sum\left(Y_{ij}-\sum Y_{ij}/\left|Y_{ij}\right|\right)^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Scrap
+
+<<Функции>>=
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+// Определяем коэффициенты линейной зависимости Y от X
+\end_layout
+
+\begin_layout Scrap
+
+// y = x*a + b
+\end_layout
+
+\begin_layout Scrap
+
+// Рассчитываем коэффициент детерминации R2
+\end_layout
+
+\begin_layout Scrap
+
+// В случае успеха возвращаем 0.
+\end_layout
+
+\begin_layout Scrap
+
+int linear_regression( double *X, double *Y,  int N,
+\end_layout
+
+\begin_layout Scrap
+
+      double *p_b, double *p_a, double *p_R2 )
+\end_layout
+
+\begin_layout Scrap
+
+{
+\end_layout
+
+\begin_layout Scrap
+
+    int i;
+\end_layout
+
+\begin_layout Scrap
+
+    if ( N <= 2 ) return -1;
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double sum_XY = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    double sum_X = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    double sum_XX = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    double sum_Y = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    for( i = 0; i < N; i++ ){
+\end_layout
+
+\begin_layout Scrap
+
+        sum_XY += (Y[i] * X[i]);
+\end_layout
+
+\begin_layout Scrap
+
+        sum_X += X[i];
+\end_layout
+
+\begin_layout Scrap
+
+        sum_Y += Y[i];
+\end_layout
+
+\begin_layout Scrap
+
+        sum_XX += (X[i]*X[i]);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+    double a = (N*sum_XY - sum_X*sum_Y) / (N*sum_XX-sum_X*sum_X);
+\end_layout
+
+\begin_layout Scrap
+
+    double b = (sum_Y - a * sum_X) / N;
+\end_layout
+
+\begin_layout Scrap
+
+    double average_Y = sum_Y / N;
+\end_layout
+
+\begin_layout Scrap
+
+    double D1 = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    double D2 = 0;
+\end_layout
+
+\begin_layout Scrap
+
+    for( i = 0; i < N; i++ ){
+\end_layout
+
+\begin_layout Scrap
+
+        double new_Y = a*X[i]+b;
+\end_layout
+
+\begin_layout Scrap
+
+        D1 += (new_Y-Y[i])*(new_Y-Y[i]);
+\end_layout
+
+\begin_layout Scrap
+
+        D2 += (Y[i]-average_Y)*(Y[i]-average_Y);
+\end_layout
+
+\begin_layout Scrap
+
+    }
+\end_layout
+
+\begin_layout Scrap
+
+    double R2 = 1 - D1/D2;
+\end_layout
+
+\begin_layout Scrap
+
+    if( p_a ) *p_a = a;
+\end_layout
+
+\begin_layout Scrap
+
+    if( p_b ) *p_b = b;
+\end_layout
+
+\begin_layout Scrap
+
+    if( p_R2 ) *p_R2 = R2;
+\end_layout
+
+\begin_layout Scrap
+
+    return 0;
+\end_layout
+
+\begin_layout Scrap
+
+}
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Subsection
+Запись данных
+\end_layout
+
+\begin_layout Scrap
+
+<<Запись результата>>=
+\end_layout
+
+\begin_layout Scrap
+
+out_proj.write( output_fname );
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Subsection*
+Сборка программы
+\end_layout
+
+\begin_layout Scrap
+
+<<build-script>>=
+\end_layout
+
+\begin_layout Scrap
+
+#!/bin/sh
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Scrap
+
+A=filter_by_simular_image
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+P=`pwd`
+\end_layout
+
+\begin_layout Scrap
+
+SRC=$P/temp/src
+\end_layout
+
+\begin_layout Scrap
+
+BIN=$P/temp/bin
+\end_layout
+
+\begin_layout Scrap
+
+INCL=$P/temp/include
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Scrap
+
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+EXE=$BIN/${A}.exe
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+LNW_notangle.sh ${A}.cpp $SRC/
+\end_layout
+
+\begin_layout Scrap
+
+\end_layout
+
+\begin_layout Scrap
+
+INCLUDES="-I $P/external/INCLUDE  -I $P/external/INCLUDE/C_LIB -I $INCL
+ "
+\end_layout
+
+\begin_layout Scrap
+
+#COPT="-D_GLIBCXX_DEBUG -Wall -ggdb -O0"
+\end_layout
+
+\begin_layout Scrap
+
+#COPT=" -g -ggdb -static "
+\end_layout
+
+\begin_layout Scrap
+
+COPT=" -O3 -static "
+\end_layout
+
+\begin_layout Scrap
+
+g++ -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp -o $EXE
+\end_layout
+
+\begin_layout Scrap
+
+@
+\end_layout
+
+\begin_layout Section
+Пример использования программы
+\end_layout
+
+\end_body
+\end_document
