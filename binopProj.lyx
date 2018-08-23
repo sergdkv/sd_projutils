@@ -388,7 +388,22 @@ binopProj.cpp
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Plain Layout
+
 #include <stdio.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <stdlib.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <string.h>
 \end_layout
 
 \begin_layout Plain Layout
@@ -1165,7 +1180,7 @@ case 'o':
 
 \begin_layout Plain Layout
 
-    std::string out_filename( optarg );
+    std::string  out_filename( optarg );
 \end_layout
 
 \begin_layout Plain Layout
@@ -8896,7 +8911,7 @@ n"
 
 \begin_layout Standard
 \begin_inset Flex Chunk
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -9097,6 +9112,813 @@ n", txt_file_name, col );
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Модификация нулевого блока файла – смена года приема
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"set_year",          1, 0, 211 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+"--set_year [год]
+\backslash
+t--- модификация года приема в нулевом файле
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 211:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        int new_year = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if( sscanf( optarg, "%d", &new_year ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+            fprintf( stderr, "Ошибка разбора числа %s (опция set_year)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        inp_proj.blk0.b0.year = new_year;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Модификация нулевого блока файла – смена дня приема
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"set_day",          1, 0, 212 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+"--set_day [год]
+\backslash
+t--- модификация года приема в нулевом файле
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 212:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        int new_year = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if( sscanf( optarg, "%d", &new_year ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+            fprintf( stderr, "Ошибка разбора числа %s (опция set_day)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        inp_proj.blk0.b0.day = new_year;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Модификация нулевого блока файла – смена времени приема
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"set_daytime",          1, 0, 213 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+"--set_daytime [год]
+\backslash
+t--- модификация года приема в нулевом файле
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 213:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        int new_year = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if( sscanf( optarg, "%d", &new_year ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+            fprintf( stderr, "Ошибка разбора числа %s (опция set_daytime)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        inp_proj.blk0.b0.dayTime = new_year;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Модификация нулевого блока файла – смена номера канала
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"set_channel",          1, 0, 214 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+"--set_channel [год]
+\backslash
+t--- модификация года приема в нулевом файле
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 214:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        int new_year = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if( sscanf( optarg, "%d", &new_year ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+            fprintf( stderr, "Ошибка разбора числа %s (опция set_daytime)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        inp_proj.blk0.channel = new_year;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Модификация нулевого блока файла – смена номера спутника
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"set_sat_id",          1, 0, 225 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+"--set_sat_id [год]
+\backslash
+t--- модификация года приема в нулевом файле
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 225:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        int new_year = 999.0;
+\end_layout
+
+\begin_layout Plain Layout
+
+        if( sscanf( optarg, "%d", &new_year ) != 1 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+            fprintf( stderr, "Ошибка разбора числа %s (опция set_sat_id)
+\backslash
+n", optarg );
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        inp_proj.blk0.b0.satId = new_year;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Модификация нулевого блока файла – смена имени спутника
+\end_layout
+
+\begin_layout Subparagraph
+опции
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+длинные опции
+\end_layout
+
+\end_inset
+
+{"set_sat_name",          1, 0, 216 },
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+справка
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Справка
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+"--set_sat_name [sat name]
+\backslash
+t--- модификация года приема в нулевом файле
+\backslash
+n"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+собственно обработка записи
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+обработка опций комадной строки
+\end_layout
+
+\end_inset
+
+case 216:
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\end_layout
+
+\begin_layout Plain Layout
+
+        memset( inp_proj.blk0.b0.satName, 0, 13 );
+\end_layout
+
+\begin_layout Plain Layout
+
+        strncpy( inp_proj.blk0.b0.satName, optarg, 12 );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    break;;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Section
+Конец
 \end_layout
 
 \end_body
