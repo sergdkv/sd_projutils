@@ -1,0 +1,1553 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage[all]{xy}
+
+% define new commands used in sec. 5.1
+\newcommand{\xyR}[1]{
+  \xydef@\xymatrixrowsep@{#1}}
+\newcommand{\xyC}[1]{
+  \xydef@\xymatrixcolsep@{#1}}
+
+\newdir{|>}{!/4.5pt/@{|}*:(1,-.2)@^{>}*:(1,+.2)@_{>}}
+
+% a pdf-bookmark for the TOC is added
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{%
+  \pdfbookmark[1]{\contentsname}{}
+  \myTOC }
+
+% redefine the \LyX macro for PDF bookmarks
+\def\LyX{\texorpdfstring{%
+  L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+  {LyX}}
+
+\noweboptions{longchunks,smallcode}
+\lstset { 
+basicstyle=\footnotesize,
+breaklines=true,
+breakatwhitespace=true,
+resetmargins=true,
+xleftmargin=3em
+}
+\end_preamble
+\use_default_options false
+\begin_modules
+noweb
+\end_modules
+\maintain_unincluded_children false
+\language russian
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format pdf
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_title "Using XY-pc in LyX"
+\pdf_author "H. Peter Gumm"
+\pdf_subject "LyX's XY-pic manual"
+\pdf_keywords "LyX, documentation"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 2
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style polish
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict true
+\end_header
+
+\begin_body
+
+\begin_layout Title
+filterTXTByProj
+\begin_inset Newline newline
+\end_inset
+
+Фильтрация строк текстового файла 
+\begin_inset Newline newline
+\end_inset
+
+на основе маски облачности 
+\end_layout
+
+\begin_layout Author
+Сергей Дьяков
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Введение
+\end_layout
+
+\begin_layout Standard
+Программа, осуществляющая фильтрацию строк текстового файла на основе маски
+ облачности.
+\end_layout
+
+\begin_layout Standard
+Программа должна быть написана на языке c++ с использованием библиотеки
+ lab34NProjLib
+\end_layout
+
+\begin_layout Section
+Формат вызова программы
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "language=bash"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+filterTXTByProj 1 2 mt21344_ir1.pro input.txt output.txt  # фильтрация строк
+ файла input.txt
+\end_layout
+
+\begin_layout LyX-Code
+
+# при этом широта находится в 1 колонке файла input.txt, долгота во второй
+ колонке
+\end_layout
+
+\begin_layout LyX-Code
+
+# результат записывается в файл output.txt
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+filterTXTByProj 1 2 mt21344_ir1.pro - output.txt
+\end_layout
+
+\begin_layout LyX-Code
+
+# аналог, исходные данные извлекаются из потока ввода
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+filterTXTByProj 1 2 mt21344_ir1.pro - output.txt
+\end_layout
+
+\begin_layout LyX-Code
+
+# аналог, результат записывается в поток вывода
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+filterTXTByProj 1 2 mt21344_ir1.pro input.txt output.txt -7
+\end_layout
+
+\begin_layout LyX-Code
+
+# аналог, фильтруются только строки, маска облачности которых содержит -7
+ (суша)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Cтруктура программы и разбор параметров
+\end_layout
+
+\begin_layout Standard
+Разбор опций программы производиться с помощью функции getopt
+\end_layout
+
+\begin_layout Standard
+(описание: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://habrahabr.ru/blogs/nix_coding/55665/
+\end_layout
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Структура программы предполагает считывание исходного файла и последовательную
+ обработку данного файла различными опциями, при этом запись файла или коррекция
+ способа представления файла является всего лишь опциями обработки.
+ Если результат обработки не был сохранен в файл - будет выведено сообщение
+ о ошибке.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+filterTXTByProj.cpp
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <stdio.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <string.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <math.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <getopt.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+<<includes>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<глобальные переменные>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<<функции>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+int main( int argc, char ** argv ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ( argc < 6 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        use_message();
+\end_layout
+
+\begin_layout Plain Layout
+
+        return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+    };
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // разбор опций программы
+\end_layout
+
+\begin_layout Plain Layout
+
+    int lat_pos = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+    sscanf( argv[1], 
+\begin_inset Quotes pld
+\end_inset
+
+%d
+\begin_inset Quotes prd
+\end_inset
+
+, &lat_pos );
+\end_layout
+
+\begin_layout Plain Layout
+
+    lat_pos -= 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    int lon_pos = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+    sscanf( argv[2], 
+\begin_inset Quotes pld
+\end_inset
+
+%d
+\begin_inset Quotes prd
+\end_inset
+
+, &lon_pos );
+\end_layout
+
+\begin_layout Plain Layout
+
+    lon_pos -= 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    char * proj_file_name = argv[3];
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::string input_file_name(argv[4]);
+\end_layout
+
+\begin_layout Plain Layout
+
+    std::string output_file_name(argv[5]);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    int mask_val = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( argc == 7 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+       sscanf( argv[7], 
+\begin_inset Quotes pld
+\end_inset
+
+%d
+\begin_inset Quotes prd
+\end_inset
+
+, &mask_val );
+\end_layout
+
+\begin_layout Plain Layout
+
+       if( mask_val > 0 ) mask_val = -mask_val;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    // получение файла-проекции
+\end_layout
+
+\begin_layout Plain Layout
+
+    <<получение файла-проекции>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // открытие исходных файлов
+\end_layout
+
+\begin_layout Plain Layout
+
+    <<открытие исходных файлов>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // обработка исходного файла, запись результата
+\end_layout
+
+\begin_layout Plain Layout
+
+    <<фильтрация строк исходного файла, запись результата>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    // закрытие файлов
+\end_layout
+
+\begin_layout Plain Layout
+
+    <<закрытие файлов>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    return 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Сборка программы
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+build-script
+\end_layout
+
+\end_inset
+
+#!/bin/sh
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+cd "${PROJ_DIR}"
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p temp/bin/
+\end_layout
+
+\begin_layout Plain Layout
+
+A=filterTXTByProj
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P=`pwd`
+\end_layout
+
+\begin_layout Plain Layout
+
+SRC=$P/temp/src
+\end_layout
+
+\begin_layout Plain Layout
+
+BIN=$P/temp/bin
+\end_layout
+
+\begin_layout Plain Layout
+
+INCL=$P/temp/include
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p $SRC
+\end_layout
+
+\begin_layout Plain Layout
+
+mkdir -p $BIN
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+EXE=$BIN/${A}.exe
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+LNW_notangle.sh ${A}.cpp $SRC/
+\end_layout
+
+\begin_layout Plain Layout
+
+INCLUDES="-I $P/external/INCLUDE  -I $P/external/INCLUDE/C_LIB -I $INCL
+ "
+\end_layout
+
+\begin_layout Plain Layout
+
+#COPT="-D_GLIBCXX_DEBUG -Wall -ggdb -O0"
+\end_layout
+
+\begin_layout Plain Layout
+
+#COPT="-g -ggdb"
+\end_layout
+
+\begin_layout Plain Layout
+
+#COPT="-O3"
+\end_layout
+
+\begin_layout Plain Layout
+
+g++ -D_GLIBCXX_DEBUG -g -ggdb -O0 -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cp
+p $SRC/lab34NProjLib.cpp -o $EXE.debug.exe
+\end_layout
+
+\begin_layout Plain Layout
+
+g++ -O3 -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp
+ -o $EXE
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+EXE=$BIN/${A}_windows.exe
+\end_layout
+
+\begin_layout Plain Layout
+
+i686-w64-mingw32-c++ 
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp
+ -o $EXE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Чтение исходных данных
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+получение файла-проекции
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+TLab34NProj inp_proj;
+\end_layout
+
+\begin_layout Plain Layout
+
+TLab34NProj::read( proj_file_name, inp_proj );
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+#
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+includes
+\end_layout
+
+\end_inset
+
+#include <lab34NProjLib.hpp>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Открытие файлов
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+открытие исходных файлов
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+FILE * input_file = NULL;
+\end_layout
+
+\begin_layout Plain Layout
+
+if( input_file_name == 
+\begin_inset Quotes pld
+\end_inset
+
+-
+\begin_inset Quotes prd
+\end_inset
+
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    input_file = stdin;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+else {
+\end_layout
+
+\begin_layout Plain Layout
+
+    input_file = fopen( input_file_name.c_str(), 
+\begin_inset Quotes pld
+\end_inset
+
+r
+\begin_inset Quotes prd
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( input_file == NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        fprintf( stderr, 
+\begin_inset Quotes pld
+\end_inset
+
+can't open file %s
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+, input_file_name.c_str() );
+\end_layout
+
+\begin_layout Plain Layout
+
+        exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+FILE * output_file = NULL;
+\end_layout
+
+\begin_layout Plain Layout
+
+if( output_file_name == 
+\begin_inset Quotes pld
+\end_inset
+
+-
+\begin_inset Quotes prd
+\end_inset
+
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    output_file = stdin;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+else {
+\end_layout
+
+\begin_layout Plain Layout
+
+    output_file = fopen( output_file_name.c_str(), 
+\begin_inset Quotes pld
+\end_inset
+
+w
+\begin_inset Quotes prd
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+    if( output_file == NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+        fprintf( stderr, 
+\begin_inset Quotes pld
+\end_inset
+
+can't open file %s
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+, output_file_name.c_str() );
+\end_layout
+
+\begin_layout Plain Layout
+
+        exit(1);
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Закрытие файлов
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+закрытие файлов
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if( input_file_name == 
+\begin_inset Quotes pld
+\end_inset
+
+-
+\begin_inset Quotes prd
+\end_inset
+
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    ;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+else {
+\end_layout
+
+\begin_layout Plain Layout
+
+    fclose( input_file );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if( output_file_name == 
+\begin_inset Quotes pld
+\end_inset
+
+-
+\begin_inset Quotes prd
+\end_inset
+
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    ;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+else {
+\end_layout
+
+\begin_layout Plain Layout
+
+    fclose( output_file );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Вывод справки
+\end_layout
+
+\begin_layout Standard
+Справку можно вызвать запустив программу без опций.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+функции
+\end_layout
+
+\end_inset
+
+void use_message(){
+\end_layout
+
+\begin_layout Plain Layout
+
+    puts( 
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+filterTXTByProj -- программа, осуществляющая фильтрацию строк текстового
+ файла на основе маски облачности
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+filterTXTByProj 1 2 mt21344_ir1.pro input.txt output.txt  # фильтрация строк
+ файла input.txt
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+# при этом широта находится в 1 колонке файла input.txt, долгота во второй
+ колонке
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+# результат записывается в файл output.txt
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+filterTXTByProj 1 2 mt21344_ir1.pro - output.txt
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+# аналог, исходные данные извлекаются из потока ввода
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+filterTXTByProj 1 2 mt21344_ir1.pro - output.txt
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+# аналог, результат записывается в поток вывода
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+filterTXTByProj 1 2 mt21344_ir1.pro input.txt output.txt -7
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes pld
+\end_inset
+
+# аналог, фильтруются только строки, маска облачности которых содержит -7
+ (суша)
+\begin_inset Quotes prd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+};
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+фильтрация строк исходного файла, запись результата
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+фильтрация строк исходного файла, запись результата
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+char input_s[1024];
+\end_layout
+
+\begin_layout Plain Layout
+
+char input_s2[1024];
+\end_layout
+
+\begin_layout Plain Layout
+
+while( fgets(input_s,1023,input_file) != NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+   strncpy( input_s2, input_s, 1023 );
+\end_layout
+
+\begin_layout Plain Layout
+
+   double lat = -9999;
+\end_layout
+
+\begin_layout Plain Layout
+
+   double lon = -9999;
+\end_layout
+
+\begin_layout Plain Layout
+
+   int pos = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+   char*p = strtok( input_s, 
+\begin_inset Quotes pld
+\end_inset
+
+;# 
+\backslash
+t
+\begin_inset Quotes pld
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( p == NULL ) continue;  // empty string
+\end_layout
+
+\begin_layout Plain Layout
+
+   while( p != NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+     if( lat_pos == pos ) sscanf( p, 
+\begin_inset Quotes pld
+\end_inset
+
+%lf
+\begin_inset Quotes prd
+\end_inset
+
+, &lat );
+\end_layout
+
+\begin_layout Plain Layout
+
+     if( lon_pos == pos ) sscanf( p, 
+\begin_inset Quotes pld
+\end_inset
+
+%lf
+\begin_inset Quotes prd
+\end_inset
+
+, &lon );
+\end_layout
+
+\begin_layout Plain Layout
+
+     p = strtok( NULL, 
+\begin_inset Quotes pld
+\end_inset
+
+;# 
+\backslash
+t
+\begin_inset Quotes pld
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+     pos += 1;
+\end_layout
+
+\begin_layout Plain Layout
+
+   }
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( lat == -9999 || lon == -9999 ){
+\end_layout
+
+\begin_layout Plain Layout
+
+      fprintf( stderr, 
+\begin_inset Quotes pld
+\end_inset
+
+Error in parsing string %s
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+, input_s2 );
+\end_layout
+
+\begin_layout Plain Layout
+
+   }
+\end_layout
+
+\begin_layout Plain Layout
+
+   int col = inp_proj.getColumn_for_Lon(lon);
+\end_layout
+
+\begin_layout Plain Layout
+
+   int row = inp_proj.getLine_for_Lat(lat);
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( col < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( row < 0 ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( col >= inp_proj.lines() ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( row >= inp_proj.cols() ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+   int val = inp_proj.raw[row][col];
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( mask_val == 0 && val < 0 || val == mask_val ) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+   fputs( input_s2, output_file );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Конец
+\end_layout
+
+\end_body
+\end_document
