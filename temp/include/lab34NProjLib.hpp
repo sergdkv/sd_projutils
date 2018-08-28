@@ -9,6 +9,8 @@
 
 typedef std::vector<short> TProjShortLine; 
 typedef std::vector<TProjShortLine> TProjShortData;
+typedef std::vector<short> TProjShortLine; 
+typedef std::vector<TProjShortLine> TProjShortData;
 
 typedef std::vector<float> TProjFloatLine; 
 typedef std::vector<TProjFloatLine> TProjFloatData;
@@ -90,6 +92,8 @@ public :
      @ingroup lat
     */
     double centerLat_for_Line( double line ) const;
+    double mercatorLat( double lat ) const;
+    double unmercatorLat( double mlat ) const;
     /**
      @brief строка, в которую попадают пиксели с указанной широтой
      @ingroup coords
@@ -97,8 +101,7 @@ public :
     */
     int getLine_for_Lat( double lat ) const ;
 private :
-    double mercatorLat( double lat ) const;
-    double unmercatorLat( double mlat ) const;
+    
 };
 
 

@@ -2711,7 +2711,7 @@ status open
 
 \begin_layout Plain Layout
 
-Определения закрытых функций TLab34NProj
+Определения функции TLab34NProj
 \end_layout
 
 \end_inset
@@ -2750,7 +2750,7 @@ double TLab34NProj::mercatorLat( double lat ) const {
 
 \begin_layout Plain Layout
 
-   lat = lat * atan2(1,1) / 90;
+   lat = lat * atan2(1,0) / 90;
 \end_layout
 
 \begin_layout Plain Layout
@@ -2760,7 +2760,7 @@ double TLab34NProj::mercatorLat( double lat ) const {
 
 \begin_layout Plain Layout
 
-   mLat = 90 * mLat / atan2(1,1);
+   mLat = 90 * mLat / atan2(1,0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -2784,7 +2784,7 @@ double TLab34NProj::unmercatorLat( double mlat ) const {
 
 \begin_layout Plain Layout
 
-   mlat = mlat * atan2(1,1) / 90;
+   mlat = mlat * atan2(1,0) / 90;
 \end_layout
 
 \begin_layout Plain Layout
@@ -2794,7 +2794,7 @@ double TLab34NProj::unmercatorLat( double mlat ) const {
 
 \begin_layout Plain Layout
 
-   lat = 90 * lat / atan2(1,1);
+   lat = 90 * lat / atan2(1,0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -2909,7 +2909,37 @@ int TLab34NProj::getLine_for_Lat( double lat ) const
 
 \begin_layout Plain Layout
 
+    //printf( 
+\begin_inset Quotes cld
+\end_inset
+
+min_lat=%lf
+\backslash
+n
+\begin_inset Quotes crd
+\end_inset
+
+, min_lat );
+\end_layout
+
+\begin_layout Plain Layout
+
     if( blk0.projType == 1 ) min_lat = mercatorLat( min_lat );
+\end_layout
+
+\begin_layout Plain Layout
+
+    //printf( 
+\begin_inset Quotes cld
+\end_inset
+
+min_lat=%lf
+\backslash
+n
+\begin_inset Quotes crd
+\end_inset
+
+, min_lat );
 \end_layout
 
 \begin_layout Plain Layout
@@ -2923,16 +2953,46 @@ int TLab34NProj::getLine_for_Lat( double lat ) const
 
 \begin_layout Plain Layout
 
+    //printf( 
+\begin_inset Quotes cld
+\end_inset
+
+max_lat=%lf
+\backslash
+n
+\begin_inset Quotes crd
+\end_inset
+
+, max_lat );
+\end_layout
+
+\begin_layout Plain Layout
+
     if( blk0.projType == 1 ) max_lat = mercatorLat( max_lat );
 \end_layout
 
 \begin_layout Plain Layout
 
+    //printf( 
+\begin_inset Quotes cld
+\end_inset
+
+max_lat=%lf
+\backslash
+n
+\begin_inset Quotes crd
+\end_inset
+
+, max_lat );
 \end_layout
 
 \begin_layout Plain Layout
 
-    double res = ( max_lat - min_lat ) / (blk0.pixNum-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+    double res = ( max_lat - min_lat ) / (blk0.scanNum-1);
 \end_layout
 
 \begin_layout Plain Layout

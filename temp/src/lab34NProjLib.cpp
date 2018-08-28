@@ -217,16 +217,16 @@ double TLab34NProj::centerLat_for_Line( double line ) const
     return lat;
 }
 double TLab34NProj::mercatorLat( double lat ) const {
-   lat = lat * atan2(1,1) / 90;
+   lat = lat * atan2(1,0) / 90;
    double mLat = log( tan( 0.5*lat + atan2(1,1) ) );
-   mLat = 90 * mLat / atan2(1,1);
+   mLat = 90 * mLat / atan2(1,0);
    return mLat;
 };
 
 double TLab34NProj::unmercatorLat( double mlat ) const {
-   mlat = mlat * atan2(1,1) / 90;
+   mlat = mlat * atan2(1,0) / 90;
    double lat = 2.0 *( atan(exp(mlat)) - atan2(1,1) ) ;
-   lat = 90 * lat / atan2(1,1);
+   lat = 90 * lat / atan2(1,0);
    return lat;
 };
 
@@ -235,12 +235,16 @@ int TLab34NProj::getLine_for_Lat( double lat ) const
     if( blk0.projType == 1 ) lat = mercatorLat( lat );
 
     double min_lat = blk0.lat;
+    //printf( "min_lat=%lf\n", min_lat );
     if( blk0.projType == 1 ) min_lat = mercatorLat( min_lat );
+    //printf( "min_lat=%lf\n", min_lat );
 
     double max_lat = blk0.lat + blk0.latSize;
+    //printf( "max_lat=%lf\n", max_lat );
     if( blk0.projType == 1 ) max_lat = mercatorLat( max_lat );
+    //printf( "max_lat=%lf\n", max_lat );
 
-    double res = ( max_lat - min_lat ) / (blk0.pixNum-1);
+    double res = ( max_lat - min_lat ) / (blk0.scanNum-1);
 
     double line = (lat - min_lat) / res;
     double rounded_line = floor(line + 0.5);

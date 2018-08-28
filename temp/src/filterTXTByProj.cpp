@@ -1,6 +1,9 @@
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
+
 #include <math.h>
 #include <getopt.h>
 #include <lab34NProjLib.hpp>
@@ -72,13 +75,15 @@ int main( int argc, char ** argv ){
     }
 
     FILE * output_file = NULL;
+    std::string output_file_tmp = "";
     if( output_file_name == "-" ){
         output_file = stdin;
     }
     else {
-        output_file = fopen( output_file_name.c_str(), "w" );
+        output_file_tmp = output_file_name+".tmp";
+        output_file = fopen( output_file_tmp.c_str(), "w" );
         if( output_file == NULL ){
-            fprintf( stderr, "can't open file %s\n", output_file_name.c_str() );
+            fprintf( stderr, "can't open file %s\n", output_file_tmp.c_str() );
             exit(1);
         }
     }
@@ -92,8 +97,13 @@ int main( int argc, char ** argv ){
        double lat = -9999;
        double lon = -9999;
        int pos = 0;
-       char*p = strtok( input_s, ";# \t" );
-       if( p == NULL ) continue;  // empty string
+       char*p = input_s;
+       while( strlen(p) > 0 && isspace(p[strlen(p)-1]) ) {
+          p[strlen(p)-1] = 0;
+       }
+       p = strtok( p, ";# \t" );
+       if( p == NULL || strlen(p) == 0 ) continue;  // empty string
+       //printf( "TEST %d %s\n", (int)strlen(p), p );
        while( p != NULL ){
          if( lat_pos == pos ) sscanf( p, "%lf", &lat );
          if( lon_pos == pos ) sscanf( p, "%lf", &lon );
@@ -110,9 +120,19 @@ int main( int argc, char ** argv ){
        if( col >= inp_proj.lines() ) continue;
        if( row >= inp_proj.cols() ) continue;
        int val = inp_proj.raw[row][col];
-       if( mask_val == 0 && val < 0 || val == mask_val ) continue;
+       fputs( input_s2, stderr );
+       fprintf( stderr, "lat=%lf lon=%lf row=%d col=%d val=%d\n", lat, lon, row, col, val );
+       if( mask_val == 0 && val < 0 || val == mask_val ) {
+         fprintf( stderr, "SKIP\n" );
+         continue;
+       }
+       else {
+         fprintf( stderr, "OK\n" );
+       }
+       
        fputs( input_s2, output_file );
     }
+    //printf( "OK\n" );
 
     // закрытие файлов
     
@@ -128,6 +148,21 @@ int main( int argc, char ** argv ){
     }
     else {
         fclose( output_file );
+    }
+
+    // сохранение результата в файл
+    
+
+    if( output_file_name != "-" ){
+        FILE *from_file = fopen( output_file_tmp.c_str(), "r" );
+        FILE *to_file = fopen( output_file_name.c_str(), "w" );
+        char buf[1024];
+        while( fgets( buf,1023,from_file) != NULL ){
+           fputs( buf, to_file );
+        }
+        fclose( from_file );
+        fclose( to_file );
+        unlink( output_file_tmp.c_str() );
     }
 
     return 0;
