@@ -1,8 +1,10 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
-\textclass literate-article
+\save_transient_properties true
+\origin unavailable
+\textclass article
 \begin_preamble
 \usepackage[all]{xy}
 
@@ -24,25 +26,39 @@
 \def\LyX{\texorpdfstring{%
   L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
   {LyX}}
+
+\noweboptions{longchunks,smallcode}
+\lstset { 
+basicstyle=\footnotesize,
+breaklines=true,
+breakatwhitespace=true,
+resetmargins=true,
+xleftmargin=3em
+}
 \end_preamble
 \use_default_options false
+\begin_modules
+noweb
+\end_modules
 \maintain_unincluded_children false
 \language russian
 \language_package default
 \inputencoding utf8
 \fontencoding T2A
-\font_roman default
-\font_sans default
-\font_typewriter default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
-
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
-\default_output_format default
+\default_output_format pdf
 \output_sync 0
 \bibtex_command default
 \index_command default
@@ -65,16 +81,26 @@
 \pdf_quoted_options "linkcolor=black, citecolor=black, urlcolor=blue, filecolor=blue,pdfpagelayout=OneColumn, pdfnewwindow=true,pdfstartview=XYZ, plainpages=false, pdfpagelabels"
 \papersize a4paper
 \use_geometry true
-\use_amsmath 2
-\use_esint 0
-\use_mhchem 1
-\use_mathdots 1
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 0
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -87,7 +113,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language french
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style swiss
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 2
 \paperpagestyle default
@@ -122,7 +151,7 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Standard
-Предлагается хранить проекции в памяти компьютера в виде двух массивов --
+Предлагается хранить проекции в памяти компьютера в виде двух массивов –
  маски облачности и маски географических величин.
 \end_layout
 
@@ -134,56 +163,103 @@ LatexCommand tableofcontents
 Заведем дополнительные типы данных для хранения маски облачности
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Общие типы данных>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Общие типы данных
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 typedef std::vector<short> TProjShortLine; 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 typedef std::vector<TProjShortLine> TProjShortData;
 \end_layout
 
-\begin_layout Scrap
+\end_inset
+
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-@
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Общие типы данных
+\end_layout
+
+\end_inset
+
+typedef std::vector<short> TProjShortLine; 
+\end_layout
+
+\begin_layout Plain Layout
+
+typedef std::vector<TProjShortLine> TProjShortData;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 и геофизических величин (температур).
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
 
-<<Общие типы данных>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Общие типы данных
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 typedef std::vector<float> TProjFloatLine; 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 typedef std::vector<TProjFloatLine> TProjFloatData;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
@@ -192,115 +268,133 @@ typedef std::vector<TProjFloatLine> TProjFloatData;
  
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status collapsed
 
-<<Общие типы данных>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Общие типы данных
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 /// данные и нулевой блок проекции нового формата lab34
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 struct TLab34NProj {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 public :
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     TProjFloatData geo; ///< матрица физических величин проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     TProjShortData raw; ///< матрица сырых данных проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     TBlk0_Proj blk0;    ///< нулевой блок нового формата
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     <<Определения функции TLab34NProj>>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 private :
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     <<Определения закрытых функций TLab34NProj>>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
 Разумеется, необходимо добавить в список заголовочных файлов 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Общие заголовки>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status collapsed
+
+\begin_layout Plain Layout
+
+Общие заголовки
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 #include <vector>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 // Для TBlk0_Proj
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <c_types.hpp>  
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <c_b0.hpp>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <c_b0proj.hpp>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Section
@@ -312,59 +406,77 @@ private :
  Чтение данных из файлов должно осуществляться отдельной функцией.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 TLab34NProj(); ///< конструктор пустой (проекция инициализируется из файла
  вызовом функции read)
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 TLab34NProj::TLab34NProj(){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     memset( &blk0, 0, sizeof(blk0) );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     raw.clear();
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     geo.clear();
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Section
@@ -375,62 +487,67 @@ TLab34NProj::TLab34NProj(){
 Теперь можно определить функцию чтения данных.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
-
-<<Определения функции TLab34NProj>>=
-\end_layout
-
-\begin_layout Scrap
+\end_inset
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 загрузка данных в объект-проекцию
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @param file_name имя файла-проекции нового формата
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @param proj данный объект-проекция будет модифицирован
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @return функция возвращает ссылку на модифицированный объект-проекцию
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 В случае ошибки функция прерывает выполнение программы
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 static TLab34NProj& read( std::string file_name,  TLab34NProj& proj );
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
@@ -438,334 +555,361 @@ static TLab34NProj& read( std::string file_name,  TLab34NProj& proj );
 ые файлы:
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Общие заголовки>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Общие заголовки
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 #include <string>
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
 Для чтения данных включаем заголовочный файл:
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Собственные заголовки>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Собственные заголовки
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 #include <stdio.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <stdlib.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <math.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <string.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
 Функция чтения данных.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 // Чтение файла - проекции нового формата
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 // вход : file_name - имя файла
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 // выход : содержимое проекции (сырые данные и геофизические величины и
  нулевой блок)
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 TLab34NProj& TLab34NProj::read( std::string file_name,  TLab34NProj& proj
  )
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {	
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     FILE* file_header = fopen(file_name.c_str(), "rb");
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( file_header == 0 ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         printf( "header is NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         perror( file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     else { 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         //printf( "header is not NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     } 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( fread( &proj.blk0, sizeof( proj.blk0 ), 1, file_header ) != 1 ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         printf( "header is NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         perror( file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     unsigned int lines = proj.blk0.scanNum;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     unsigned int cols =  proj.blk0.pixNum; 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     proj.geo.resize(lines); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     proj.raw.resize(lines);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( unsigned int i = 0; i < lines; i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         proj.geo[i].resize(cols); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         proj.raw[i].resize(cols);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     static short line_buf[1000 * 1000];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( unsigned int i = 0; i < lines; i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         if( fread( line_buf, sizeof(short), cols, file_header ) != cols
  ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             printf( "header is NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             perror( file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         for( unsigned int j = 0; j < cols; j++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             short a = line_buf[j];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             proj.raw[i][j] = a;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             if( a < 0 ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 proj.geo[i][j] = -999;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             else {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 proj.geo[i][j] = a * proj.blk0.ka + proj.blk0.kb;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     fclose( file_header ); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return proj;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Section
@@ -776,63 +920,68 @@ n", file_name.c_str() );
 Теперь можно определить функцию чтения данных.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
-
-<<Определения функции TLab34NProj>>=
-\end_layout
-
-\begin_layout Scrap
+\end_inset
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 копирование данных из одной проекции в другую
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @param from_proj источник данных
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @param to_proj   данный объект-проекция будет модифицирован
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @return функция возвращает ссылку на модифицированный объект-проекцию
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 В случае ошибки функция прерывает выполнение программы
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 static TLab34NProj& copyFromTo( TLab34NProj& from_proj, TLab34NProj& to_proj
  );
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
@@ -840,264 +989,301 @@ static TLab34NProj& copyFromTo( TLab34NProj& from_proj, TLab34NProj& to_proj
 ые файлы:
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Общие заголовки>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Общие заголовки
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 #include <string>
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
 Для чтения данных включаем заголовочный файл:
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Собственные заголовки>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Собственные заголовки
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 #include <stdio.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <stdlib.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <math.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 #include <string.h>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
 Функция чтения данных.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 // Чтение файла - проекции нового формата
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 // вход : file_name - имя файла
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 // выход : содержимое проекции (сырые данные и геофизические величины и
  нулевой блок)
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 TLab34NProj& TLab34NProj::copyFromTo( TLab34NProj& from_proj, TLab34NProj&
  to_proj )
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     to_proj.blk0 = from_proj.blk0;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     unsigned int lines = to_proj.blk0.scanNum;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     unsigned int cols =  to_proj.blk0.pixNum; 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     to_proj.geo.resize(lines); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     to_proj.raw.resize(lines);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( unsigned int i = 0; i < lines; i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         to_proj.geo[i].resize(cols); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         to_proj.raw[i].resize(cols);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( unsigned int i = 0; i < lines; i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         for( unsigned int j = 0; j < cols; j++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             to_proj.raw[i][j] = from_proj.raw[i][j];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             to_proj.geo[i][j] = from_proj.geo[i][j];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return to_proj;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Section
 Получение размера проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
+
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 /// количество строк в проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 int lines() const {  
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    return  blk0.scanNum; 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 /// количество пикселей в строке проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 int cols() const {  
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    return  blk0.pixNum;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
 
 \end_layout
 
@@ -1105,7 +1291,7 @@ int cols() const {
 Запись данных
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
 
 \end_layout
 
@@ -1113,550 +1299,583 @@ int cols() const {
 Аналогично реализуем функцию сохранения данных.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
+
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 сохранение данных объект-проекции в файл
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @param file_name имя файла-проекции нового формата
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @return функция возвращает ссылку на объект-проекцию
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 В случае ошибки функция прерывает выполнение программы
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 TLab34NProj& write( std::string file_name);
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
-\end_layout
-
-\begin_layout Scrap
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 TLab34NProj& TLab34NProj::write( std::string file_name )
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     // Подготовка к записи
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     // Корректируем коэффициенты представления данных и максимальное значение
  пикселя
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double min_value = 1000.*1000.*1000.*1000.;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( int line = 0; line < lines(); line++ ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         for( int col = 0; col < cols(); col++ ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             if( raw[line][col] >= 0 ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 if( geo[line][col] < min_value ) {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                     min_value = geo[line][col];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     blk0.kb = floor( min_value );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     // выполняем преобразование данных к коротким целым
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     int max_pixel_value = 0;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( int line = 0; line < lines(); line++ ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         for( int col = 0; col < cols(); col++ ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             if( raw[line][col] >= 0 ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 double a = geo[line][col];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 double c = floor( (a - blk0.kb) / blk0.ka + 0.5 );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 raw[line][col] = c;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 if ( c > max_pixel_value ) { 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                     max_pixel_value = c;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
                 }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     short M = max_pixel_value;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( (int)M != max_pixel_value ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         printf( "Слишком большое максимальное значение в файле %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     blk0.maxPixelValue = M;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     FILE* file_header = fopen(file_name.c_str(), "wb");
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( file_header == 0 ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         printf( "header is NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         perror( file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     else { 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         //printf( "header is not NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     } 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    if( fwrite( &blk0, sizeof( blk0 ), 1, file_header ) != 1 ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         printf( "header is NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         perror( file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     static short line_buf[1000 * 1000];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( int i = 0; i < lines(); i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         for( int j = 0; j < cols(); j++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             line_buf[j] = raw[i][j];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
        if( (int)fwrite( line_buf, sizeof(short), cols(), file_header ) !=
  cols() ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             printf( "header is NULL for file %s
 \backslash
 n", file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             perror( file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( fclose( file_header ) != 0 ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         perror( file_name.c_str() );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         exit(1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return *this;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Section
 Создание копии проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 /// Копирующий конструктор
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 TLab34NProj( const TLab34NProj& old );
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 TLab34NProj::TLab34NProj( const TLab34NProj& old ){
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     blk0 = old.blk0;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     raw.resize(old.lines()); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     geo.resize(old.lines()); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( int i = 0; i < old.lines(); i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         raw[i].resize(old.cols() ); 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         geo[i].resize(old.cols());
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for( int i = 0; i < old.lines(); i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
        for( int j = 0; j < old.cols(); j++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
           raw[i][j] = old.raw[i][j];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
           geo[i][j] = old.geo[i][j];
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
        }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
 
 \end_layout
 
@@ -1664,117 +1883,131 @@ TLab34NProj::TLab34NProj( const TLab34NProj& old ){
 Очистка проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @brief Очистка проекции
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 Все пиксели проекции маркируются указанным значением
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 @param cloud_value заносится во все пиксели массива raw 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
        (рекомендумое значение -1)
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 TLab34NProj& clear( int cloud_value );
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
-\end_layout
-
-\begin_layout Scrap
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 TLab34NProj& TLab34NProj::clear( int cloud_value )
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     for(  int i = 0; i < lines(); i++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         for(  int j = 0; j < cols(); j++ ){ 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             raw[i][j] = cloud_value; 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
             geo[i][j] = -999;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
         }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     }
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return *this;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Section
@@ -1784,7 +2017,7 @@ TLab34NProj& TLab34NProj::clear( int cloud_value )
 \begin_layout Standard
 Проекция нового формата это прямоугольная матрица значений.
  При этом пиксели строки матрицы лежат на одной широте а пиксели столбцы
- матрицы --- на одной долготе.
+ матрицы — на одной долготе.
 \end_layout
 
 \begin_layout Standard
@@ -1818,7 +2051,7 @@ tt lon}
 
 \end_inset
 
- --- долгота середины первого столбца проекции
+ — долгота середины первого столбца проекции
 \end_layout
 
 \begin_layout Standard
@@ -1834,7 +2067,7 @@ tt lon + lonSize}
 
 \end_inset
 
- --- долгота середины последного столбца проекции
+ — долгота середины последного столбца проекции
 \end_layout
 
 \begin_layout Standard
@@ -1850,7 +2083,7 @@ tt pixNum}
 
 \end_inset
 
---- количество столбцов проекции
+— количество столбцов проекции
 \end_layout
 
 \begin_layout Standard
@@ -1873,7 +2106,7 @@ tt lonRes}
 
 \end_inset
 
- --- разрешение проекции в секундах.
+ — разрешение проекции в секундах.
  На этапе создания прокции на её основе рассчитывается количество столбцов
  проекции.
  После того, как количество столбцов определено про данную величину проще
@@ -1923,178 +2156,214 @@ tt pixNum}
  столбца для новой проекции легко.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @brief Долгота центра пикселя в градусах
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @param  column 0 <= column  < pixNum
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup coords
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup lon
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 double centerLon_for_Column( double column ) const;
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 double TLab34NProj::centerLon_for_Column( double column ) const
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double res = blk0.lonSize / (blk0.pixNum-1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return blk0.lon + column * res;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
 Можно определить обратную функцию
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  Номер колонки в которую попадают пиксели с указанной долготой
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     (долгота в градусах восточной долготы)
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup coords
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup lon
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 int getColumn_for_Lon( double lon ) const;
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 int TLab34NProj::getColumn_for_Lon( double lon ) const
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double res = blk0.lonSize / (blk0.pixNum-1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double column = (lon - blk0.lon) / res;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double rounded_col = floor(column + 0.5);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return int( rounded_col );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Subsection
@@ -2119,7 +2388,7 @@ tt lat}
 
 \end_inset
 
- --- широта середины первой строки проекции
+ — широта середины первой строки проекции
 \end_layout
 
 \begin_layout Standard
@@ -2135,7 +2404,7 @@ tt lat + latSize}
 
 \end_inset
 
- --- широта середины последней строки проекции
+ — широта середины последней строки проекции
 \end_layout
 
 \begin_layout Standard
@@ -2151,7 +2420,7 @@ tt scanNum}
 
 \end_inset
 
---- количество строк проекции
+— количество строк проекции
 \end_layout
 
 \begin_layout Standard
@@ -2167,7 +2436,7 @@ tt projType}
 
 \end_inset
 
---- вид проекции.
+— вид проекции.
  Если 
 \begin_inset Formula $\text{{\tt projType}}=1$
 \end_inset
@@ -2239,7 +2508,7 @@ tt latRes}
 
 \end_inset
 
- --- разрешение проекции по широте (обычной для равнопромежуточной проеции
+ — разрешение проекции по широте (обычной для равнопромежуточной проеции
  и меркаторской для проекции Меркатора) в секундах.
  На этапе создания прокции на её основе рассчитывается количество строк
  проекции.
@@ -2290,439 +2559,499 @@ tt scanNum}
  находящиеся в нулевом блоке файла-проекции.
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @brief широта центра пикселя в градусах
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @param  line 0 <= line  < blk0.scanNum
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup coords
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup lat
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 double centerLat_for_Line( double line ) const;
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 // 0 <= line < scanNum
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 double TLab34NProj::centerLat_for_Line( double line ) const
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double min_lat = blk0.lat;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( blk0.projType == 1 ) min_lat = mercatorLat( min_lat );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double max_lat = blk0.lat + blk0.latSize;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( blk0.projType == 1 ) max_lat = mercatorLat( max_lat );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double res = ( max_lat - min_lat ) / (blk0.pixNum-1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double lat = min_lat + line * res;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( blk0.projType == 1 ) lat = unmercatorLat( lat );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return lat;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
-\end_layout
-
-\begin_layout Scrap
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения закрытых функций TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения закрытых функций TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 double mercatorLat( double lat ) const;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 double unmercatorLat( double mlat ) const;
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
-\end_layout
-
-\begin_layout Scrap
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 double TLab34NProj::mercatorLat( double lat ) const {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    lat = lat * atan2(1,1) / 90;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    double mLat = log( tan( 0.5*lat + atan2(1,1) ) );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    mLat = 90 * mLat / atan2(1,1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    return mLat;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 double TLab34NProj::unmercatorLat( double mlat ) const {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    mlat = mlat * atan2(1,1) / 90;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    double lat = 2.0 *( atan(exp(mlat)) - atan2(1,1) ) ;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    lat = 90 * lat / atan2(1,1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
    return lat;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 };
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Standard
 Обратная функция
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Определения функции TLab34NProj>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Определения функции TLab34NProj
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 /**
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @brief строка, в которую попадают пиксели с указанной широтой
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup coords
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
  @ingroup lat
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 */
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 int getLine_for_Lat( double lat ) const ;
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<Функции>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+Функции
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 int TLab34NProj::getLine_for_Lat( double lat ) const
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 {
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( blk0.projType == 1 ) lat = mercatorLat( lat );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double min_lat = blk0.lat;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( blk0.projType == 1 ) min_lat = mercatorLat( min_lat );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double max_lat = blk0.lat + blk0.latSize;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     if( blk0.projType == 1 ) max_lat = mercatorLat( max_lat );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double res = ( max_lat - min_lat ) / (blk0.pixNum-1);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double line = (lat - min_lat) / res;
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     double rounded_line = floor(line + 0.5);
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     return int( rounded_line );
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 }
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
 \begin_layout Section
 Исходные файлы
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<lab34NProjLib.cpp>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+lab34NProjLib.cpp
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 #include <lab34NProjLib.hpp>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 <<Собственные заголовки>>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 <<Функции>>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
-\end_layout
-
-\begin_layout Scrap
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<lab34NProjLib.hpp>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+lab34NProjLib.hpp
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 <<Общие заголовки>>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 <<Общие типы данных>>
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
 
 \end_layout
 
@@ -2730,153 +3059,162 @@ int TLab34NProj::getLine_for_Lat( double lat ) const
 Сборка библиотеки
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
 
-<<build-script>>=
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+build-script
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
 #!/bin/sh
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 cd "${PROJ_DIR}"
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 mkdir -p temp/bin/
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 A=lab34NProjLib
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 P=`pwd`
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 SRC=$P/temp/src
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 BIN=$P/temp/bin
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 OBJ=$P/temp/lib
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 INCL=$P/temp/include
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 mkdir -p $SRC
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 mkdir -p $BIN
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 mkdir -p $INCL
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 mkdir -p $OBJ
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 EXE=$BIN/${A}.exe
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 LNW_notangle.sh "${A}.cpp" "$SRC/"
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 LNW_notangle.sh "${A}.hpp" "$INCL/"
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
-gcc -Wall -c "$SRC/${A}.cpp" 
+gcc -std=c++11 -Wall -c "$SRC/${A}.cpp" 
 \backslash
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     "-I$INCL" -Iexternal/INCLUDE -Iexternal/INCLUDE/C_LIB 
 \backslash
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
     -o "$OBJ/$A.o"
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Plain Layout
 
 doxygen >/dev/null 2>/dev/null
 \end_layout
 
-\begin_layout Scrap
+\end_inset
 
-@
+
 \end_layout
 
-\begin_layout Scrap
+\begin_layout Standard
 
 \end_layout
 

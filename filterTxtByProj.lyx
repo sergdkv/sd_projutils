@@ -300,7 +300,21 @@ filterTXTByProj.cpp
 
 \begin_layout Plain Layout
 
+#include <stdlib.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+#include <unistd.h>
+\end_layout
+
+\begin_layout Plain Layout
+
 #include <string.h>
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -543,6 +557,20 @@ int main( int argc, char ** argv ){
 
 \begin_layout Plain Layout
 
+    // сохранение результата в файл
+\end_layout
+
+\begin_layout Plain Layout
+
+    <<сохранение результата в файл>>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
     return 0;
 \end_layout
 
@@ -576,7 +604,7 @@ build-script
 
 \end_inset
 
-#!/bin/sh
+#!/bin/bash
 \end_layout
 
 \begin_layout Plain Layout
@@ -677,13 +705,23 @@ INCLUDES="-I $P/external/INCLUDE  -I $P/external/INCLUDE/C_LIB -I $INCL
 
 \begin_layout Plain Layout
 
-g++ -D_GLIBCXX_DEBUG -g -ggdb -O0 -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cp
-p $SRC/lab34NProjLib.cpp -o $EXE.debug.exe
+COPT=-std=c++11
 \end_layout
 
 \begin_layout Plain Layout
 
-g++ -O3 -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp
+#echo PWD=`pwd`
+\end_layout
+
+\begin_layout Plain Layout
+
+g++ -D_GLIBCXX_DEBUG -g -ggdb -O0 -static ${COPT}  ${INCLUDES}  $SRC/${A}.cpp
+ $SRC/lab34NProjLib.cpp -o $EXE.debug.exe
+\end_layout
+
+\begin_layout Plain Layout
+
+g++ -O3 -static  ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp
  -o $EXE
 \end_layout
 
@@ -705,8 +743,8 @@ i686-w64-mingw32-c++
 
 \begin_layout Plain Layout
 
-    -static -m32 ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp
- -o $EXE
+    -static  ${COPT}  ${INCLUDES}  $SRC/${A}.cpp $SRC/lab34NProjLib.cpp -o
+ $EXE
 \end_layout
 
 \end_inset
@@ -762,7 +800,7 @@ TLab34NProj::read( proj_file_name, inp_proj );
 
 \begin_layout Standard
 \begin_inset Flex Chunk
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -790,7 +828,7 @@ includes
 
 \begin_layout Standard
 \begin_inset Flex Chunk
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -899,6 +937,19 @@ FILE * output_file = NULL;
 
 \begin_layout Plain Layout
 
+std::string output_file_tmp = 
+\begin_inset Quotes pld
+\end_inset
+
+
+\begin_inset Quotes prd
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
 if( output_file_name == 
 \begin_inset Quotes pld
 \end_inset
@@ -927,7 +978,20 @@ else {
 
 \begin_layout Plain Layout
 
-    output_file = fopen( output_file_name.c_str(), 
+    output_file_tmp = output_file_name+
+\begin_inset Quotes prd
+\end_inset
+
+.tmp
+\begin_inset Quotes prd
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+    output_file = fopen( output_file_tmp.c_str(), 
 \begin_inset Quotes pld
 \end_inset
 
@@ -955,7 +1019,7 @@ n
 \begin_inset Quotes prd
 \end_inset
 
-, output_file_name.c_str() );
+, output_file_tmp.c_str() );
 \end_layout
 
 \begin_layout Plain Layout
@@ -1074,6 +1138,122 @@ else {
 \begin_layout Plain Layout
 
     fclose( output_file );
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Сохранение результата в файл
+\end_layout
+
+\begin_layout Standard
+Этот блок необходим для того, чтобы можно было использовать одно имя файла
+ для исходного и конечного файлов
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+сохранение результата в файл
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if( output_file_name != 
+\begin_inset Quotes pld
+\end_inset
+
+-
+\begin_inset Quotes prd
+\end_inset
+
+ ){
+\end_layout
+
+\begin_layout Plain Layout
+
+    FILE *from_file = fopen( output_file_tmp.c_str(), 
+\begin_inset Quotes pld
+\end_inset
+
+r
+\begin_inset Quotes prd
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+    FILE *to_file = fopen( output_file_name.c_str(), 
+\begin_inset Quotes pld
+\end_inset
+
+w
+\begin_inset Quotes prd
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+    char buf[1024];
+\end_layout
+
+\begin_layout Plain Layout
+
+    while( fgets( buf,1023,from_file) != NULL ){
+\end_layout
+
+\begin_layout Plain Layout
+
+       fputs( buf, to_file );
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+    fclose( from_file );
+\end_layout
+
+\begin_layout Plain Layout
+
+    fclose( to_file );
+\end_layout
+
+\begin_layout Plain Layout
+
+    unlink( output_file_tmp.c_str() );
 \end_layout
 
 \begin_layout Plain Layout
@@ -1391,7 +1571,27 @@ while( fgets(input_s,1023,input_file) != NULL ){
 
 \begin_layout Plain Layout
 
-   char*p = strtok( input_s, 
+   char*p = input_s;
+\end_layout
+
+\begin_layout Plain Layout
+
+   while( strlen(p) > 0 && isspace(p[strlen(p)-1]) ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+      p[strlen(p)-1] = 0;
+\end_layout
+
+\begin_layout Plain Layout
+
+   }
+\end_layout
+
+\begin_layout Plain Layout
+
+   p = strtok( p, 
 \begin_inset Quotes pld
 \end_inset
 
@@ -1406,7 +1606,22 @@ t
 
 \begin_layout Plain Layout
 
-   if( p == NULL ) continue;  // empty string
+   if( p == NULL || strlen(p) == 0 ) continue;  // empty string
+\end_layout
+
+\begin_layout Plain Layout
+
+   //printf( 
+\begin_inset Quotes pld
+\end_inset
+
+TEST %d %s
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+, (int)strlen(p), p );
 \end_layout
 
 \begin_layout Plain Layout
@@ -1527,7 +1742,82 @@ n
 
 \begin_layout Plain Layout
 
-   if( mask_val == 0 && val < 0 || val == mask_val ) continue;
+   fputs( input_s2, stderr );
+\end_layout
+
+\begin_layout Plain Layout
+
+   fprintf( stderr, 
+\begin_inset Quotes pld
+\end_inset
+
+lat=%lf lon=%lf row=%d col=%d val=%d
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+, lat, lon, row, col, val );
+\end_layout
+
+\begin_layout Plain Layout
+
+   if( mask_val == 0 && val < 0 || val == mask_val ) {
+\end_layout
+
+\begin_layout Plain Layout
+
+     fprintf( stderr, 
+\begin_inset Quotes pld
+\end_inset
+
+SKIP
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+     continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+   }
+\end_layout
+
+\begin_layout Plain Layout
+
+   else {
+\end_layout
+
+\begin_layout Plain Layout
+
+     fprintf( stderr, 
+\begin_inset Quotes pld
+\end_inset
+
+OK
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+ );
+\end_layout
+
+\begin_layout Plain Layout
+
+   }
+\end_layout
+
+\begin_layout Plain Layout
+
+   
 \end_layout
 
 \begin_layout Plain Layout
@@ -1538,6 +1828,21 @@ n
 \begin_layout Plain Layout
 
 }
+\end_layout
+
+\begin_layout Plain Layout
+
+//printf( 
+\begin_inset Quotes pld
+\end_inset
+
+OK
+\backslash
+n
+\begin_inset Quotes prd
+\end_inset
+
+ );
 \end_layout
 
 \end_inset
